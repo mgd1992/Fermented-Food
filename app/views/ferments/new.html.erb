@@ -1,0 +1,12 @@
+<%= form_with(model: @ferment, local: true) do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :description %>
+  <%= form.text_field :description %>
+
+  <!-- Campo oculto para `user_id` -->
+  <%= form.hidden_field :user_id, value: current_user.id %> <!-- Asegúrate de que current_user está disponible y definido -->
+
+  <%= form.submit %>
+<% end %>

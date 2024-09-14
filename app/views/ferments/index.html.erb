@@ -1,0 +1,20 @@
+<h1 class="text-center mb-5 mt-2">Todos los Fermentos</h1>
+
+
+  <% @ferments.each do |ferment| %>
+  <div class="ferments-list d-flex p-3">
+    <div class="ferment">
+      <h2><%= ferment.name %></h2>
+      <p><%= ferment.description %></p>
+      <p>Creado por: <%= ferment.user.email %></p>
+    </div>
+    <%= link_to "Ver", ferment_path(ferment) %>
+    <%= link_to 'X', @ferment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'text-danger' %>
+
+  </div>
+<% end %>
+
+
+<div class="text-center">
+  <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 fixed-bottom"%>
+</div>

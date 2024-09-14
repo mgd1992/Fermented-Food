@@ -1,1 +1,72 @@
-// Specific CSS for your home-page
+* {
+  box-sizing: border-box;
+}
+
+html,body {
+  margin: 0;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  color: #fff;
+  background: #333;
+  overflow: hidden;
+}
+
+.landing {
+  position: relative;
+  background-image: url('https://plus.unsplash.com/premium_photo-1705808668311-45ee3d6612b5?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
+
+.landing-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-inner h1 {
+  font-size: 100px;
+}
+
+.landing-inner a{
+  text-decoration: none;
+
+}
+
+
+
+
+//RESPONSIVE SECCION
+
+@media (max-width: 650px) {
+  .landing img {
+    width: 70%;
+  }
+
+  .landing h1 {
+    font-size: 40px;
+  }
+}
+
+@media (max-height: 600px) {
+  img {
+    width: 20%;
+  }
+}
+
+@media (max-height: 400px) {
+   img {
+    padding-bottom: 30px;
+  }
+
+  h1 {
+    display: none;
+  }
+}

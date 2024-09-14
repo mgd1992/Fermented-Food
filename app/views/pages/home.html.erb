@@ -1,2 +1,16 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<section class="landing">
+
+  <nav class="nav">
+    </div>
+      <%= link_to 'About us' %>
+      <%= link_to 'About us' %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete %>
+    <div>
+
+  </nav>
+
+  <div class="landing-inner">
+    <h1>Cool Beans</h1>
+    <%= link_to "Get started!", new_user_registration_path %>
+  </div>
+</section>
