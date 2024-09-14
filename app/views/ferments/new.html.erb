@@ -1,12 +1,21 @@
-<%= form_with(model: @ferment, local: true) do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
+<div class="d-flex m-5 justify-content-center">
 
-  <%= form.label :description %>
-  <%= form.text_field :description %>
+  <%= form_with(model: @ferment, local: true) do |form| %>
 
-  <!-- Campo oculto para `user_id` -->
-  <%= form.hidden_field :user_id, value: current_user.id %> <!-- Asegúrate de que current_user está disponible y definido -->
+    <div class="mx-3 mb-4">
 
-  <%= form.submit %>
-<% end %>
+    <%= form.label :Nombre %>
+    <%= form.text_field :name %>
+
+    <%= form.label :Descripcion %>
+    <%= form.text_area :description %>
+
+    </div>
+
+    <!-- Campo oculto para `user_id` -->
+    <%= form.hidden_field :user_id, value: current_user.id %> <!-- Asegúrate de que current_user está disponible y definido -->
+    <%= form.submit :Crear_fermento, class: "btn btn-outline-success w-100" %>
+
+  <% end %>
+
+</div>
