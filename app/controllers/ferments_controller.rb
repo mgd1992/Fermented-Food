@@ -13,7 +13,7 @@ class FermentsController < ApplicationController
 
   def create
     @ferment = Ferment.new(ferment_params)
-
+    @ferment.user = current_user
     if @ferment.save!
       redirect_to @ferment, notice: 'Ferment was successfully created.'
     else
