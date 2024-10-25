@@ -1,0 +1,6 @@
+<%= simple_form_for @user, url: user_path(@user), method: :patch, html: { class: "w-50", multipart: true } do |f| %>
+  <div class="form-inputs flex">
+    <%= f.input :photo, as: :file, label: "Upload Profile Photo", input_html: { accept: 'image/*' } %>
+  </div>
+  <%= f.submit "Update Profile", class: "btn btn-primary" %>
+<% end %>
