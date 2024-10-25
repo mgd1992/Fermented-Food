@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :edit, :update]
 
   def index
     @users = User.all
@@ -15,6 +15,17 @@ class UsersController < ApplicationController
       redirect_to user_path(@user) # Redirect to the user's profile page
     else
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Profile updated successfully'
+    else
+      render :edit
     end
   end
 

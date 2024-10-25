@@ -7,6 +7,9 @@
     <%= image_tag @user.photo, crop: :fill %>
   <% end %>
   <h3 class="text-dark my-4"><%= @user.full_name %></h3>
+  <%= link_to edit_user_path(@user) do %>
+    <i class="fa-solid fa-camera-retro text-dark"></i>
+  <% end %>
   <p class="text-dark"><%= @user.email %></p>
 </div>
   <h4>My Ferments</h4>
