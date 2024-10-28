@@ -1,0 +1,24 @@
+.ferments{
+  display: flex;
+  flex-direction: column;
+}
+
+.ferment-content{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+}
+
+.ferment-title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.ferment-description{
+  margin-right: 20px;
+  flex-grow: 1;
+}

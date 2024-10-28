@@ -1,5 +1,7 @@
 <div class="container d-flex justify-content-between">
-  <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete %>
+  <% if user_signed_in? && @user == current_user %>
+    <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete %>
+  <% end %>
 </div>
 
 <div class="profile mx-auto my-5">
@@ -17,16 +19,21 @@
 
 <h4 class="text-center my-4">My Ferments</h4>
 
-<% @user.ferments.each do |ferment| %>
+<div class="ferments-user">
+  <% @user.ferments.each do |ferment| %>
 
-  <div class="border w-25">
-    <%= link_to ferment_path(ferment) do %>
-      <h4><%= ferment.name %>
-    <% end %>
+    <ul>
+      <li>
+        <%= link_to ferment_path(ferment) do %>
+          <h4><%= ferment.name %>
+          <% if ferment.photos.attached? %>
+            <%= image_tag ferment.photos.first, crop: :fill, class:" w-100" %>
+          <% end %>
+        <% end %>
+      </li>
+    </ul>
 
-    <p><%= ferment.description %></p>
-
-  </div>
-<% end %>
+  <% end %>
+</div>-
 
 <%= link_to "All Ferments", ferments_path %>
