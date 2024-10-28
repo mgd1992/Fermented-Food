@@ -1,22 +1,31 @@
 <div class="landing">
-
-  <nav class="nav">
-    </div>
-      <%= link_to 'About us' %>
-      <%= link_to 'About us' %>
-
-    <div>
-
-  </nav>
-
   <div class="landing-inner">
-    <h1>Cool Beans</h1>
-    <% if user_signed_in? %>
-      <%= link_to "Profile", profile_path(current_user) %>
-      <%= link_to 'All fermentos', ferments_path %>
-    <% else %>
-      <%= link_to "Get started!", new_user_registration_path %>
-    <% end %>
-  </div>
 
+    <nav class="nav">
+      <%= link_to '/', class: 'nav-link text-light' do %>
+        <h1 class="nav-title">Cool Beans</h1>
+      <% end %>
+      <div class="nav-links">
+        <div class="search-container">
+          <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
+            <div class="input-group">
+              <%= text_field_tag :query, params[:query], placeholder: "Search for fermentos...", class: 'form-control' %>
+              <div class="input-group-append">
+                <%= submit_tag 'Search', class: 'btn btn-outline-info mx-2' %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <%= link_to 'About Us', '#', class: 'about-us text-light' %>
+        <%= link_to 'Contact Us', '#', class: 'contact-us text-light' %>
+        <% if user_signed_in? %>
+          <%= link_to "Profile", profile_path(current_user), class: 'btn btn-outline-info' %>
+        <% else %>
+          <%= link_to "Sign in", new_user_registration_path, class: 'btn btn-success' %>
+        <% end %>
+      </div>
+
+    </nav>
+
+  </div>
 </div>
