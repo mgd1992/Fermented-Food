@@ -1,0 +1,38 @@
+.ferment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ferment-item {
+  background-color: #343a40;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.ferment-item:hover {
+  transform: scale(1.02);
+}
+
+.ferment-link {
+  text-decoration: none;
+}
+
+.ferment-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ferment-name {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.ferment-image {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+}
