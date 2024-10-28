@@ -1,21 +1,20 @@
+<%= link_to "todos los fermentos", ferments_path, class: "btn btn-outline-success  m-4" %>
 
-<div class="border mx-auto my-5 w-50 p-5 d-flex justify-content-evenly align-items-center">
+<div class="mx-auto w-50 p-5 d-flex flex-column justify-content-evenly align-items-center">
 
-  <div class="ferment-info">
+  <div class="d-flex flex-column justify-content-evenly align-items-center mb-5">
     <h5 class="text-center"><%= @ferment.name %></h5>
     <p class="text-center"><%= @ferment.description %></p>
+    <%= link_to "Editar", edit_ferment_path(@ferment) %>
   </div>
 
-  <div class="ferment-img">
+  <div class="d-flex flex-column justify-content-center align-items-center">
     <% if @ferment.photos.attached? %>
       <% @ferment.photos.each do |photo| %>
-        <%= image_tag photo, class: "w-100" %>
+        <%= image_tag photo, class: "w-50 mb-3" %>
       <% end %>
     <% end %>
   </div>
-  <%= link_to "Editar", edit_ferment_path(@ferment) %>
 
 
 </div>
-
-<%= link_to "todos los fermentos", ferments_path, class: "btn btn-outline-success" %>
