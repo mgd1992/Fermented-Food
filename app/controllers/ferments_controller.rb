@@ -28,13 +28,10 @@ class FermentsController < ApplicationController
   def update
     @ferment = Ferment.find(params[:id])
 
-    # Obtiene las nuevas fotos del formulario, excluyendo las vacías
     nuevas_fotos = params[:ferment][:photos] if params[:ferment][:photos].present?
 
-    # Adjunta las nuevas fotos al registro sin eliminar las fotos existentes
     nuevas_fotos.each { |foto| @ferment.photos.attach(foto) } if nuevas_fotos.present?
 
-    # Actualiza otros campos del fermento sin modificar las fotos
     if @ferment.update(ferment_params.except(:photos))
       redirect_to @ferment, notice: 'Your ferment was successfully updated.'
     else
@@ -45,9 +42,10 @@ class FermentsController < ApplicationController
 
   def destroy
 
-    if @ferment.destroy
+    #if @ferment.user == current_user
+      @ferment.destroy
       redirect_to ferments_path, notice: 'Your ferment was successfully destroyed.'
-    end
+    #end
   end
 
   private
