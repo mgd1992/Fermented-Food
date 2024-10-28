@@ -1,20 +1,25 @@
-<%= link_to "todos los fermentos", ferments_path, class: "btn btn-outline-success  m-4" %>
+<%= link_to "Todos los fermentos", ferments_path, class: "btn btn-outline-success m-4" %>
 
-<div class="mx-auto w-50 p-5 d-flex flex-column justify-content-evenly align-items-center">
+<div class="container mx-auto w-75 p-5 border rounded-3 shadow-sm">
 
-  <div class="d-flex flex-column justify-content-evenly align-items-center mb-5">
-    <h5 class="text-center"><%= @ferment.name %></h5>
-    <p class="text-center"><%= @ferment.description %></p>
-    <%= link_to "Editar", edit_ferment_path(@ferment) %>
+  
+  <div class="text-center mb-4">
+    <h2 class="text-success mb-3"><%= @ferment.name %></h2>
+    <p class="lead text-muted"><%= @ferment.description %></p>
+    <%= link_to "Editar", edit_ferment_path(@ferment), class: "btn btn-outline-primary mt-2" %>
   </div>
 
-  <div class="d-flex flex-column justify-content-center align-items-center">
+
+  <div class="row justify-content-center">
     <% if @ferment.photos.attached? %>
       <% @ferment.photos.each do |photo| %>
-        <%= image_tag photo, class: "w-50 mb-3" %>
+        <div class="col-md-4 col-6 mb-3">
+          <%= image_tag photo, class: "img-fluid rounded shadow" %>
+        </div>
       <% end %>
+    <% else %>
+      <p class="text-center text-muted">No hay fotos disponibles.</p>
     <% end %>
   </div>
-
 
 </div>
