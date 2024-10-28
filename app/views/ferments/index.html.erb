@@ -1,23 +1,29 @@
 <h1 class="text-center mb-5 mt-2">All ferments</h1>
 
-
-<% @ferments.each do |ferment| %>
-  <div class="ferments-list d-flex p-3 mx-auto my-5">
-    <div class="">
-      <h2><%= ferment.name %></h2>
-      <p><%= ferment.description %></p>
-
-      <p>Creado por: <%= ferment.user.full_name %> <%= link_to "ver Perfil", profile_path(ferment.user) %></p>
-      <% if ferment.photos.attached? %>
-      <%= image_tag ferment.photos.first, crop: :fill, class:" w-25" %>
-      <% end %>
-    </div>
-    <%= link_to "Ver", ferment_path(ferment) %>
-    <%= link_to "X", ferment_path(ferment), data: { turbo_method: :delete }, class: "btn btn-dark btn-sm my-1 text-light" %>
-  </div>
-<% end %>
-
-
 <div class="text-center">
-  <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 fixed-sm-bottom w-75"%>
+  <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-25 mb-3"%>
+</div>
+
+<div class="ferments">
+  <% @ferments.each do |ferment| %>
+
+      <div class="ferment-content">
+
+        <div class="ferment-title">
+          <h3><%= ferment.name %></h3>
+          <%= link_to "Ver", ferment_path(ferment) %>
+          <% if ferment.user == current_user %>
+            <%= link_to "X", ferment_path(ferment), data: { turbo_method: :delete }, class: "text-danger" %>
+          <% end %>
+        </div>
+
+        <div class="ferment-description">
+          <p><%= ferment.description %></p>
+        </div>
+
+        <p>Creado por: <%= link_to ferment.user.full_name, profile_path(ferment.user) %></p>
+
+      </div>
+
+  <% end %>
 </div>
