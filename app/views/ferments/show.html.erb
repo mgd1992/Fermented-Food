@@ -1,7 +1,21 @@
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title"><%= @ferment.name %></h5>
-    <p class="card-text"><%= @ferment.description %></p>
-    <%= link_to "todos los fermentos", ferments_path, class: "btn btn-outline-success" %>
+
+<div class="border mx-auto my-5 w-50 p-5 d-flex justify-content-evenly align-items-center">
+
+  <div class="ferment-info">
+    <h5 class="text-center"><%= @ferment.name %></h5>
+    <p class="text-center"><%= @ferment.description %></p>
   </div>
+
+  <div class="ferment-img">
+    <% if @ferment.photos.attached? %>
+      <% @ferment.photos.each do |photo| %>
+        <%= image_tag photo, class: "w-100" %>
+      <% end %>
+    <% end %>
+  </div>
+  <%= link_to "Editar", edit_ferment_path(@ferment) %>
+
+
 </div>
+
+<%= link_to "todos los fermentos", ferments_path, class: "btn btn-outline-success" %>
