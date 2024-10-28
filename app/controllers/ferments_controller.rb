@@ -3,6 +3,11 @@ class FermentsController < ApplicationController
 
   def index
     @ferments = Ferment.includes(:user).all
+
+    if params[:query].present?
+      @ferments = Ferment.where("name ILIKE ?", "%#{params[:query]}%")
+    end
+
   end
 
   def show
