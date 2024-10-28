@@ -1,6 +1,8 @@
-<%= simple_form_for @user, url: user_path(@user), method: :patch, html: { class: "w-50", multipart: true } do |f| %>
-  <div class="form-inputs flex">
-    <%= f.input :photo, as: :file, label: "Upload Profile Photo", input_html: { accept: 'image/*' } %>
+<%= simple_form_for @user, url: user_path(@user), method: :patch, html: { class: "w-50 mx-auto", multipart: true } do |f| %>
+  <div class="form-inputs my-4">
+    <%= f.input :photo, as: :file, label: "Upload Profile Photo", input_html: { accept: 'image/*', class: 'form-control-file' } %>
   </div>
-  <%= f.submit "Update Profile", class: "btn btn-primary" %>
+  <div class="text-center">
+    <%= f.submit "Update Profile", class: "btn btn-info w-100" %>
+  </div>
 <% end %>

@@ -36,3 +36,18 @@
   height: 75px;
   object-fit: cover;
 }
+
+.profile {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile i {
+  font-size: 24px;
+}
+
+hr {
+  border-top: 2px solid #28a745; 
+}
