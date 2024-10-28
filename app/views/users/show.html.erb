@@ -25,13 +25,6 @@
     <% end %>
 
     <p><%= ferment.description %></p>
-    <% if ferment.photos.attached? %>
-      <%= image_tag ferment.photos.first, crop: :fill %>
-    <% end %>
-
-
-      <%= link_to "X", ferment_path(ferment), data: { turbo_method: :delete }, class: "btn btn-dark btn-sm my-1 text-light" %>
-    
 
   </div>
 <% end %>
