@@ -4,4 +4,5 @@ class Ferment < ApplicationRecord
   validates :user, presence: true
   validates :name, presence: true, length: { minimum: 5 }
   validates :description, presence: true
+  has_many_attached :photos
 end

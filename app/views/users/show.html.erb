@@ -12,12 +12,28 @@
   <% end %>
   <p class="text-dark"><%= @user.email %></p>
 </div>
-  <h4>My Ferments</h4>
-  <% @user.ferments.each do |ferment| %>
-    <div>
-      <h5><%= link_to ferment.name, ferment_path(ferment) %></h5>
-      <p><%= ferment.description %></p>
-    </div>
-  <% end %>
 
-  <%= link_to "All Ferments", ferments_path %>
+<hr class="text-center my-3 w-50 mx-auto">
+
+<h4 class="text-center my-4">My Ferments</h4>
+
+<% @user.ferments.each do |ferment| %>
+
+  <div class="border w-25">
+    <%= link_to ferment_path(ferment) do %>
+      <h4><%= ferment.name %>
+    <% end %>
+
+    <p><%= ferment.description %></p>
+    <% if ferment.photos.attached? %>
+      <%= image_tag ferment.photos.first, crop: :fill %>
+    <% end %>
+
+
+      <%= link_to "X", ferment_path(ferment), data: { turbo_method: :delete }, class: "btn btn-dark btn-sm my-1 text-light" %>
+    
+
+  </div>
+<% end %>
+
+<%= link_to "All Ferments", ferments_path %>

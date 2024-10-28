@@ -6,7 +6,8 @@
     <div class="mx-5">
       <h2><%= ferment.name %></h2>
       <p><%= ferment.description %></p>
-      <p>Creado por: <%= ferment.user.first_name %> <%= link_to "ver Perfil", profile_path(ferment.user) %></p>
+
+      <p>Creado por: <%= ferment.user.full_name %> <%= link_to "ver Perfil", profile_path(ferment.user) %></p>
 
     </div>
     <%= link_to "Ver", ferment_path(ferment) %>
