@@ -1,29 +1,37 @@
-<h1 class="text-center mb-5 mt-2">All ferments</h1>
-
-<div class="text-center">
-  <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-25 mb-3"%>
+<div class="p-5 mb-5 d-flex justify-content-between align-items-center bg-dark">
+  <%= link_to '/', class: 'nav-link text-light' do %>
+    <h1 class="nav-title">Cool Beans</h1>
+  <% end %>
+  <% if user_signed_in? && @user == current_user %>
+    <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-light btn-sm" %>
+  <% end %>
 </div>
 
-<div class="ferments">
-  <% @ferments.each do |ferment| %>
+<h1 class="text-center mb-5 mt-2">Todos los fermentos</h1>
 
-      <div class="ferment-content">
+<div class="text-center mb-4">
+  <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-25" %>
+</div>
 
-        <div class="ferment-title">
-          <h3><%= ferment.name %></h3>
-          <%= link_to "Ver", ferment_path(ferment) %>
+<div class="container ">
+  <ul class="list-group">
+    <% @ferments.each do |ferment| %>
+      <li class="list-group-item d-flex justify-content-between align-items-center py-3 my-2">
+
+        <div class="d-flex flex-column">
+          <h4 class="mb-1 text-success"><%= ferment.name %></h4>
+          <p class="mb-1 text-muted"><%= ferment.description %></p>
+          <small class="text-muted">Creado por: <%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none" %></small>
+        </div>
+
+        <div>
+          <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm me-2 my-2" %>
           <% if ferment.user == current_user %>
-            <%= link_to "X", ferment_path(ferment), data: { turbo_method: :delete }, class: "text-danger" %>
+            <%= link_to "Eliminar", ferment_path(ferment), data: { turbo_method: :delete, confirm: '¿Estás seguro?' }, class: "btn btn-outline-danger btn-sm" %>
           <% end %>
         </div>
 
-        <div class="ferment-description">
-          <p><%= ferment.description %></p>
-        </div>
-
-        <p>Creado por: <%= link_to ferment.user.full_name, profile_path(ferment.user) %></p>
-
-      </div>
-
-  <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>

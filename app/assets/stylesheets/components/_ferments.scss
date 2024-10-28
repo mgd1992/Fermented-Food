@@ -1,24 +1,51 @@
-.ferments{
-  display: flex;
-  flex-direction: column;
+.list-group-item {
+  border: 1px solid #28a745;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.ferment-content{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 15px;
+.list-group-item:hover {
+  background-color: #f9f9f9;
 }
 
-.ferment-title{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-right: 20px;
+.list-group-item h4 {
+  font-weight: bold;
 }
 
-.ferment-description{
-  margin-right: 20px;
-  flex-grow: 1;
+.list-group-item .btn-outline-success,
+.list-group-item .btn-outline-danger {
+  transition: all 0.3s ease;
+}
+
+.list-group-item .btn-outline-success:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.list-group-item .btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+
+.container {
+  background-color: #8888883c;
+}
+
+h2.text-success {
+  font-size: 1.75rem;
+  font-weight: bold;
+}
+
+.lead {
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.img-fluid {
+  transition: transform 0.2s ease;
+}
+
+.img-fluid:hover {
+  transform: scale(1.05);
 }
