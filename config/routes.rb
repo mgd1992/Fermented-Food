@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :users, only: [:index, :show, :edit, :update, :create] do
-    resources :ferments, only: [:index]
+    resources :ferments, only: [:index, :show, :create, :edit, :update, :destroy]
   end
   resources :ferments
 

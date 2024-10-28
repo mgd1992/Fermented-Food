@@ -1,20 +1,23 @@
-<div class="d-flex m-5 justify-content-center">
+<div class="d-flex m-5 justify-content-center items-center">
 
   <%= form_with(model: @ferment, local: true) do |form| %>
 
-    <div class="mx-3 mb-4">
+    <div class="p-5 my-5 d-flex flex-column align-items-center border">
 
-    <%= form.label :Nombre %>
-    <%= form.text_field :name %>
+      <%= form.label :Nombre %>
+      <%= form.text_field :name, placeholder: "Nombre del fermento..", class: "py-2 px-5 mt-2" %>
 
-    <%= form.label :Descripcion %>
-    <%= form.text_area :description %>
+      <%= form.label :Descripcion, class: "mt-3" %>
+      <%= form.text_area :description,  placeholder: "Descripcion..", class: "py-2 px-5 mt-2" %>
 
+      <%= form.label :photos, "Sube una foto", class: "mt-3" %>
+      <%= form.file_field :photos, required: true, multiple: true,  class: "py-2 px-5 mt-2" %>
     </div>
 
-    <!-- Campo oculto para `user_id` -->
-    <%= form.hidden_field :user_id, value: current_user.id %> <!-- Asegúrate de que current_user está disponible y definido -->
-    <%= form.submit :Crear_fermento, class: "btn btn-outline-success w-100" %>
+
+    <%= form.hidden_field :user_id, value: current_user.id %>
+
+    <%= form.submit :Crear, class: "btn btn-outline-success w-100" %>
 
   <% end %>
 
