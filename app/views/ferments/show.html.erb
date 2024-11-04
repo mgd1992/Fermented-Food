@@ -2,7 +2,7 @@
 
 <div class="container mx-auto w-75 p-5 border rounded-3 shadow-sm">
 
-  
+
   <div class="text-center mb-4">
     <h2 class="text-success mb-3"><%= @ferment.name %></h2>
     <p class="lead text-muted"><%= @ferment.description %></p>
@@ -21,5 +21,32 @@
       <p class="text-center text-muted">No hay fotos disponibles.</p>
     <% end %>
   </div>
+
+  <% if @comments.any? %>
+    <h2>Comentarios</h2>
+    <% @comments.each do |comment| %>
+      <div class="comment">
+        <h3><%= comment.title %></h3>
+        <p><%= comment.content %></p>
+        <p><small>Por <%= comment.user.full_name %> en <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
+      </div>
+    <% end %>
+  <% end %>
+
+  <h3>Deja un comentario</h3>
+
+  <%= form_with(model: [@ferment.user, @ferment, @comment], local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :content %>
+      <%= form.text_area :content, class: 'form-control' %>
+    </div>
+
+    <%= form.submit "Comentar", class: 'btn btn-primary' %>
+  <% end %>
 
 </div>

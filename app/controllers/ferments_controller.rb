@@ -1,4 +1,5 @@
 class FermentsController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create]
   before_action :set_ferment, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -11,6 +12,8 @@ class FermentsController < ApplicationController
   end
 
   def show
+    @comments = @ferment.comments.includes(:user)
+    @comment = Comment.new
   end
 
   def new
