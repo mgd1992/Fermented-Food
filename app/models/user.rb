@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_one_attached :photo
   has_many :ferments, dependent: :destroy
   has_many :ferment_recipes
+  has_many :comments, dependent: :destroy
 
   validates :first_name, presence: true
 
