@@ -1,6 +1,6 @@
 
 
-<div class="sign-up ">
+<div class="sign-up p-3">
   <h2 class="text-center">Sign up</h2>
   <p class="text-center mb-5">Enter your details below & sign up</p>
 
@@ -27,12 +27,12 @@
     </div>
 
     <div class="form-actions">
-      <%= f.button :submit, "Sign up", class: "btn btn-outline-success" %>
+      <%= f.button :submit, "Sign up", class: "btn btn-outline-success mb-3" %>
     </div>
   <% end %>
 
-  <div class="login ">
-    <p class="me-1">Already have an account?</p>
-    <%= render "devise/shared/links"%>
+  <div>
+    <p class="mb-4">Already have an account?</p>
+    <%= render "devise/shared/links" %>
   </div>
 </div>

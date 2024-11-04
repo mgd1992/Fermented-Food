@@ -26,9 +26,13 @@
         </div>
 
 
-        <%= form.hidden_field :user_id, value: current_user.id %>
+        <% if current_user %>
+          <%= form.hidden_field :user_id, value: current_user.id %>
+        <% else %>
+          <p>You have to log-in/sign-up before creating a new ferment</p>
+        <% end %>
 
-        
+
         <div class="d-grid gap-2">
           <%= form.submit "Crear", class: "btn btn-outline-success" %>
           <%= link_to "Volver", ferments_path, class: "btn btn-outline-success" %>
