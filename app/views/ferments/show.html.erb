@@ -22,31 +22,44 @@
     <% end %>
   </div>
 
-  <% if @comments.any? %>
-    <h2>Comentarios</h2>
-    <% @comments.each do |comment| %>
-      <div class="comment">
-        <h3><%= comment.title %></h3>
-        <p><%= comment.content %></p>
-        <p><small>Por <%= comment.user.full_name %> en <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small></p>
-      </div>
+  <hr>
+
+  <%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "mb-5") do |form| %>
+    <h3 class="text-center m-4">Deja un comentario</h3>
+
+    <div class="form-group">
+      <%= form.label :title, class: 'font-weight-bold' %>
+      <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3' %>
+    </div>
+
+    <div class="form-group">
+      <%= form.label :content, class: 'font-weight-bold' %>
+      <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3', rows: 4 %>
+    </div>
+
+    <div class="text-center">
+      <%= form.submit "Comentar", class: 'btn btn-primary btn-lg' %>
+    </div>
+  <% end %>
+
+  <div class="comments-section mt-5">
+    <% if @comments.any? %>
+      <h4 class="text-center mb-4">Comentarios</h4>
+      <% @comments.each do |comment| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= comment.title %></h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              <small>Por <%= comment.user.full_name %> el <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+            </h6>
+            <p class="card-text"><%= comment.content %></p>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-center">No hay comentarios todavía.</p>
     <% end %>
-  <% end %>
+  </div>
 
-  <h3>Deja un comentario</h3>
-
-  <%= form_with(model: [@ferment.user, @ferment, @comment], local: true) do |form| %>
-    <div class="form-group">
-      <%= form.label :title %>
-      <%= form.text_field :title, class: 'form-control' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :content %>
-      <%= form.text_area :content, class: 'form-control' %>
-    </div>
-
-    <%= form.submit "Comentar", class: 'btn btn-primary' %>
-  <% end %>
 
 </div>
