@@ -28,7 +28,7 @@ Si deseas ejecutar este proyecto en un entorno local, sigue los pasos:
 Clona este repositorio:
 
 ```bash
-git clone https://github.com/usuario/FermentApp.git
+gh repo clone https://github.com/mgd1992/Fermented-Food.git
 ```
 Instala las dependencias de Rails:
 
