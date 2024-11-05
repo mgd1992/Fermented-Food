@@ -2,8 +2,8 @@
   <%= link_to '/', class: 'nav-link text-light' do %>
     <h1 class="nav-title">Cool Beans</h1>
   <% end %>
-  <% if user_signed_in? && @user == current_user %>
-    <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-light btn-sm" %>
+  <% if user_signed_in? %>
+    <%= link_to "Profile", profile_path(current_user), class: 'btn btn-outline-info' %>
   <% end %>
 </div>
 
