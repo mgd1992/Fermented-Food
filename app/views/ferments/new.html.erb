@@ -13,6 +13,11 @@
           <%= form.text_field :name, placeholder: "Nombre del fermento..", class: "form-control border-success" %>
         </div>
 
+        <div class="form-group mb-3">
+          <%= form.label :ingredients, "Descripción", class: "form-label text-success" %>
+          <%= form.text_area :ingredients, placeholder: "Ingredientes", rows: 3, class: "form-control border-success" %>
+        </div>
+
 
         <div class="form-group mb-3">
           <%= form.label :description, "Descripción", class: "form-label text-success" %>

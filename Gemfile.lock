@@ -109,6 +109,7 @@ GEM
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.3.1)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
@@ -136,6 +137,10 @@ GEM
       sassc (~> 2.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    httparty (0.22.0)
+      csv
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     image_processing (1.13.0)
@@ -163,10 +168,14 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
+    meilisearch (0.29.0)
+      httparty (~> 0.17)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
     minitest (5.25.1)
     msgpack (1.7.2)
+    multi_xml (0.7.1)
+      bigdecimal (~> 3.1)
     mutex_m (0.2.0)
     net-imap (0.4.16)
       date
@@ -312,6 +321,7 @@ DEPENDENCIES
   image_processing (>= 1.2)
   importmap-rails
   jbuilder
+  meilisearch
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.4)

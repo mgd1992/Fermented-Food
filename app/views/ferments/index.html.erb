@@ -7,31 +7,54 @@
   <% end %>
 </div>
 
-<h1 class="text-center mb-5 mt-2">Todos los fermentos</h1>
+<div class="container">
+
+  <div class="search-container mx-auto">
+    <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
+      <div class="input-group">
+        <%= text_field_tag :query, params[:query], placeholder: "Search ferments...", class: 'form-control' %>
+        <div class="input-group-append">
+          <%= submit_tag 'Search', class: 'btn btn-outline-info mx-2' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<h1 class="text-center mb-3 mt-2">Todos los fermentos</h1>
 
 <div class="text-center mb-4">
   <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-25" %>
 </div>
 
-<div class="container ">
+<div class="container">
   <ul class="list-group">
     <% @ferments.each do |ferment| %>
-      <li class="list-group-item d-flex justify-content-between align-items-center py-3 my-2">
+      <% if ferment.present? %>
+        <li class="list-group-item d-flex justify-content-between align-items-center py-3 my-2">
 
-        <div class="d-flex flex-column">
-          <h4 class="mb-1 text-success"><%= ferment.name %></h4>
-          <p class="mb-1 text-muted"><%= ferment.description %></p>
-          <small class="text-muted">Creado por: <%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none" %></small>
-        </div>
+          <div class="d-flex flex-column">
+            <h4 class="mb-2 text-success"><%= ferment["name"] %></h4>
+            <p class="mb-1 text-muted pe-5"><%= ferment["ingredients"] %></p>
+            <p class="mb-1 text-muted pe-5"><%= ferment["description"] %></p>
 
-        <div>
-          <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm me-2 my-2" %>
-          <% if ferment.user == current_user %>
-            <%= link_to "Eliminar", ferment_path(ferment), data: { turbo_method: :delete, confirm: '¿Estás seguro?' }, class: "btn btn-outline-danger btn-sm" %>
-          <% end %>
-        </div>
+            <% if ferment["user_id"].present? && ferment["user_name"].present? %>
+              <small class="text-muted mt-2">Creado por:
+                <%= link_to ferment["user_name"], profile_path(ferment["user_id"]), class: "text-decoration-none text-dark" %>
+              </small>
+            <% else %>
+              <small class="text-muted mt-2">Usuario no disponible</small>
+            <% end %>
+          </div>
 
-      </li>
+          <div>
+            <%= link_to "Ver", ferment_path(ferment["id"]), class: "btn btn-outline-success btn-sm me-2 my-2" %>
+            <% if ferment["user_id"] == current_user.id %>
+              <%= link_to "Eliminar", ferment_path(ferment["id"]), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn btn-outline-danger btn-sm" %>
+            <% end %>
+          </div>
+
+        </li>
+      <% end %>
     <% end %>
   </ul>
 </div>

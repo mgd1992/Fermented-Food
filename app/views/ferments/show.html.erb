@@ -5,8 +5,9 @@
 
   <div class="text-center mb-4">
     <h2 class="text-success mb-3"><%= @ferment.name %></h2>
+    <p class="mb-1 text-muted"><%= @ferment.ingredients %></p>
     <p class="lead text-muted"><%= @ferment.description %></p>
-    <%= link_to "Editar", edit_ferment_path(@ferment), class: "btn btn-outline-primary mt-2" %>
+    <%= link_to "Editar", edit_ferment_path(@ferment), class: "btn btn-outline-success mt-2" %>
   </div>
 
 
@@ -29,16 +30,16 @@
 
     <div class="form-group">
       <%= form.label :title, class: 'font-weight-bold' %>
-      <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3' %>
+      <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3 rounded-3' %>
     </div>
 
     <div class="form-group">
       <%= form.label :content, class: 'font-weight-bold' %>
-      <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3', rows: 4 %>
+      <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3 rounded-3', rows: 10 %>
     </div>
 
     <div class="text-center">
-      <%= form.submit "Comentar", class: 'btn btn-primary btn-lg' %>
+      <%= form.submit "Comentar", class: 'btn btn-outline-success btn-sm' %>
     </div>
   <% end %>
 
@@ -46,8 +47,8 @@
     <% if @comments.any? %>
       <h4 class="text-center mb-4">Comentarios</h4>
       <% @comments.each do |comment| %>
-        <div class="card mb-3">
-          <div class="card-body">
+        <div class="card mb-3 rounded-3">
+          <div class="card-body ">
             <h5 class="card-title"><%= comment.title %></h5>
             <h6 class="card-subtitle mb-2 text-muted">
               <small>Por <%= comment.user.full_name %> el <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small>

@@ -6,5 +6,9 @@ class Ferment < ApplicationRecord
 
   validates :user, presence: true
   validates :name, presence: true, length: { minimum: 5 }
-  validates :description, presence: true
+  validates :description, presence: true, length: { minimum: 20 }
+
+  def ingredients_as_text
+    ingredients.join(", ") if ingredients.present?
+  end
 end

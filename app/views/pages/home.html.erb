@@ -9,13 +9,14 @@
         <div class="search-container">
           <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
             <div class="input-group">
-              <%= text_field_tag :query, params[:query], placeholder: "Search for fermentos...", class: 'form-control' %>
+              <%= text_field_tag :query, params[:query], placeholder: "Search ferments...", class: 'form-control' %>
               <div class="input-group-append">
                 <%= submit_tag 'Search', class: 'btn btn-outline-info mx-2' %>
               </div>
             </div>
           <% end %>
         </div>
+        <%= link_to 'All ferments', ferments_path, class: 'about-us text-light' %>
         <%= link_to 'About Us', '#', class: 'about-us text-light' %>
         <%= link_to 'Contact Us', '#', class: 'contact-us text-light' %>
         <% if user_signed_in? %>
