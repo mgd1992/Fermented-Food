@@ -1,0 +1,350 @@
+[{
+  "id": 61,
+  "name": "Yogur",
+  "ingredients": [
+    "Leche",
+    "Cultivos de yogur (Lactobacillus bulgaricus y Streptococcus thermophilus)"
+  ],
+  "instructions": "Calienta la leche a 85°C y enfríala a 43°C. Añade los cultivos de yogur y mezcla bien. Cubre y deja fermentar en un lugar cálido durante 6-12 horas.",
+  "fermentation_time": "6-12 horas"
+},
+{
+  "id": 62,
+  "name": "Kéfir",
+  "ingredients": [
+    "Leche",
+    "Granos de kéfir"
+  ],
+  "instructions": "Añade los granos de kéfir a la leche en un frasco. Cubre con un paño y deja fermentar a temperatura ambiente durante 24 horas. Cuela los granos y guarda el kéfir en el refrigerador.",
+  "fermentation_time": "24 horas"
+},
+{
+  "id": 63,
+  "name": "Chucrut",
+  "ingredients": [
+    "Repollo",
+    "Sal"
+  ],
+  "instructions": "Corta el repollo en tiras finas y mezcla con sal. Amasa hasta que suelte su jugo. Coloca en un frasco, presionando para que quede sumergido en su propio jugo. Cubre y deja fermentar a temperatura ambiente durante 1-4 semanas.",
+  "fermentation_time": "1-4 semanas"
+},
+{
+  "id": 64,
+  "name": "Kimchi",
+  "ingredients": [
+    "Repollo napa",
+    "Rábano",
+    "Ajo",
+    "Jengibre",
+    "Salsa de pescado",
+    "Sal",
+    "Chile en polvo"
+  ],
+  "instructions": "Corta el repollo y mezcla con sal. Deja reposar durante 2 horas. Mezcla el ajo, jengibre, salsa de pescado y chile en polvo. Combina todo y coloca en un frasco. Deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 65,
+  "name": "Miso",
+  "ingredients": [
+    "Soja",
+    "Sal",
+    "Koji (hongo Aspergillus oryzae)"
+  ],
+  "instructions": "Remoja la soja durante la noche y cocínala hasta que esté blanda. Tritura y mezcla con sal y koji. Coloca en un frasco, presionando para eliminar burbujas de aire. Deja fermentar en un lugar fresco durante 6 meses a 2 años.",
+  "fermentation_time": "6 meses a 2 años"
+},
+{
+  "id": 66,
+  "name": "Tempeh",
+  "ingredients": [
+    "Soja",
+    "Cultivo de Rhizopus oligosporus"
+  ],
+  "instructions": "Remoja la soja durante la noche, cocínala y enfríala. Mezcla con el cultivo y coloca en un recipiente perforado. Deja fermentar a 30°C durante 24-48 horas.",
+  "fermentation_time": "24-48 horas"
+},
+{
+  "id": 67,
+  "name": "Kombucha",
+  "ingredients": [
+    "Té negro o verde",
+    "Azúcar",
+    "SCOBY (cultivo simbiótico de bacterias y levaduras)"
+  ],
+  "instructions": "Prepara el té y disuelve el azúcar. Deja enfriar y añade el SCOBY. Cubre con un paño y deja fermentar a temperatura ambiente durante 7-14 días.",
+  "fermentation_time": "7-14 días"
+},
+{
+  "id": 68,
+  "name": "Natto",
+  "ingredients": [
+    "Soja",
+    "Cultivo de Bacillus subtilis"
+  ],
+  "instructions": "Remoja la soja durante la noche, cocínala y enfríala. Mezcla con el cultivo y coloca en un recipiente. Deja fermentar a 40°C durante 24 horas.",
+  "fermentation_time": "24 horas"
+},
+{
+  "id": 69,
+  "name": "Kvass",
+  "ingredients": [
+    "Pan de centeno",
+    "Agua",
+    "Azúcar",
+    "Levadura"
+  ],
+  "instructions": "Desmenuza el pan de centeno y colócalo en un frasco con agua y azúcar. Añade un poco de levadura y deja fermentar a temperatura ambiente durante 2-3 días.",
+  "fermentation_time": "2-3 días"
+},
+{
+  "id": 610,
+  "name": "Salsa de soja",
+  "ingredients": [
+    "Soja",
+    "Trigo",
+    "Sal",
+    "Koji"
+  ],
+  "instructions": "Mezcla la soja cocida con trigo y koji. Deja fermentar en un lugar cálido durante varios meses, luego filtra y añade sal.",
+  "fermentation_time": "6 meses a 2 años"
+},
+{
+  "id": 611,
+  "name": "Tepache",
+  "ingredients": [
+    "Cáscaras de piña",
+    "Azúcar",
+    "Canela",
+    "Agua"
+  ],
+  "instructions": "Mezcla las cáscaras de piña con azúcar, canela y agua en un frasco. Cubre y deja fermentar a temperatura ambiente durante 3-5 días.",
+  "fermentation_time": "3-5 días"
+},
+{
+  "id": 612,
+  "name": "Lassi",
+  "ingredients": [
+    "Yogur",
+    "Agua",
+    "Especias (opcional)"
+  ],
+  "instructions": "Mezcla el yogur con agua y especias al gusto. Bate hasta obtener una mezcla homogénea. Puede ser dulce o salado.",
+  "fermentation_time": "No requiere fermentación adicional"
+},
+{
+  "id": 613,
+  "name": "Bebida de jengibre (Ginger Beer)",
+  "ingredients": [
+    "Jengibre fresco",
+    "Azúcar",
+    "Agua",
+    "Levadura"
+  ],
+  "instructions": "Mezcla jengibre rallado, azúcar y agua. Añade levadura y deja fermentar en un frasco cerrado durante 3-7 días.",
+  "fermentation_time": "3-7 días"
+},
+{
+  "id": 614,
+  "name": "Fermento de ajo",
+  "ingredients": [
+    "Ajo",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Coloca dientes de ajo pelados en un frasco, añade sal y agua. Cubre y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 615,
+  "name": "Bebida de cúrcuma",
+  "ingredients": [
+    "Cúrcuma fresca",
+    "Agua",
+    "Azúcar",
+    "Levadura"
+  ],
+  "instructions": "Mezcla cúrcuma rallada, agua y azúcar. Añade levadura y deja fermentar en un frasco cerrado durante 3-5 días.",
+  "fermentation_time": "3-5 días"
+},
+{
+  "id": 616,
+  "name": "Zanahorias fermentadas",
+  "ingredients": [
+    "Zanahorias",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta las zanahorias en tiras y colócalas en un frasco. Mezcla agua y sal, vierte sobre las zanahorias y deja fermentar durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 617,
+  "name": "Pepinillos fermentados",
+  "ingredients": [
+    "Pepinos",
+    "Sal",
+    "Agua",
+    "Especias (opcional)"
+  ],
+  "instructions": "Coloca los pepinos en un frasco, añade sal y agua. Agrega especias si lo deseas. Cubre y deja fermentar a temperatura ambiente durante 1-4 semanas.",
+  "fermentation_time": "1-4 semanas"
+},
+{
+  "id": 618,
+  "name": "Vinagre de manzana",
+  "ingredients": [
+    "Manzanas",
+    "Azúcar",
+    "Agua"
+  ],
+  "instructions": "Corta las manzanas y colócalas en un frasco. Mezcla azúcar y agua, vierte sobre las manzanas y deja fermentar durante 3-4 semanas.",
+  "fermentation_time": "3-4 semanas"
+},
+{
+  "id": 619,
+  "name": "Queso",
+  "ingredients": [
+    "Leche",
+    "Cuajo",
+    "Sal"
+  ],
+  "instructions": "Calienta la leche a 32°C, añade el cuajo y mezcla bien. Deja reposar durante 30-60 minutos. Corta la cuajada, calienta a 40°C y cuela. Añade sal y coloca en un molde para que escurra el suero.",
+  "fermentation_time": "30-60 minutos"
+},
+{
+  "id": 620,
+  "name": "Fermento de cebolla",
+  "ingredients": [
+    "Cebolla",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta la cebolla en rodajas y colócala en un frasco. Mezcla agua y sal, vierte sobre las cebollas y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 621,
+  "name": "Fermento de rábano",
+  "ingredients": [
+    "Rábano",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta los rábanos en rodajas y colócalos en un frasco. Mezcla agua y sal, vierte sobre los rábanos y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 622,
+  "name": "Fermento de coliflor",
+  "ingredients": [
+    "Coliflor",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta la coliflor en floretes y colócala en un frasco. Mezcla agua y sal, vierte sobre la coliflor y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 623,
+  "name": "Fermento de jengibre",
+  "ingredients": [
+    "Jengibre fresco",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Ralla el jengibre y colócalo en un frasco. Mezcla agua y sal, vierte sobre el jengibre y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 6624,
+  "name": "Fermento de pimiento",
+  "ingredients": [
+    "Pimientos",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta los pimientos en tiras y colócalos en un frasco. Mezcla agua y sal, vierte sobre los pimientos y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 6625,
+  "name": "Fermento de berenjena",
+  "ingredients": [
+    "Berenjena",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta las berenjenas en rodajas y colócalas en un frasco. Mezcla agua y sal, vierte sobre las berenjenas y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 626,
+  "name": "Fermento de pepino",
+  "ingredients": [
+    "Pepinos",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta los pepinos en rodajas y colócalos en un frasco. Mezcla agua y sal, vierte sobre los pepinos y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 627,
+  "name": "Fermento de zanahoria",
+  "ingredients": [
+    "Zanahorias",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta las zanahorias en rodajas y colócalas en un frasco. Mezcla agua y sal, vierte sobre las zanahorias y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 628,
+  "name": "Fermento de remolacha",
+  "ingredients": [
+    "Remolacha",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta las remolachas en rodajas y colócalas en un frasco. Mezcla agua y sal, vierte sobre las remolachas y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 629,
+  "name": "Fermento de col",
+  "ingredients": [
+    "Col",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta la col en tiras y colócala en un frasco. Mezcla agua y sal, vierte sobre la col y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 630,
+  "name": "Fermento de brócoli",
+  "ingredients": [
+    "Brócoli",
+    "Sal",
+    "Agua"
+  ],
+  "instructions": "Corta el brócoli en floretes y colócalo en un frasco. Mezcla agua y sal, vierte sobre el brócoli y deja fermentar a temperatura ambiente durante 1-2 semanas.",
+  "fermentation_time": "1-2 semanas"
+},
+{
+  "id": 6568,
+  "name": "erberberb",
+  "ingredients": "sberberberberberbebger",
+  "instructions": "test2",
+  "fermentation_time": null
+},
+{
+  "id": 6569,
+  "name": "Hidromiel",
+  "ingredients": "Se utilizan levaduras Saccharomyces si se quiere una fermentación más rápida (entre un mes y medio y dos meses). Si no se agrega ninguna levadura a la preparación, la fermentación tardará mucho más tiempo. Se debe calentar varias veces para que las impurezas se alojen en la parte superior del preparado y se puedan retirar los restos de cera y otras partículas impurezas de la miel, tras lo que se añade más agua con el objetivo de ajustar la graduación alcohólica y el contenido de otras sustancias como el polen para aclarar la mezcla.",
+  "instructions": "test",
+  "fermentation_time": null
+}
+]

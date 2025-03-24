@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.1.2"
+ruby "3.3.5"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.4"
@@ -31,9 +31,11 @@ gem "faker"
 
 gem "image_processing", ">= 1.2"
 
-# meilisearch
-gem "meilisearch"
+gem 'pg_search'
 
+gem 'meilisearch-rails'
+
+gem 'ostruct'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
@@ -83,3 +85,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "kaminari", "~> 1.2"

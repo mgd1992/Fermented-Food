@@ -1,11 +1,20 @@
+require 'json'
 
-require 'faker'
 
-Ferment.destroy_all
-User.destroy_all
+# json a postgresql
 
-10.times do |i|
-  user = User.new(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, email: "users_#{i + 1}@gmail.com", password: "1234567")
-  user.save
-end
-puts "created Users"
+# file_path = Rails.root.join('db', 'fermented_food.json')
+# ferments = JSON.parse(File.read(file_path))
+
+# ferments.each do |ferment|
+#   Ferment.create!(
+#     id: ferment["id"],
+#     name: ferment["name"],
+#     ingredients: ferment["ingredients"],
+#     instructions: ferment["instructions"],
+#     fermentation_time: ferment["fermentation_time"],
+#     user_id: 344
+#   )
+# end
+
+# puts "Imported #{ferments.size} ferments!"

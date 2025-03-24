@@ -11,8 +11,12 @@
   </head>
 
   <body>
-    <p class="notice my-0"><%= notice %></p>
-    <p class="alert my-0"><%= alert %></p>
+    <% if flash[:notice] %>
+      <p class="notice my-0"><%= flash[:notice] %></p>
+    <% end %>
+    <% if flash[:alert] %>
+      <p class="alert my-0"><%= flash[:alert] %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>

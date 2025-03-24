@@ -19,8 +19,13 @@
 
 
         <div class="mb-3">
-          <%= form.label :description, "Descripción", class: "form-label text-success" %>
-          <%= form.text_area :description, class: "form-control border-success", placeholder: "Descripción del fermento.." %>
+          <%= form.label :instructions, "Instrucciones", class: "form-label text-success" %>
+          <%= form.text_area :instructions, class: "form-control border-success", placeholder: "instrucciones del fermento.." %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :fermentation_time, "Tiempo de fermentacion", class: "form-label text-success" %>
+          <%= form.text_field :fermentation_time, class: "form-control border-success", placeholder: "Tiempo de fermentacion.." %>
         </div>
 
         <div class="mb-4">
