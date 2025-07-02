@@ -1,7 +1,8 @@
 .pagination{
   width: 85%;
-  position: fixed;
+  position: sticky;
   bottom: 0;
+  margin: 30px auto;
   display: flex;
   justify-content: center;
   align-items: center;

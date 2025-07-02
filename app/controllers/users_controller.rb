@@ -17,20 +17,26 @@ class UsersController < ApplicationController
   end
 
   def update
+    if params[:user][:password].blank?
+      params[:user].delete(:password)
+    end
+
     if @user.update(user_params)
-      redirect_to user_path(@user), notice: 'Profile updated successfully'
+      redirect_to user_path(@user), notice: 'Perfil actualizado'
     else
       render :edit
     end
+
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :photo, :avatar)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :photo)
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    redirect_to root_path, alert: "Usuario no encontrado" unless @user
   end
 end

@@ -1,5 +1,4 @@
 class Ferment < ApplicationRecord
-  include MeiliSearch::Rails
 
   belongs_to :user
   has_many :ferment_recipes, dependent: :destroy
@@ -9,12 +8,11 @@ class Ferment < ApplicationRecord
   validates :user, presence: true
   validates :name, presence: true
   validates :instructions, presence: true
+  validates :ingredients, presence: true
 
-  meilisearch do
-    attribute :name, :ingredients, :instructions, :fermentation_time
 
-    searchable_attributes [:name, :ingredients, :instructions, :fermentation_time]
-    filterable_attributes [:name, :ingredients, :instructions, :fermentation_time]
-    sortable_attributes [:created_at]
+  def formatted_start_date
+    start_date.strftime("%d/%m/%Y") if start_date.present?
   end
+
 end

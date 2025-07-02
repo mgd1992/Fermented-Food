@@ -1,23 +1,25 @@
 <div class="landing">
   <div class="landing-inner">
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+  <%= link_to root_path, class: 'nav-link text-light' do %>
+    <h1 class="nav-title">Cool Beans</h1>
+  <% end %>
 
-    <nav class="nav">
-      <%= link_to '/', class: 'nav-link text-light' do %>
-        <h1 class="nav-title">Cool Beans</h1>
-      <% end %>
-      <div class="nav-links">
-        
-        <%= link_to 'All ferments', ferments_path, class: 'about-us text-light' %>
-        <%= link_to 'About Us', '#', class: 'about-us text-light' %>
-        <%= link_to 'Contact Us', '#', class: 'contact-us text-light' %>
-        <% if user_signed_in? %>
-          <%= link_to "Profile", profile_path(current_user), class: 'btn btn-outline-info' %>
-        <% else %>
-          <%= link_to "Sign in", new_user_registration_path, class: 'btn btn-success' %>
-        <% end %>
-      </div>
+  <div class="nav-links">
+    <%= link_to 'All ferments', ferments_path, class: 'about-us text-light' %>
+    <%= link_to 'About Us', '#', class: 'about-us text-light' %>
+    <%= link_to 'Contact Us', '#', class: 'contact-us text-light' %>
 
-    </nav>
+    <% if user_signed_in? %>
+      <%= link_to "Profile", user_path(current_user), class: 'btn btn-outline-info' %>
+      <%= link_to "Log out", destroy_user_session_path, method: :delete, data: { confirm: "Cerrar sesión?" }, class: "btn btn-sm btn-outline-danger" %>
+    <% else %>
+      <%= link_to "Sign in", new_user_session_path, class: 'btn btn-success' %>
+      <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-primary ms-2' %>
+    <% end %>
+  </div>
+</nav>
+
 
   </div>
 </div>

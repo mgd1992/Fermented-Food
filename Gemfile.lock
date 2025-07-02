@@ -180,10 +180,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    meilisearch (0.28.4)
       httparty (~> 0.17)
-    meilisearch-rails (0.14.2)
-      meilisearch (~> 0.28.4)
       mutex_m (~> 0.2)
     mini_magick (4.13.2)
     mini_mime (1.1.5)
@@ -250,6 +247,8 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
+    rails-ujs (0.1.0)
+      railties (>= 3.1)
     railties (7.1.4)
       actionpack (= 7.1.4)
       activesupport (= 7.1.4)
@@ -341,12 +340,12 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kaminari (~> 1.2)
-  meilisearch-rails
   ostruct
   pg (~> 1.1)
   pg_search
   puma (>= 5.0)
   rails (~> 7.1.4)
+  rails-ujs
   sassc-rails
   selenium-webdriver
   simple_form!

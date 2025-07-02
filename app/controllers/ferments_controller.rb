@@ -1,12 +1,17 @@
 class FermentsController < ApplicationController
-  require 'meilisearch'
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create, :update, :edit]
   before_action :set_ferment, only: [:show, :edit, :update, :destroy]
 
 
   def index
-    @ferments = Ferment.search(params[:query]).page(params[:page]).per(5)
-
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @ferments = Ferment.where("name ILIKE :q OR ingredients ILIKE :q OR instructions ILIKE :q", q: query)
+                        .order(created_at: :desc)
+                        .page(params[:page])
+    else
+      @ferments = Ferment.order(created_at: :desc).page(params[:page])
+    end
   end
 
   def show
@@ -35,13 +40,14 @@ class FermentsController < ApplicationController
     if @ferment.update(ferment_params)
       redirect_to ferments_path, notice: "Fermento actualizado con éxito."
     else
+      puts @ferment.errors.full_messages
       render :edit, alert: "No se pudo actualizar el fermento."
     end
   end
 
   def destroy
-    if @ferment.user == current_user
-      @ferment.destroy
+    if @ferment.user_id == current_user.id
+      @ferment.destroy!
       redirect_to ferments_path, notice: "Fermento eliminado con éxito."
     else
       redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento."
@@ -55,6 +61,6 @@ class FermentsController < ApplicationController
   end
 
   def ferment_params
-    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, photos: [])
+    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, photos: [])
   end
 end
