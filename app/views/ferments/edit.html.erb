@@ -17,6 +17,10 @@
           <%= form.text_field :name, class: "form-control border-success", placeholder: "Nombre del fermento.." %>
         </div>
 
+        <div class="mb-3">
+          <%= form.label :ingredients, "Ingredientes", class: "form-label text-success" %>
+          <%= form.text_area :ingredients, class: "form-control border-success", placeholder: "instrucciones del fermento.." %>
+        </div>
 
         <div class="mb-3">
           <%= form.label :instructions, "Instrucciones", class: "form-label text-success" %>
@@ -26,6 +30,11 @@
         <div class="mb-3">
           <%= form.label :fermentation_time, "Tiempo de fermentacion", class: "form-label text-success" %>
           <%= form.text_field :fermentation_time, class: "form-control border-success", placeholder: "Tiempo de fermentacion.." %>
+        </div>
+
+        <div class="form-group mb-3">
+          <%= form.label :start_date, "Fecha de inicio", class: "form-label text-success" %>
+          <%= form.text_field :start_date, class: "form-control border-success", data: { controller: "datepicker" } %>
         </div>
 
         <div class="mb-4">

@@ -2,6 +2,23 @@
   <div class="form-inputs my-4">
     <%= f.input :photo, as: :file, label: "Upload Profile Photo", input_html: { accept: 'image/*', class: 'form-control-file' } %>
   </div>
+
+  <div class="form-inputs my-4">
+    <%= f.input :first_name, label: "First Name", input_html: { class: 'form-control' } %>
+  </div>
+
+  <div class="form-inputs my-4">
+    <%= f.input :last_name, label: "Last Name", input_html: { class: 'form-control' } %>
+  </div>
+
+  <div class="form-inputs my-4">
+    <%= f.input :email, label: "Email", input_html: { class: 'form-control' } %>
+  </div>
+
+  <div class="form-inputs my-4">
+    <%= f.input :password, label: "Password", input_html: { class: 'form-control' } %>
+  </div>
+
   <div class="text-center">
     <%= f.submit "Update Profile", class: "btn btn-outline-info w-100" %>
     <%= link_to "Volver", ferments_path, class: "btn btn-outline-info mt-3 w-100" %>

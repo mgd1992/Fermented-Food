@@ -4,14 +4,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one_attached :photo
-  has_one_attached :avatar
 
   has_many :ferments, dependent: :destroy
   has_many :ferment_recipes
   has_many :comments, dependent: :destroy
 
 
-  validates :first_name, presence: true
+  validates :first_name, presence: true, uniqueness: true
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
+  validates :password, length: { minimum: 6 }, allow_nil: true, on: :update
 
 
   def full_name

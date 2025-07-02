@@ -1,69 +1,74 @@
-<div class="p-5 mb-5 d-flex justify-content-between align-items-center bg-dark">
-  <%= link_to '/', class: 'nav-link text-light' do %>
-    <h1 class="nav-title">Cool Beans</h1>
-  <% end %>
-  <% if user_signed_in? %>
-    <%= link_to "Profile", profile_path(current_user), class: 'btn btn-outline-info' %>
-  <% end %>
+<nav class="navbar navbar-dark bg-dark p-4 mb-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <%= link_to '/', class: 'nav-link text-light' do %>
+      <h1 class="nav-title mb-0">Cool Beans</h1>
+    <% end %>
 
-</div>
-
-
-
-<h1 class="text-center mb-3 mt-2">Todos los fermentos</h1>
-
-<div class="text-center mb-4">
-  <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-25" %>
-</div>
-
-<div class="nav-links">
-
-  <div class="search-container">
-    <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
-      <div class="input-group">
-        <%= text_field_tag :query, params[:query], placeholder: "Search ferments...", class: 'form-control' %>
-        <div class="input-group-append">
-          <%= submit_tag 'Search', class: 'btn btn-outline-info mx-2' %>
-        </div>
-      </div>
+    <% if user_signed_in? %>
+      <%= link_to "Profile", profile_path(current_user), class: 'btn btn-outline-info' %>
     <% end %>
   </div>
-</div>
+</nav>
 
-<div class="container">
-  <ul class="list-group">
-    <% @ferments.each do |ferment| %>
-      <% if ferment.present? %>
+
+<div class="d-flex flex-column align-items-center sticky-top justify-content-center">
+
+  <div class="d-flex flex-column align-items-center my-3">
+    <h1 class="text-center my-2">Todos los fermentos</h1>
+
+    <div class="text-center mb-4">
+      <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-100" %>
+    </div>
+
+    <div class="search-container w-100" style="position: sticky; top: 0; z-index: 1000; padding: 10px">
+      <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
+        <div class="input-group">
+          <%= text_field_tag :query, params[:query], placeholder: "Search ferments...", class: 'form-control', autocomplete: "on" %>
+          <%= submit_tag 'Search', class: 'btn btn-outline-info mx-2' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
+
+  <div class="container">
+    <ul class="list-group">
+      <% @ferments.each do |ferment| %>
         <li class="list-group-item d-flex justify-content-between align-items-center py-3 my-2">
-          
-          <div class="d-flex flex-column">
+          <div class="d-flex flex-column flex-grow-1">
             <h4 class="mb-2 text-success"><%= ferment.name %></h4>
-            <p class="mb-1 text-muted pe-5">Ingredientes: <%= ferment.ingredients %></p>
-            <p class="mb-1 text-muted pe-5">Instrucciones: <%= ferment.instructions %></p>
-            <p class="mb-1 text-dark pe-5 mt-3">Tiempo de fermentacion: <%= ferment.fermentation_time %></p>
+            <p class="mb-1 text-muted">Ingredientes: <%= ferment.ingredients %></p>
+            <p class="mb-1 text-muted">Instrucciones: <%= ferment.instructions %></p>
+            <p class="mb-2 text-dark">Tiempo de fermentación: <%= ferment.fermentation_time %></p>
+            <p class="small text-muted"><strong>Fecha de inicio:</strong> <%= ferment.formatted_start_date %></p>
 
             <% if ferment.user.present? %>
-              <small class="text-muted mt-4">Creado por:
-                <%= link_to ferment.user.full_name, profile_path(ferment.user_id), class: "text-decoration-none text-dark" %>
+              <small class="text-muted mt-2">
+                Creado por:
+                <%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none text-dark" %>
               </small>
             <% else %>
-              <small class="text-muted mt-4">Usuario no disponible</small>
+              <small class="text-muted mt-2">Usuario no disponible</small>
             <% end %>
           </div>
 
-          <div>
-            <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm me-2 my-2" %>
+          <div class="d-flex flex-column align-items-end">
+            <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm mb-2" %>
 
             <% if ferment.user == current_user %>
-              <%= link_to "Eliminar", ferment_path(ferment), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm" %>
+              <%= link_to "Eliminar", ferment_path(ferment), method: :delete, class: "btn btn-outline-danger btn-sm" %>
             <% end %>
 
           </div>
         </li>
       <% end %>
-    <% end %>
-  </ul>
+    </ul>
 
-  <%= paginate @ferments %>
+  </div>
+
+  <div class="pagination">
+    <%= paginate @ferments %>
+  </div>
 
 </div>

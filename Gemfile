@@ -33,9 +33,11 @@ gem "image_processing", ">= 1.2"
 
 gem 'pg_search'
 
-gem 'meilisearch-rails'
-
 gem 'ostruct'
+
+gem 'rails-ujs'
+
+#novu notifications
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"

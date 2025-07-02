@@ -7,6 +7,7 @@
     <h2 class="text-success mb-3"><%= @ferment.name %></h2>
     <p class="mb-1 text-muted"><%= @ferment.ingredients %></p>
     <p class="lead text-muted"><%= @ferment.instructions %></p>
+    <p class="lead text-muted"><strong>Fecha de inicio:</strong> <%= @ferment.formatted_start_date %></p>
     <%= link_to "Editar", edit_ferment_path(@ferment), class: "btn btn-outline-success mt-2" %>
   </div>
 
