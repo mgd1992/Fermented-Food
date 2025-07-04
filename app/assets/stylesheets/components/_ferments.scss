@@ -1,1 +1,37 @@
+.ferment-container {
+  max-width: 960px;
+  background-color: #1e1e1e;
+  border: 1px solid #17a2b8;
+}
 
+.ferment-details {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  background-color: #2a2a2a;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.ferment-gallery {
+  .ferment-photo {
+    transition: transform 0.3s ease;
+    max-height: 250px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .ferment-photo:hover {
+    transform: scale(1.03);
+  }
+}
+
+@media (max-width: 576px) {
+  .ferment-container {
+    padding: 1.5rem;
+  }
+
+  .ferment-details {
+    font-size: 1rem;
+    padding: 15px;
+  }
+}

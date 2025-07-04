@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   root to: "pages#home"
   devise_for :users
 
-  resources :users, only: [:index, :show, :edit, :update, :create] do
-    resources :ferments, only: [:index, :show, :create, :edit, :update, :destroy] do
+  resources :users do
+    resources :ferments do
       resources :comments, only: [:create]
     end
   end

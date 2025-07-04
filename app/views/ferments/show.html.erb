@@ -1,67 +1,69 @@
-<%= link_to "Todos los fermentos", ferments_path, class: "btn btn-outline-success m-4" %>
-
-<div class="container mx-auto w-75 p-5 border rounded-3 shadow-sm">
-
-
+<div class="container mx-auto my-5 w-75 p-5 border rounded-3 shadow-sm">
+  <div class="ferment-container container mx-auto p-5 rounded-3 shadow bg-dark">
   <div class="text-center mb-4">
-    <h2 class="text-success mb-3"><%= @ferment.name %></h2>
-    <p class="mb-1 text-muted"><%= @ferment.ingredients %></p>
-    <p class="lead text-muted"><%= @ferment.instructions %></p>
-    <p class="lead text-muted"><strong>Fecha de inicio:</strong> <%= @ferment.formatted_start_date %></p>
-    <%= link_to "Editar", edit_ferment_path(@ferment), class: "btn btn-outline-success mt-2" %>
+    <h1 class="text-light mb-3"><%= @ferment.name %></h1>
+    <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-sm btn-outline-info" %>
+    <%= link_to "← Volver", profile_path(@ferment.user), class: "btn btn-sm btn-outline-info" %>
+    <% if user_signed_in? && @user == current_user %>
+      <%= link_to "✏️ Editar", edit_ferment_path(@ferment), class: "btn btn-sm btn-outline-info" %>
+    <% end %>
   </div>
 
+  <section class="ferment-details text-light mb-4">
+    <p><strong>🧂 Ingredientes:</strong> <%= @ferment.ingredients %></p>
+    <p><strong>📋 Instrucciones:</strong> <%= @ferment.instructions %></p>
+    <p><strong>🗓️ Fecha de inicio:</strong> <%= @ferment.formatted_start_date %></p>
+  </section>
 
-  <div class="row justify-content-center">
-    <% if @ferment.photos.attached? %>
+  <% if @ferment.photos.attached? %>
+    <section class="ferment-gallery row justify-content-center g-3 mb-4">
       <% @ferment.photos.each do |photo| %>
-        <div class="col-md-4 col-6 mb-3">
-          <%= image_tag photo, class: "img-fluid rounded shadow" %>
+        <div class="col-6 col-md-4 col-lg-3">
+          <%= image_tag photo, class: "img-fluid rounded shadow-sm ferment-photo" %>
         </div>
       <% end %>
-    <% else %>
-      <p class="text-center text-muted">No hay fotos disponibles.</p>
-    <% end %>
-  </div>
-
-  <hr>
-
-  <%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "mb-5") do |form| %>
-    <h3 class="text-center m-4">Deja un comentario</h3>
-
-    <div class="form-group">
-      <%= form.label :title, class: 'font-weight-bold' %>
-      <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3 rounded-3' %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :content, class: 'font-weight-bold' %>
-      <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3 rounded-3', rows: 10 %>
-    </div>
-
-    <div class="text-center">
-      <%= form.submit "Comentar", class: 'btn btn-outline-success btn-sm' %>
-    </div>
+    </section>
+  <% else %>
+    <p class="text-center text-muted">No hay fotos disponibles.</p>
   <% end %>
+</div>
 
-  <div class="comments-section mt-5">
-    <% if @comments.any? %>
-      <h4 class="text-center mb-4">Comentarios</h4>
-      <% @comments.each do |comment| %>
-        <div class="card mb-3 rounded-3">
-          <div class="card-body ">
-            <h5 class="card-title"><%= comment.title %></h5>
-            <h6 class="card-subtitle mb-2 text-muted">
-              <small>Por <%= comment.user.full_name %> el <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small>
-            </h6>
-            <p class="card-text"><%= comment.content %></p>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="text-center">No hay comentarios todavía.</p>
-    <% end %>
+<hr>
+
+<%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "mb-5") do |form| %>
+  <h3 class="text-center m-4">Deja un comentario</h3>
+
+  <div class="form-group">
+    <%= form.label :Titulo, class: 'font-weight-bold mb-1' %>
+    <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3 rounded-3', aria: { label: "Título del comentario" } %>
   </div>
 
+  <div class="form-group">
+    <%= form.label :Comentario, class: 'font-weight-bold mb-1' %>
+    <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3 rounded-3', rows: 10, aria: { label: "Contenido del comentario" } %>
+  </div>
 
-</div>
+  <div class="text-center">
+    <%= form.submit "Comentar", class: 'btn btn-outline-success btn-sm w-50' %>
+  </div>
+<% end %>
+
+<section class="comments-section mt-5">
+  <% if @comments.any? %>
+    <h4 class="text-center">Comentarios</h4>
+    <hr class="my-5">
+    <% @comments.each do |comment| %>
+      <article class="card mb-3 rounded-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= comment.title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted">
+            <small>Por <%= comment.user.full_name %> el <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small>
+          </h6>
+          <p class="card-text"><%= comment.content %></p>
+        </div>
+      </article>
+    <% end %>
+  <% else %>
+    <p class="text-center">No hay comentarios todavía.</p>
+  <% end %>
+</section>
