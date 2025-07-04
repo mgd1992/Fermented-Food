@@ -1,15 +1,9 @@
 .show-page {
   width: 100%;
-  max-height: 500px;
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 40px;
   padding: 20px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    padding: 10px;
-  }
 }
 
 .profile {
@@ -36,7 +30,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px;
   margin: 0;
 }
 
@@ -82,3 +75,12 @@ li {
   font-size: 1.1rem;
   color: #e2e2e2;
 }
+
+  @media (max-width: 768px) {
+    .show-page{
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 10px;
+    }
+
+  }

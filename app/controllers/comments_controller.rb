@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :authorize_comment!, only: [:edit, :update, :destroy]
   before_action :set_ferment
 
   def create
@@ -12,7 +14,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  private
+private
 
   def set_ferment
     @ferment = Ferment.find(params[:ferment_id])
