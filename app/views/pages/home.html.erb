@@ -7,8 +7,6 @@
 
   <div class="nav-links">
     <%= link_to 'All ferments', ferments_path, class: 'about-us text-light' %>
-    <%= link_to 'About Us', '#', class: 'about-us text-light' %>
-    <%= link_to 'Contact Us', '#', class: 'contact-us text-light' %>
 
     <% if user_signed_in? %>
       <%= link_to "Profile", user_path(current_user), class: 'btn btn-outline-info' %>

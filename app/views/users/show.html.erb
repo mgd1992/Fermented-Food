@@ -7,46 +7,50 @@
   <% end %>
 </div>
 
-<div class="profile mx-auto my-5 text-center border-success text-success bg-dark">
-  <% if @user.photo.attached? %>
-    <%= image_tag @user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 200px; height: 200px; object-fit: cover;" %>
-  <% else %>
-    <p class="text-muted">No photo available. Upload one!</p>
-  <% end %>
-  <%= link_to edit_user_path(@user) do %>
-    <i class="fa-solid fa-camera-retro"></i> <p>Editar Perfil</p>
-  <% end %>
-  <h3 class="text-success my-4"><%= @user.full_name %></h3>
-  <p class="text-success"><%= @user.email %></p>
-</div>
-
-
-<% if @user.ferments.any? %>
-  <hr class="text-center my-3 w-50 mx-auto">
-  <h4 class="text-center my-4">Mis Fermentos</h4>
-
-  <div class="ferments-user">
-    <% @user.ferments.each do |ferment| %>
-
-      <ul class="ferment-list">
-        <li class="ferment-item list-unstyled p-3">
-          <%= link_to ferment_path(ferment), class: "ferment-link" do %>
-            <div class="ferment-content">
-              <p class="ferment-name text-light mb-2"><%= ferment.name %></p>
-              <% if ferment.photos.attached? %>
-                <%= image_tag ferment.photos.first.variant(resize_to_limit: [300, 300]), crop: :fill, class: "ferment-image" %>
-              <% end %>
-            </div>
-          <% end %>
-
-        </li>
-      </ul>
-
-    <% end %>
-  </div>
-
-<% end %>
-
 <div class="text-center">
   <%= link_to "All Ferments", ferments_path, class:"btn btn-outline-success w-25 my-2" %>
+</div>
+
+<div class="d-flex">
+  <div class="profile mx-auto my-5 text-center border-success text-success bg-dark">
+    <% if @user.photo.attached? %>
+      <%= image_tag @user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 200px; height: 200px; object-fit: cover;" %>
+    <% else %>
+      <p class="text-muted">No photo available. Upload one!</p>
+    <% end %>
+    <% if user_signed_in? && @user == current_user %>
+      <%= link_to edit_user_path(@user) do %>
+        <p>Editar Perfil</p>
+      <% end %>
+    <% end %>
+    <h3 class="text-success my-4"><%= @user.full_name %></h3>
+    <p class="text-success"><%= @user.email %></p>
+  </div>
+
+
+  <% if @user.ferments.any? %>
+    <hr class="text-center my-3 w-50 mx-auto">
+    <h4 class="text-center my-4">Mis Fermentos</h4>
+
+    <div class="ferments-user">
+      <% @user.ferments.each do |ferment| %>
+
+        <ul class="ferment-list">
+          <li class="ferment-item list-unstyled p-3">
+            <%= link_to ferment_path(ferment), class: "ferment-link" do %>
+              <div class="ferment-content">
+                <p class="ferment-name text-light mb-2"><%= ferment.name %></p>
+                <% if ferment.photos.attached? %>
+                  <%= image_tag ferment.photos.first.variant(resize_to_limit: [300, 300]), crop: :fill, class: "ferment-image" %>
+                <% end %>
+              </div>
+            <% end %>
+
+          </li>
+        </ul>
+
+      <% end %>
+    </div>
+
+  <% end %>
 </div>

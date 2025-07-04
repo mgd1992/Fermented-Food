@@ -1,0 +1,8 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="95" fill="#fff" stroke="#000" stroke-width="3"/>
+  <path d="M100 50C100 50 145 82 145 135C145 135 110 145 100 135C90 125 70 144 70 135C70 126 100 50 100 50Z" fill="none" stroke="#000" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="125" cy="92" r="8" fill="#000"/>
+  <circle cx="110" cy="120" r="6" fill="#000"/>
+  <path d="M70 120C70 120 85 100 100 115C115 130 130 110 130 110" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="100" y="175" font-family="'Helvetica Neue', sans-serif" font-weight="bold" font-size="16" text-anchor="middle" fill="#000">COOL BEANS</text>
+</svg>
