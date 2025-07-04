@@ -7,11 +7,12 @@
   <% end %>
 </div>
 
-<hr class="text-center w-50 mx-auto mt-4">
-<h4 class="text-center text-light mb-2">Mis Fermentos</h4>
+<h4 class="text-center text-light mt-5 mb-2">Mis Fermentos</h4>
+<hr class="text-center w-50 mx-auto">
 
 
-<div class="show-page mt-5">
+<div class="show-page mt-2">
+
   <!-- Perfil usuario -->
   <div class="profile text-center text-light bg-dark">
     <% if @user.photo.attached? %>
@@ -41,14 +42,20 @@
 
       <ul class="ferment-list">
         <% @user.ferments.each do |ferment| %>
-          <li class="ferment-item">
-            <%= link_to ferment_path(ferment), class: "ferment-link" do %>
-              <div class="ferment-content">
+          <li class="ferment-item d-flex align-items-center justify-content-between">
+            <%= link_to ferment_path(ferment), class: "ferment-link d-flex align-items-center" do %>
+              <div class="ferment-content d-flex align-items-center">
                 <% if ferment.photos.attached? %>
-                  <%= image_tag ferment.photos.first.variant(resize_to_limit: [75, 75]), class: "ferment-image" %>
+                  <%= image_tag ferment.photos.first.variant(resize_to_limit: [75, 75]), class: "ferment-image me-3" %>
                 <% end %>
-                <p class="ferment-name"><%= ferment.name %></p>
+                <p class="ferment-name mb-0"><%= ferment.name %></p>
               </div>
+            <% end %>
+
+            <% if user_signed_in? && ferment.user == current_user %>
+              <%= button_to ferment_path(ferment), method: :delete, data: { confirm: "¿Estás seguro de eliminar este fermento?" }, class: "btn btn-sm btn-outline-danger ms-3" do %>
+                ×
+              <% end %>
             <% end %>
           </li>
         <% end %>
