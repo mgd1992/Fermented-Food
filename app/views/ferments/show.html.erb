@@ -2,17 +2,16 @@
   <div class="ferment-container container mx-auto p-5 rounded-3 shadow bg-dark">
   <div class="text-center mb-4">
     <h1 class="text-light mb-3"><%= @ferment.name %></h1>
-    <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-sm btn-outline-info" %>
     <%= link_to "← Volver", profile_path(@ferment.user), class: "btn btn-sm btn-outline-info" %>
-    <% if user_signed_in? && @user == current_user %>
-      <%= link_to "✏️ Editar", edit_ferment_path(@ferment), class: "btn btn-sm btn-outline-info" %>
-    <% end %>
+    <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-sm btn-outline-info" %>
   </div>
-
   <section class="ferment-details text-light mb-4">
     <p><strong>🧂 Ingredientes:</strong> <%= @ferment.ingredients %></p>
     <p><strong>📋 Instrucciones:</strong> <%= @ferment.instructions %></p>
     <p><strong>🗓️ Fecha de inicio:</strong> <%= @ferment.formatted_start_date %></p>
+    <% if user_signed_in? && @ferment.user == current_user %>
+      <%= link_to "✏️ Editar", edit_ferment_path(@ferment), class: "btn btn-sm btn-outline-info" %>
+    <% end %>
   </section>
 
   <% if @ferment.photos.attached? %>
@@ -29,23 +28,24 @@
 </div>
 
 <hr>
+<% if user_signed_in? %>
+  <%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "mb-5") do |form| %>
+    <h3 class="text-center m-4">Deja un comentario</h3>
 
-<%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "mb-5") do |form| %>
-  <h3 class="text-center m-4">Deja un comentario</h3>
+    <div class="form-group">
+      <%= form.label :Titulo, class: 'font-weight-bold mb-1' %>
+      <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3 rounded-3', aria: { label: "Título del comentario" } %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :Titulo, class: 'font-weight-bold mb-1' %>
-    <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3 rounded-3', aria: { label: "Título del comentario" } %>
-  </div>
+    <div class="form-group">
+      <%= form.label :Comentario, class: 'font-weight-bold mb-1' %>
+      <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3 rounded-3', rows: 10, aria: { label: "Contenido del comentario" } %>
+    </div>
 
-  <div class="form-group">
-    <%= form.label :Comentario, class: 'font-weight-bold mb-1' %>
-    <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3 rounded-3', rows: 10, aria: { label: "Contenido del comentario" } %>
-  </div>
-
-  <div class="text-center">
-    <%= form.submit "Comentar", class: 'btn btn-outline-success btn-sm w-50' %>
-  </div>
+    <div class="text-center">
+      <%= form.submit "Comentar", class: 'btn btn-outline-success btn-sm w-50' %>
+    </div>
+  <% end %>
 <% end %>
 
 <section class="comments-section mt-5">
