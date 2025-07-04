@@ -36,8 +36,8 @@
     <ul class="list-group">
       <% @ferments.each do |ferment| %>
         <li class="list-group-item d-flex justify-content-between align-items-center py-3 my-2">
-          <div class="d-flex flex-column flex-grow-1">
-            <h4 class="mb-2 text-success"><%= ferment.name %></h4>
+          <div class="d-flex flex-column flex-grow-1 p-2">
+            <h4 class="mb-2 text-dark fw-bold text-uppercase fs-3"><%= ferment.name %></h4>
             <p class="mb-1 text-muted">Ingredientes: <%= ferment.ingredients %></p>
             <p class="mb-1 text-muted">Instrucciones: <%= ferment.instructions %></p>
             <p class="mb-2 text-dark">Tiempo de fermentación: <%= ferment.fermentation_time %></p>
