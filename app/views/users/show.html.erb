@@ -3,7 +3,7 @@
     <h1 class="nav-title fs-3 m-0">Cool Beans</h1>
   <% end %>
   <% if @user == current_user %>
-    <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-light btn-sm" %>
+    <%= link_to "Cerrar sesión", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-light btn-sm" %>
   <% end %>
 </div>
 
@@ -16,7 +16,7 @@
   <!-- Perfil usuario -->
   <div class="profile text-center text-light bg-dark">
     <% if @user.photo.attached? %>
-      <%= image_tag @user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 160px; height: 160px; object-fit: cover;" %>
+      <%= image_tag @user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 200px; height: 200px; object-fit: cover;" %>
     <% else %>
       <p class="text-light">No hay fotos disponibles!</p>
     <% end %>
@@ -24,15 +24,20 @@
     <h3 class="text-light mt-2 mb-1"><%= @user.full_name %></h3>
     <p class="text-light"><%= @user.email %></p>
     <p class="text-warning">Cantidad de fermentos: <strong><%= @user.ferments.count %></strong> </p>
-    <div class="text-center mt-4">
-      <%= link_to "All Ferments", ferments_path, class:"btn btn-outline-info px-4 py-2 rounded-3" %>
-      <%= link_to 'New ferment', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3" %>
+    <div class="text-center">
+      <%= link_to "Todos", ferments_path, class:"btn btn-outline-info px-4 py-2 rounded-3" %>
+
+      <div class="d-flex flex-column justify-content-center">
+        <% if user_signed_in? && @user == current_user %>
+          <%= link_to 'Crear Fermento', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3 my-2" %>
+          <%= link_to edit_user_path(@user), class: "btn btn-outline-light btn-sm my-2 py-2" do %>
+            Editar Perfil
+          <% end %>
+
+        <% end %>
+      </div>
+
     </div>
-    <% if user_signed_in? && @user == current_user %>
-      <%= link_to edit_user_path(@user), class: "btn btn-outline-success btn-sm my-2" do %>
-        Editar Perfil
-      <% end %>
-    <% end %>
 
   </div>
 
