@@ -1,24 +1,66 @@
-.ferment-list {
+.show-page {
+  width: 100%;
+  max-height: 500px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+}
+
+.profile {
+  height: 450px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ferments-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ferment-list {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  margin: 0;
 }
 
 .ferment-item {
-  background-color: #343a40;
+  background-color: #2e2e2e;
   border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-  width: 90%;
-  margin: 0 auto;
+  border: 1px solid #aeacac;
+  transition: transform 0.2s ease;
+  width: 100%;
+  padding: 16px;
+
+  &:hover {
+    transform: scale(1.01);
+    background-color: #383838;
+  }
 }
 
-.ferment-item:hover {
-  transform: scale(1.02);
+li {
+  list-style: none;
 }
 
 .ferment-link {
   text-decoration: none;
+  color: inherit;
 }
 
 .ferment-content {
@@ -27,29 +69,16 @@
   gap: 15px;
 }
 
-.ferment-name {
-  font-weight: bold;
-  font-size: 1.2em;
-  margin: 0;
-}
-
 .ferment-image {
   width: 75px;
   height: 75px;
   object-fit: cover;
-}
-
-.profile {
-  background-color: #f8f9fa;
   border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.profile i {
-  font-size: 24px;
-}
-
-hr {
-  border-top: 2px solid #28a745;
+.ferment-name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #e2e2e2;
 }
