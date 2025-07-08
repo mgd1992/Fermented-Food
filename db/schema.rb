@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_25_100727) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_07_131033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,6 +75,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_25_100727) do
     t.text "instructions"
     t.string "fermentation_time"
     t.datetime "start_date"
+    t.integer "revisar_fermentos"
+    t.date "review_date"
     t.index ["user_id"], name: "index_ferments_on_user_id"
   end
 

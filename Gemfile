@@ -37,6 +37,10 @@ gem 'ostruct'
 
 gem 'rails-ujs'
 
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+
+
 #novu notifications
 
 # Use Redis adapter to run Action Cable in production
@@ -78,7 +82,8 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-
+  gem 'letter_opener'
+  gem 'letter_opener_web'
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
 

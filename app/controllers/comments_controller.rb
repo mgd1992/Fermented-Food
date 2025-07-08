@@ -1,6 +1,4 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:edit, :update, :destroy]
-  before_action :authorize_comment!, only: [:edit, :update, :destroy]
   before_action :set_ferment
 
   def create
@@ -13,6 +11,14 @@ class CommentsController < ApplicationController
       redirect_to @ferment, alert: 'Hubo un problema al crear el comentario.'
     end
   end
+
+  def destroy
+    if @user == current_user
+      @comment.destroy!
+      redirect_to @ferment.comments
+    end
+  end
+
 
 private
 

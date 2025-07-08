@@ -37,6 +37,11 @@
           <%= form.text_field :start_date, class: "form-control border-success", data: { controller: "datepicker" } %>
         </div>
 
+        <div class="form-group mb-3">
+          <%= form.label :revisar_fermentos, "¿Cuántos días para revisarlo?", class: "form-label" %>
+          <%= form.number_field :revisar_fermentos, min: 1, placeholder: "Ej: 5", class: "form-control" %>
+        </div>
+
         <div class="mb-4">
           <%= form.label :photos, "Subir más fotos", class: "form-label text-success" %>
           <%= form.file_field :photos, multiple: true, class: "form-control border-success" %>
