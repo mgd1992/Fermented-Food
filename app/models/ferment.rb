@@ -1,7 +1,6 @@
 class Ferment < ApplicationRecord
   before_create :set_review_date
   belongs_to :user
-  has_many :ferment_recipes, dependent: :destroy
   has_many_attached :photos, dependent: :destroy
   has_many :comments, dependent: :destroy
 
