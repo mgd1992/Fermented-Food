@@ -26,10 +26,13 @@ class FermentsController < ApplicationController
   def create
     @ferment = Ferment.new(ferment_params)
     @ferment.user = current_user
+
+    review_date = @ferment.start_date + @ferment.revisar_fermentos.days
     if @ferment.save
-      redirect_to ferments_path, notice: "Fermento creado con éxito."
+      ReviewReminderJob.set(wait_until: review_date).perform_later(@ferment.id)
+      redirect_to @ferment
     else
-      render :new, alert: "No se pudo crear el fermento."
+      render :new
     end
   end
 
@@ -48,7 +51,7 @@ class FermentsController < ApplicationController
   def destroy
     if @ferment.user_id == current_user.id
       @ferment.destroy!
-      redirect_to ferments_path, notice: "Fermento eliminado con éxito."
+      redirect_to @ferment.user, notice: "Fermento eliminado con éxito."
     else
       redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento."
     end
@@ -57,10 +60,10 @@ class FermentsController < ApplicationController
   private
 
   def set_ferment
-    @ferment = Ferment.find(params[:id])
+    @ferment = Ferment.includes(:user, photos_attachments: :blob, comments: []).find(params[:id])
   end
 
   def ferment_params
-    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, photos: [])
+    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, :revisar_fermentos, photos: [])
   end
 end

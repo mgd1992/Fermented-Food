@@ -6,12 +6,16 @@
     <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-sm btn-outline-info" %>
   </div>
   <section class="ferment-details text-light mb-4">
+
     <p><strong>🧂 Ingredientes:</strong> <%= @ferment.ingredients %></p>
     <p><strong>📋 Instrucciones:</strong> <%= @ferment.instructions %></p>
     <p><strong>🗓️ Fecha de inicio:</strong> <%= @ferment.formatted_start_date %></p>
+    <p><strong>⏰ Revisar en:</strong> <%= @ferment.revisar_fermentos %> </p>
+
     <% if user_signed_in? && @ferment.user == current_user %>
       <%= link_to "✏️ Editar", edit_ferment_path(@ferment), class: "btn btn-sm btn-outline-info" %>
     <% end %>
+
   </section>
 
   <% if @ferment.photos.attached? %>
@@ -60,6 +64,11 @@
             <small>Por <%= comment.user.full_name %> el <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small>
           </h6>
           <p class="card-text"><%= comment.content %></p>
+          <% if user_signed_in? %>
+            <%= button_to comment_path(comment), method: :delete, data: { confirm: "¿Estás seguro de eliminar este comentario?" }, class: "btn btn-sm btn-outline-danger ms-3" do %>
+              ×
+            <% end %>
+          <% end %>
         </div>
       </article>
     <% end %>

@@ -1,0 +1,17 @@
+<div class="container py-4" style="max-width: 600px; font-family: Arial, sans-serif; background: #f8f9fa; border-radius: 8px; padding: 20px;">
+
+  <h1 class="mb-4" style="color: #343a40;">Hola <%= @user.first_name %>!</h1>
+
+  <p style="font-size: 1.1rem; color: #495057;">
+    Tu fermento <strong><%= @ferment.name %></strong> comenzó el <%= @ferment.start_date.strftime("%d/%m/%Y") %>.
+  </p>
+
+  <p style="font-size: 1.1rem; color: #495057;">
+    Ya es hora de revisarlo. ¿Querés ver los detalles?
+  </p>
+
+  <div class="mt-4 text-center">
+    <%= link_to 'Ver fermento', ferment_url(@ferment), class: "btn btn-primary btn-lg", style: "text-decoration: none;" %>
+  </div>
+
+</div>
