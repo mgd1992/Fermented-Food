@@ -77,8 +77,19 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+# production:
+  # <<: *default
+  # url: <%= ENV['DATABASE_URL'] %>
+  # database: fermented_food_production
+  # username: fermented_food
+  # password: <%= ENV["FERMENTED_FOOD_DATABASE_PASSWORD"] %>
 production:
-  <<: *default
-  database: fermented_food_production
-  username: fermented_food
-  password: <%= ENV["FERMENTED_FOOD_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  host: db.zelfpyrkxsabybuknfkr.supabase.co
+  port: 5432
+  database: postgres
+  username: postgres
+  password: <%= ENV['SUPABASE_DB_PASSWORD'] %>
+  sslmode: require
