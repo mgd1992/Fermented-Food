@@ -4,9 +4,9 @@
 
 🚀 **Características actuales**
 - Perfil de usuario: Los usuarios pueden registrarse y personalizar sus perfiles.
-  
-- Registro de fermentos: Cada usuario puede añadir sus propios fermentos con detalles relevantes como nombre, fecha de inicio, ingredientes, entre otros.
-  
+
+- Registro de fermentos: Cada usuario puede añadir sus propios fermentos con detalles relevantes como nombre, fecha de inicio, ingredientes, entre otros. Galería de imágenes para cada fermento: los usuarios pueden documentar visualmente el progreso de sus fermentos.
+
 - Comentarios: Los usuarios pueden comentar en los fermentos registrados, facilitando el intercambio de ideas, actualizaciones y sugerencias.
 
 🛠️ **Tecnologías utilizadas**
@@ -15,7 +15,7 @@
 
 - Backend/Frontend: Ruby (Ruby on Rails)
 - Diseño: SCSS, Boostrap
-- Base de datos: PostgreSQL 
+- Base de datos: PostgreSQL
 
 
 💻 Instalación y configuración
@@ -42,12 +42,6 @@ rails db:create
 rails db:migrate
 ```
 
-Instala las dependencias de JavaScript:
-
-```bash
-yarn install
-```
-
 Inicia el servidor de Rails:
 
 ```bash
@@ -58,7 +52,7 @@ Abre tu navegador y dirígete a http://localhost:3000 para ver la aplicación en
 📈 Próximas mejoras
 En próximas versiones, planeamos agregar:
 
-** Galería de imágenes para cada fermento: Para que los usuarios puedan documentar visualmente el progreso de sus fermentos.
+**
 ** Registro de etapas: Posibilidad de añadir etapas y actualizaciones para cada fermento.
 ** Sistema de likes y favoritos: Una manera de destacar fermentos populares y permitir a los usuarios guardar sus favoritos.
 ** Notificaciones en tiempo real: Alertas para nuevos comentarios y actualizaciones en fermentos seguidos.
