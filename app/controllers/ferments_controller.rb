@@ -6,9 +6,7 @@ class FermentsController < ApplicationController
   def index
     if params[:query].present?
       query = "%#{params[:query]}%"
-      @ferments = Ferment.where("name ILIKE :q OR ingredients ILIKE :q OR instructions ILIKE :q", q: query)
-                        .order(created_at: :desc)
-                        .page(params[:page])
+      @ferments = Ferment.where("name ILIKE :q OR ingredients ILIKE :q OR instructions ILIKE :q", q: query).order(created_at: :desc).page(params[:page])
     else
       @ferments = Ferment.order(created_at: :desc).page(params[:page])
     end
@@ -40,8 +38,11 @@ class FermentsController < ApplicationController
   end
 
   def update
-    if @ferment.update(ferment_params)
-      redirect_to ferments_path, notice: "Fermento actualizado con éxito."
+    if params[:ferment][:photos]
+      @ferment.photos.attach(params[:ferment][:photos])
+    end
+    if @ferment.update(ferment_params_except_photos)
+      redirect_to @ferment, notice: "Fermento actualizado con éxito."
     else
       puts @ferment.errors.full_messages
       render :edit, alert: "No se pudo actualizar el fermento."
@@ -65,5 +66,9 @@ class FermentsController < ApplicationController
 
   def ferment_params
     params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, :revisar_fermentos, photos: [])
+  end
+
+  def ferment_params_except_photos
+    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, :revisar_fermentos)
   end
 end

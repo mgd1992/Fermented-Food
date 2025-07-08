@@ -2,10 +2,17 @@
   <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6 border border-success rounded-3 p-4">
 
-      <div class="text-start mb-4">
-        <%= link_to "Go back", ferments_path, class: "btn btn-outline-success" %>
-      </div>
 
+      <% if @ferment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@ferment.errors.count, "error") %> no permitieron guardar el fermento:</h2>
+          <ul>
+            <% @ferment.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
       <h1 class="text-center text-success mb-4">Actualizar Fermento</h1>
 
@@ -50,6 +57,9 @@
 
         <div class="d-grid">
           <%= form.submit "Actualizar Fermento", class: "btn btn-outline-success" %>
+        </div>
+        <div class="text-start mt-2">
+          <%= link_to "Go back", @ferment.user , class: "btn btn-outline-secondary w-100" %>
         </div>
 
       <% end %>
