@@ -84,12 +84,6 @@ test:
   # username: fermented_food
   # password: <%= ENV["FERMENTED_FOOD_DATABASE_PASSWORD"] %>
 production:
-  adapter: postgresql
-  encoding: unicode
+  url: <%= ENV['DATABASE_URL'] %>
   pool: 5
-  host: db.zelfpyrkxsabybuknfkr.supabase.co
-  port: 5432
-  database: postgres
-  username: postgres
-  password: <%= ENV['SUPABASE_DB_PASSWORD'] %>
-  sslmode: require
+  timeout: 5000
