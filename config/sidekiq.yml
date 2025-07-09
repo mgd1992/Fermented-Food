@@ -1,6 +1,6 @@
 :development:
   :schedule:
     review_reminder_job:
-      cron: "36 14 7 7 *"
+      cron: "0 8 * * *"
       class: "ReviewReminderJob"
       timezone: "Europe/Madrid"

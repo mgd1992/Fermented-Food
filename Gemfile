@@ -40,6 +40,9 @@ gem 'rails-ujs'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
+gem 'faraday'
+
+gem "aws-sdk-s3", require: false
 
 #novu notifications
 
@@ -94,3 +97,5 @@ group :test do
 end
 
 gem "kaminari", "~> 1.2"
+
+gem "dockerfile-rails", ">= 1.7", :group => :development
