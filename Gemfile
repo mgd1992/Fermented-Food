@@ -42,8 +42,6 @@ gem 'sidekiq-scheduler'
 
 gem 'faraday'
 
-gem "aws-sdk-s3", require: false
-
 #novu notifications
 
 # Use Redis adapter to run Action Cable in production
