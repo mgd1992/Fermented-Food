@@ -1,25 +1,27 @@
 <div class="landing">
-  <div class="landing-inner">
-    <nav class="nav" role="navigation" aria-label="Main navigation">
-  <%= link_to root_path, class: 'nav-link text-light' do %>
-    <h1 class="nav-title">Cool Beans</h1>
-  <% end %>
+  <div class="landing-inner d-flex flex-column justify-content-between">
+    <nav class="nav p-3 d-flex justify-content-between align-items-center">
+      <%= link_to root_path, class: 'nav-link text-light' do %>
+        <h1 class="nav-title">Cool Beans</h1>
+      <% end %>
 
-  <div class="nav-links">
-    <%= link_to 'Fermentos', ferments_path, class: 'btn btn-outline-info' %>
+      <div class="nav-links">
+        <%= link_to 'Explorar fermentos', ferments_path, class: 'btn btn-outline-light' %>
 
-    <% if user_signed_in? %>
-      <%= link_to "Perfil", user_path(current_user), class: 'btn btn-outline-info' %>
-      
-    <% else %>
-      <%= link_to "Log in", new_user_session_path, class: 'btn btn-sm btn-outline-success' %>
-      <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-sm btn-outline-primary' %>
-    <% end %>
-  </div>
+        <% if user_signed_in? %>
+          <%= link_to "Mi Perfil", user_path(current_user), class: 'btn btn-outline-light' %>
+        <% else %>
+          <%= link_to "Log in", new_user_session_path, class: 'btn btn-sm btn-outline-light' %>
+          <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-sm btn-light text-dark' %>
+        <% end %>
+      </div>
+    </nav>
 
-
-</nav>
-
+    <div class="text-center text-white-50 my-3">
+      <%= link_to "https://github.com/mgd1992", class: "text-white-50 text-decoration-none", target: "_blank" do %>
+  <i class="bi bi-github me-1 fs-4"></i>
+<% end %>
+    </div>
 
   </div>
 </div>

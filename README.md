@@ -57,16 +57,44 @@ rails db:migrate
 rails s
 ```
 
+Acceder a la app en:
+http://localhost:3000
+
 5. Iniciar Sidekiq (en otra terminal):
 
 ```bash
 bundle exec sidekiq
 ```
 
-Acceder a la app en:
-http://localhost:3000
+6. Instalar y correr Redis (necesario para Sidekiq):
+
+```bash
+sudo apt update
+sudo apt install redis-server
+sudo systemctl start redis-server
+```
 
 
+## Probar envío de recordatorios manualmente
+Para probar que los recordatorios por email llegan correctamente, podés ejecutar el job manualmente desde la consola de Rails:
+
+1. Abrí la consola de Rails con:
+
+```bash
+rails c
+```
+
+2. Ejecutá el job que envía los recordatorios:
+
+```bash
+ReviewReminderJob.perform_now
+```
+
+3. Luego, abrí en tu navegador la URL donde letter_opener muestra los emails generados:
+
+```bash
+http://localhost:3000/letter_opener/
+```
 
 ## Estado del proyecto
 

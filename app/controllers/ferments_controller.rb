@@ -6,9 +6,16 @@ class FermentsController < ApplicationController
   def index
     if params[:query].present?
       query = "%#{params[:query]}%"
-      @ferments = Ferment.where("name ILIKE :q OR ingredients ILIKE :q OR instructions ILIKE :q", q: query).order(created_at: :desc).page(params[:page])
+      @ferments = Ferment
+        .where("name ILIKE :q OR ingredients ILIKE :q OR instructions ILIKE :q", q: query)
+        .order(created_at: :desc)
+        .page(params[:page])
+        .per(10)
     else
-      @ferments = Ferment.order(created_at: :desc).page(params[:page])
+      @ferments = Ferment
+        .order(created_at: :desc)
+        .page(params[:page])
+        .per(10) 
     end
   end
 
