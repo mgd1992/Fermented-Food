@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :users do
     resources :ferments do
       resources :comments, only: [:create, :destroy]
+      member do
+        delete "photos/:photo_id", to: "ferments#destroy_photo", as: :destroy_photo
+      end
     end
   end
   resources :ferments

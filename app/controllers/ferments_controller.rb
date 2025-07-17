@@ -15,7 +15,7 @@ class FermentsController < ApplicationController
       @ferments = Ferment
         .order(created_at: :desc)
         .page(params[:page])
-        .per(10) 
+        .per(10)
     end
   end
 
@@ -62,6 +62,19 @@ class FermentsController < ApplicationController
       redirect_to @ferment.user, notice: "Fermento eliminado con éxito."
     else
       redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento."
+    end
+  end
+
+  # Eliminar fotos
+
+  def destroy_photo
+    ferment = Ferment.find(params[:id])
+    if ferment.user == current_user
+      photo = ferment.photos.find(params[:photo_id])
+      photo.purge # esto elimina el attachment
+      redirect_to ferment_path(ferment), notice: "Foto eliminada con éxito."
+    else
+      redirect_to ferment_path(ferment), alert: "No estás autorizado para eliminar esta foto."
     end
   end
 
