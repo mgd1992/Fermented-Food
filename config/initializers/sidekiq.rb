@@ -1,12 +1,9 @@
 require 'sidekiq'
 require 'sidekiq-scheduler'
 
-require 'openssl'
-
 Sidekiq.configure_server do |config|
   config.redis = {
-    url: ENV['REDIS_URL'],
-    ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE } 
+    url: "redis://localhost:6379/0"
   }
 
   schedule_file = "config/sidekiq.yml"
@@ -27,7 +24,6 @@ end
 
 Sidekiq.configure_client do |config|
   config.redis = {
-    url: ENV['REDIS_URL'],
-    ssl_params: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
+    url: "redis://localhost:6379/0"
   }
 end
