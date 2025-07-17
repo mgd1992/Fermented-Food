@@ -7,7 +7,11 @@
 
       <div class="nav-links">
         <%= link_to 'Explorar fermentos', ferments_path, class: 'btn btn-outline-light' %>
-
+        <div class="text-center my-3">
+          <%= link_to "https://github.com/mgd1992/Fermented-Food", target: "_blank", rel: "noopener noreferrer", class: "btn btn-outline-light text-decoration-none" do %>
+            <i class="bi bi-github "></i>
+          <% end %>
+        </div>
         <% if user_signed_in? %>
           <%= link_to "Mi Perfil", user_path(current_user), class: 'btn btn-outline-light' %>
         <% else %>
@@ -17,11 +21,9 @@
       </div>
     </nav>
 
-    <div class="text-center text-white-50 my-3">
-      <%= link_to "https://github.com/mgd1992", class: "text-white-50 text-decoration-none", target: "_blank" do %>
-  <i class="bi bi-github me-1 fs-4"></i>
-<% end %>
-    </div>
+
+
+
 
   </div>
 </div>
