@@ -1,0 +1,33 @@
+es:
+  devise:
+    sessions:
+      new:
+        sign_in: "Iniciar sesión"
+
+    registrations:
+      new:
+        sign_up: "Registrarse"
+      edit:
+        update: "Actualizar"
+        cancel_my_account: "Eliminar mi cuenta"
+
+    failure:
+      already_authenticated: "Ya has iniciado sesión."
+      invalid: "Email o contraseña incorrectos."
+      not_found_in_database: "Email o contraseña incorrectos."
+      unauthenticated: "Necesitas iniciar sesión para continuar."
+      timeout: "Tu sesión ha expirado. Inicia sesión nuevamente."
+      unconfirmed: "Debes confirmar tu correo antes de continuar."
+
+    sessions:
+      signed_in: "Has iniciado sesión correctamente."
+      signed_out: "Has cerrado sesión correctamente."
+
+    registrations:
+      signed_up: "Te has registrado correctamente."
+      updated: "Tu cuenta ha sido actualizada."
+      destroyed: "Tu cuenta ha sido eliminada."
+
+    passwords:
+      send_instructions: "Te enviamos un email para restablecer tu contraseña."
+      updated: "Tu contraseña fue actualizada correctamente."

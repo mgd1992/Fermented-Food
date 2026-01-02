@@ -1,0 +1,21 @@
+es:
+  simple_form:
+    "yes": "Sí"
+    "no": "No"
+
+    error_notification:
+      default_message: "Por favor revisa los errores a continuación:"
+
+    labels:
+      defaults:
+        email: "Correo electrónico"
+        password: "Contraseña"
+
+    hints:
+      defaults:
+        email: "Introduce tu correo electrónico"
+        password: "Introduce tu contraseña"
+
+    prompts:
+      defaults:
+        password: "Selecciona tu edad"
