@@ -5,7 +5,9 @@
     <% end %>
 
     <% if user_signed_in? %>
-      <%= link_to "Mi perfil", profile_path(current_user), class: 'btn btn-outline-info' %>
+      <%= link_to user_path(current_user) do %>
+        <%= image_tag current_user.photo, class: "img-fluid rounded-circle profile-avatar"%>
+      <% end %>
     <% end %>
   </div>
 </nav>

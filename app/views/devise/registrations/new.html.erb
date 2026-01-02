@@ -7,38 +7,64 @@
     <h2>Registrate</h2>
   </div>
 
-  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "w-100" }) do |f| %>
+  <%= simple_form_for(resource,
+      as: resource_name,
+      url: registration_path(resource_name),
+      html: { class: "w-100", multipart: true }) do |f| %>
+
     <%= f.error_notification %>
 
     <div class="form-inputs">
+
       <%= f.input :first_name,
-                  required: true,
-                  autofocus: true,
-                  input_html: { placeholder: "First name", class: "form-control mb-3 rounded-3" } %>
+        label: "Nombre",
+        required: true,
+        input_html: {
+          class: "form-control mb-3 rounded-3 bg-dark text-light border-light",
+          placeholder: "Tu nombre"
+        } %>
 
       <%= f.input :last_name,
-                  required: true,
-                  input_html: { placeholder: "Last name", class: "form-control mb-3 rounded-3" } %>
+        label: "Apellidos",
+        required: true,
+        input_html: {
+          class: "form-control mb-3 rounded-3 bg-dark text-light border-light",
+          placeholder: "Tus apellidos"
+        } %>
 
       <%= f.input :email,
-                  required: true,
-                  input_html: { placeholder: "Email", class: "form-control mb-3 rounded-3" } %>
+        label: "Correo electrónico",
+        required: true,
+        input_html: {
+          class: "form-control mb-3 rounded-3 bg-dark text-light border-light",
+          placeholder: "tu@email.com"
+        } %>
 
       <%= f.input :password,
-                  required: true,
-                  hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                  input_html: { placeholder: "Password", class: "form-control mb-3 rounded-3" } %>
+        label: "Contraseña",
+        required: true,
+        input_html: {
+          class: "form-control mb-3 rounded-3 bg-dark text-light border-light"
+        } %>
 
-      <%= f.input :photo, as: :file, multipart: true, required: true, input_html: { class: "form-control mb-3 rounded-3" } %>
+      <%= f.input :photo,
+        as: :file,
+        label: "Foto de perfil",
+        required: true,
+        input_html: {
+          class: "form-control mb-3 rounded-3"
+        } %>
+
     </div>
 
     <div class="form-actions text-center">
-      <%= f.button :submit, "Sign up", class: "btn btn-outline-info w-50 mb-3" %>
+      <%= f.button :submit, "Registrarse", class: "btn btn-outline-info w-50 mb-3" %>
     </div>
+
   <% end %>
 
   <div class="text-center">
-    <p class="mb-2">Already have an account?</p>
-    <%= link_to "Log in", new_session_path(resource_name), class: "btn btn-outline-light btn-sm" %>
+    <p class="mb-2">¿Ya tienes cuenta?</p>
+    <%= link_to "Entrar", new_session_path(resource_name), class: "btn btn-outline-light btn-sm" %>
   </div>
 </div>
