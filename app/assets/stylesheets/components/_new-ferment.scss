@@ -1,0 +1,45 @@
+/* Card del formulario */
+.surface-card {
+  background-color: #fffaf0;
+  border-radius: 16px;
+  padding: 2rem;
+  border: none;
+}
+
+.form-control {
+  background-color: #f0e9df;
+  border: 1px solid #d1c7ba;
+  border-radius: 8px;
+  color: #3b3b3b;
+}
+
+/* Labels */
+.form-label {
+  color: #5a4a3c;
+  font-weight: 500;
+}
+
+.form-text {
+  color: #7b6d61;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #b5895e;
+  border-color: #946c43;
+}
+
+.btn-primary:hover {
+  background-color: #a3764d;
+  border-color: #a3764d;
+}
+
+.btn-outline-secondary {
+  color: #5a4a3c;
+  border-color: #5a4a3c;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #e6d9c6;
+  color: #3b3b3b;
+}
