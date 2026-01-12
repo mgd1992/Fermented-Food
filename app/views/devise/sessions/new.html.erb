@@ -1,51 +1,61 @@
-<div class="container mt-5 p-5 bg-dark text-light border rounded-3 shadow" style="max-width: 600px;">
-  <%= link_to '/', class: 'nav-link text-light text-center mb-5' do %>
-    <h1 class="nav-title border p-2">Cool Beans</h1>
-  <% end %>
+<div class="auth-page">
+  <div class="auth-card fade-in">
 
-  <div class="text-center mb-4">
-    <h2>Iniciar sesión</h2>
-  </div>
+    <%= link_to '/', class: "brand d-block text-center mb-4" do %>
+      <h1>Cool Beans</h1>
+    <% end %>
 
-  <%= simple_form_for(resource,
+    <h2 class="auth-title">Bienvenido de nuevo</h2>
+    <p class="auth-subtitle">Seguimos fermentando? 🧂</p>
+
+    <%= simple_form_for(resource,
       as: resource_name,
       url: session_path(resource_name),
-      html: { class: "w-100" }) do |f| %>
+      html: { class: "auth-inputs" }) do |f| %>
 
-    <%= f.error_notification %>
-
-    <div class="form-inputs">
+      <%= f.error_notification %>
 
       <%= f.input :email,
-        label: "Correo electrónico",
+        label: false,
         autofocus: true,
         input_html: {
-          class: "form-control mb-3 rounded-3 bg-dark text-light border-light",
-          autocomplete: "email",
-          placeholder: "tu@email.com"
+          placeholder: "Email",
+          autocomplete: "email"
         } %>
 
-      <%= f.input :password,
-        label: "Contraseña",
-        input_html: {
-          class: "form-control mb-3 rounded-3 bg-dark text-light border-light",
-          autocomplete: "current-password"
-        } %>
+      <div data-controller="password" class="position-relative">
+        <%= f.input :password,
+          label: false,
+          input_html: {
+            id: "password-field",
+            class: "form-control bg-dark text-light border-secondary",
+            placeholder: "Contraseña",
+            data: { password_target: "input" }
+          } %>
 
-      <%= f.input :remember_me,
-        label: "Recordarme",
-        as: :boolean if devise_mapping.rememberable? %>
+        <button
+          type="button"
+          data-action="click->password#toggle"
+          class="password-toggle"
+        >
+          <span data-password-target="icon">👁</span>
+        </button>
+      </div>
 
+      <% if devise_mapping.rememberable? %>
+        <div class="remember-me">
+          <%= f.input :remember_me, as: :boolean, label: "Recordarme" %>
+        </div>
+      <% end %>
+
+      <%= f.button :submit, "Entrar", class: "auth-button mt-3" %>
+
+    <% end %>
+
+    <div class="auth-footer mt-3 text-center">
+      <span>¿No tienes cuenta?</span>
+      <%= link_to "Crear cuenta", new_registration_path(resource_name), class: "ms-2" %>
     </div>
 
-    <div class="form-actions text-center">
-      <%= f.button :submit, "Entrar", class: "btn btn-outline-info w-50 mb-3" %>
-    </div>
-
-  <% end %>
-
-  <div class="text-center">
-    <p class="mb-2">¿No tienes cuenta?</p>
-    <%= link_to "Registrarse", new_registration_path(resource_name), class: "btn btn-outline-light btn-sm" %>
   </div>
 </div>
