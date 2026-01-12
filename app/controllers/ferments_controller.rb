@@ -1,13 +1,12 @@
 class FermentsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :update, :edit]
-  before_action :set_ferment, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo]
+  before_action :authorize_user!, only: [:destroy, :destroy_photo]
 
   def index
     if params[:query].present?
       query = "%#{params[:query]}%"
       @ferments = Ferment
-        .where("name ILIKE :q OR ingredients ILIKE :q OR instructions ILIKE :q", q: query)
+        .where("name ILIKE :q OR ingredients ILIKE :q", q: query)
         .order(created_at: :desc)
         .page(params[:page])
         .per(10)
@@ -32,10 +31,11 @@ class FermentsController < ApplicationController
     @ferment = Ferment.new(ferment_params)
     @ferment.user = current_user
 
-    review_date = @ferment.start_date + @ferment.revisar_fermentos.days
     if @ferment.save
+      review_date = @ferment.start_date + @ferment.revisar_fermentos.days
       ReviewReminderJob.set(wait_until: review_date).perform_later(@ferment.id)
-      redirect_to @ferment
+
+      redirect_to @ferment, notice: "Fermento creado con éxito."
     else
       render :new
     end
@@ -45,19 +45,15 @@ class FermentsController < ApplicationController
   end
 
   def update
-    if params[:ferment][:photos]
-      @ferment.photos.attach(params[:ferment][:photos])
-    end
-    if @ferment.update(ferment_params_except_photos)
+    if @ferment.update(ferment_params)
       redirect_to @ferment, notice: "Fermento actualizado con éxito."
     else
-      puts @ferment.errors.full_messages
       render :edit, alert: "No se pudo actualizar el fermento."
     end
   end
 
   def destroy
-    if @ferment.user_id == current_user.id
+    if @ferment.user == current_user
       @ferment.destroy!
       redirect_to @ferment.user, notice: "Fermento eliminado con éxito."
     else
@@ -66,16 +62,11 @@ class FermentsController < ApplicationController
   end
 
   # Eliminar fotos
-
   def destroy_photo
-    ferment = Ferment.find(params[:id])
-    if ferment.user == current_user
-      photo = ferment.photos.find(params[:photo_id])
-      photo.purge # esto elimina el attachment
-      redirect_to ferment_path(ferment), notice: "Foto eliminada con éxito."
-    else
-      redirect_to ferment_path(ferment), alert: "No estás autorizado para eliminar esta foto."
-    end
+    photo = @ferment.photos.find(params[:photo_id])
+    photo.purge
+
+    redirect_to ferment_path(@ferment), notice: "Foto eliminada con éxito."
   end
 
   private
@@ -84,11 +75,23 @@ class FermentsController < ApplicationController
     @ferment = Ferment.includes(:user, photos_attachments: :blob, comments: []).find(params[:id])
   end
 
+  # ✅ Campos permitidos para create
   def ferment_params
-    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, :revisar_fermentos, photos: [])
+    params.require(:ferment).permit(
+      :name, :instructions, :ingredients, :fermentation_time,
+      :start_date, :revisar_fermentos, photos: []
+    )
   end
 
+  # ✅ Campos permitidos para update (sin fotos)
   def ferment_params_except_photos
-    params.require(:ferment).permit(:name, :instructions, :user_id, :ingredients, :fermentation_time, :start_date, :revisar_fermentos)
+    params.require(:ferment).permit(
+      :name, :instructions, :ingredients, :fermentation_time,
+      :start_date, :revisar_fermentos
+    )
+  end
+
+  def authorize_user!
+    redirect_to ferments_path, alert: "No tienes permiso" unless @ferment.user == current_user
   end
 end

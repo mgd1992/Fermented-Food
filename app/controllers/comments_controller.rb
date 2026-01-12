@@ -1,5 +1,8 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_ferment
+  before_action :set_comment, only: [:destroy]
+  before_action :authorize_user!, only: [:destroy]
 
   def create
     @comment = @ferment.comments.new(comment_params)
@@ -13,10 +16,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if @user == current_user
-      @comment.destroy!
-      redirect_to @ferment.comments
-    end
+    @comment.destroy
+    redirect_to @ferment, notice: 'Comentario eliminado con éxito.'
   end
 
 
@@ -24,6 +25,14 @@ private
 
   def set_ferment
     @ferment = Ferment.find(params[:ferment_id])
+  end
+
+  def set_comment
+    @comment = @ferment.comments.find(params[:id])
+  end
+
+  def authorize_user!
+    redirect_to @ferment, alert: 'No tienes permiso para eliminar este comentario.' unless @comment.user == current_user
   end
 
   def comment_params

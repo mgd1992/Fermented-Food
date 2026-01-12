@@ -19,58 +19,79 @@
     <h1 class="text-center my-2">Todos los fermentos</h1>
 
     <div class="text-center mb-3">
-      <%= link_to 'Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-100" %>
+      <%= link_to '➕ Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-100" %>
     </div>
 
-    <div class="search-container w-100" style="position: sticky; top: 0; z-index: 1000; padding: 10px">
+    <div class="search-container w-100" >
       <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
         <div class="input-group">
-          <%= text_field_tag :query, params[:query], placeholder: "Buscar fermento...", class: 'form-control', autocomplete: "off" %>
-          <%= submit_tag 'Buscar', class: 'btn btn-outline-info mx-2' %>
+          <%= text_field_tag :query, params[:query], placeholder: "Buscar fermento...", class: 'form-control', autocomplete: "on" %>
+          <%= submit_tag '🔍', class: 'btn btn-outline-none' %>
         </div>
       <% end %>
     </div>
+
   </div>
 
   <div class="container mb-5 pb-3">
-    <ul class="list-group">
+    <ul class="list-group ">
       <% @ferments.each do |ferment| %>
-        <li class="list-group-item d-flex justify-content-between rounded align-items-center py-2 my-1">
+        <li class="ferment-card ">
           <div class="d-flex flex-column flex-grow-1 p-2">
-            <%= link_to ferment_path(ferment), class: "text-decoration-none" do %>
-              <h4 class="mb-2 text-dark fw-bold text-uppercase fs-3"><%= ferment.name %></h4>
-            <% end %>
-            <p class="mb-1 text-muted">Ingredientes: <%= ferment.ingredients %></p>
-            <p class="mb-1 text-muted">Instrucciones: <%= ferment.instructions %></p>
-            <p class="mb-2 text-dark">Tiempo de fermentación: <%= ferment.fermentation_time %></p>
-            <p class="small text-muted"><strong>Fecha de inicio:</strong> <%= ferment.formatted_start_date %></p>
 
-            <% if ferment.user.present? %>
-              <small class="text-muted mt-2">
-                Creado por:
-                <%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none text-dark" %>
-              </small>
-            <% else %>
-              <small class="text-muted mt-2">Usuario no disponible</small>
+            <%= link_to ferment_path(ferment), class: "text-decoration-none " do %>
+              <h4 class="ferment-name"><%= ferment.name %></h4>
             <% end %>
+
+            <p class="ferment-time">
+              <span class="label">Descripción:</span>
+              <%= ferment.description %>
+            </p>
+
+            <p class="ferment-text">
+              <span class="label">Ingredientes:</span>
+              <%= ferment.ingredients %>
+            </p>
+
+
+            <div class="d-flex align-items-center justify-content-around mt-2">
+              <p class="ferment-time">
+                ⏳<%= ferment.fermentation_time %>
+              </p>
+
+              <small class="d-block">
+                📅 <%= ferment.formatted_start_date %>
+              </small>
+
+              <% if ferment.user.present? %>
+                <small>
+                  👤<%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none text-warning" %>
+                </small>
+              <% end %>
+            </div>
+
           </div>
 
-          <div class="d-flex flex-column align-items-end">
-            <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm mb-2" %>
+          <div class="ferment-actions">
+
+            <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm me-2 rounded" %>
 
             <% if ferment.user == current_user %>
-              <%= link_to "Eliminar", ferment_path(ferment), method: :delete, class: "btn btn-outline-danger btn-sm" %>
+              <%= link_to "🗑", ferment_path(ferment), method: :delete, class: "btn btn-outline-danger btn-sm rounded" %>
             <% end %>
 
           </div>
+
         </li>
       <% end %>
     </ul>
 
   </div>
 
-  <div class="pagination rounded">
-    <%= paginate @ferments %>
-  </div>
+  <% if @ferments.total_pages > 1 %>
+    <div class="pagination rounded">
+      <%= paginate @ferments %>
+    </div>
+  <% end %>
 
 </div>

@@ -1,0 +1,62 @@
+.search-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.ferment-card {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ferment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.ferment-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #d3d3d3;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid white;
+}
+
+.ferment-text {
+  font-size: 0.95rem;
+  color: #9ca3af;
+  margin-bottom: 4px;
+  line-height: 1.45;
+}
+
+.label {
+  color: #7ee2b8;
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+.ferment-time {
+  margin-top: 8px;
+  font-weight: 500;
+  color: #b2b4b9;
+}
+
+.ferment-actions {
+  display: flex;
+  align-items: center;
+}
+
+.ferment-card:hover .ferment-actions .btn {
+  opacity: 1;
+}
