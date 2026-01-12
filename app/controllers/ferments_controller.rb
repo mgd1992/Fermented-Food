@@ -79,7 +79,7 @@ class FermentsController < ApplicationController
   def ferment_params
     params.require(:ferment).permit(
       :name, :instructions, :ingredients, :fermentation_time,
-      :start_date, :revisar_fermentos, photos: []
+      :start_date, :description ,:revisar_fermentos, photos: []
     )
   end
 
