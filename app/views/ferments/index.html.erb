@@ -39,9 +39,20 @@
         <li class="ferment-card ">
           <div class="d-flex flex-column flex-grow-1 p-2">
 
-            <%= link_to ferment_path(ferment), class: "text-decoration-none " do %>
-              <h4 class="ferment-name"><%= ferment.name %></h4>
-            <% end %>
+            <div class="d-flex align-items-center justify-content-between">
+
+              <%= link_to ferment_path(ferment), class: "text-decoration-none " do %>
+                <h4 class="ferment-name"><%= ferment.name %></h4>
+              <% end %>
+
+              <% if ferment.comments.any? %>
+                <small>
+                  💬 <%= link_to ferment.comments.count, ferment_path(ferment), class: "text-decoration-none text-light" %>
+                </small>
+              <% end %>
+
+            </div>
+
 
             <p class="ferment-time">
               <span class="label">Descripción:</span>
@@ -68,6 +79,7 @@
                   👤<%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none text-warning" %>
                 </small>
               <% end %>
+
             </div>
 
           </div>
