@@ -6,8 +6,8 @@ class FermentMailer < ApplicationMailer
 
     mail(
       to: @user.email,
-      subject: "⏰ ¡Hora de revisar tu fermento: #{@ferment.name}!"
+      subject: "⏰ Hora de revisar tu fermento: #{@ferment.name}!"
     )
   end
-  
+
 end
