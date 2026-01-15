@@ -44,6 +44,7 @@ body {
   border-radius: 50%;
   object-fit: cover;
   transition: transform 0.2s;
+  margin-bottom: 8px;
 }
 
 .profile-avatar:hover {
@@ -54,6 +55,7 @@ body {
   display: none;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   background: rgba(27, 27, 27, 0.95);
   padding: 1rem;

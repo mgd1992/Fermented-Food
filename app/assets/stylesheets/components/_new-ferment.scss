@@ -12,7 +12,6 @@
   width: 100%;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
   border: 2px solid rgba(126, 226, 184, 0.4);
-  /* borde verde agua suave */
 }
 
 .brand {
@@ -90,7 +89,6 @@
   color: #f0fdf4;
 }
 
-/* Fade-in animation */
 .fade-in {
   animation: fadeUp 0.5s ease-out;
 }
@@ -107,7 +105,6 @@
   }
 }
 
-/* Mobile tweaks */
 @media (max-width: 480px) {
   .auth-card {
     padding: 1.5rem;

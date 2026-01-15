@@ -1,20 +1,3 @@
-<!-- Navbar -->
-<div class="p-4 d-flex justify-content-between align-items-center bg-dark shadow-sm">
-  <%= link_to '/', class: 'nav-link text-light d-flex align-items-center gap-2' do %>
-    <h1 class="nav-title fs-3 m-0">Cool Beans</h1>
-  <% end %>
-  <% if @user == current_user %>
-    <div class="d-flex flex-column align-items-center">
-
-      <% if @user.photo.attached? %>
-        <%= image_tag @user.photo, class: "img-fluid rounded-circle mb-3 profile-avatar" %>
-      <% end %>
-      <%= link_to "Cerrar sesión", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-outline-light btn-sm" %>
-    </div>
-  <% end %>
-</div>
-
-
 <div class="show-page mt-2">
 
   <!-- Perfil usuario -->
