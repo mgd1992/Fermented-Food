@@ -11,8 +11,12 @@
       <% end %>
 
       <!-- Links Desktop -->
-      <div class="nav-links d-none d-md-flex align-items-center gap-2">
+      <div class="nav-links d-none d-md-flex align-items-center justify-content-center gap-2">
         <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm' %>
+
+        <%= link_to 'Crear fermento', new_ferment_path,
+          class: "btn btn-outline-light btn-sm" %>
+
         <% if user_signed_in? %>
           <%= link_to user_path(current_user) do %>
             <%= image_tag current_user.photo, class: "profile-avatar" %>
@@ -30,9 +34,9 @@
 
       <!-- Menú Mobile -->
       <div class="nav-mobile-menu d-none flex-column align-items-center bg-dark text-light p-3" data-navbar-target="menu">
-        <%= link_to 'Explorar', ferments_path, class: 'btn btn-outline-light w-50 mb-2' %>
         <% if user_signed_in? %>
-          <%= link_to 'Mi perfil', user_path(current_user), class: 'btn btn-outline-light w-50 mb-2' %>
+          <%= link_to 'Mi perfil', user_path(current_user), class: 'btn btn-outline-light w-50 ' %>
+          <%= link_to 'Crear fermento', new_ferment_path, class: "btn btn-outline-light w-50" %>
         <% else %>
           <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light w-100 mb-2' %>
           <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-light w-100 text-dark mb-2' %>

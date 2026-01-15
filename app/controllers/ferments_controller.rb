@@ -1,6 +1,6 @@
 class FermentsController < ApplicationController
   before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo]
-  before_action :authorize_user!, only: [:destroy, :destroy_photo]
+  before_action :authorize_user!, only: [:new, :create, :destroy, :destroy_photo]
 
   def index
     if params[:query].present?
@@ -92,6 +92,6 @@ class FermentsController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to ferments_path, alert: "No tienes permiso" unless @ferment.user == current_user
+    redirect_to new_user_session_path, alert: "Debes iniciar sesión para continuar"
   end
 end
