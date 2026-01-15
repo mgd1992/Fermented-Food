@@ -20,24 +20,35 @@
   </section>
 
   <% if @ferment.photos.attached? %>
-    <section class="ferment-gallery row justify-content-center g-3 mb-4">
+    <section class="ferment-gallery d-flex justify-content-center g-3 mb-4">
       <% @ferment.photos.each do |photo| %>
-        <div class="col-6 col-md-4 col-lg-3 position-relative">
-          <%= image_tag photo, class: "img-fluid rounded shadow-sm ferment-photo" %>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <p class="text-light small mt-1">
+              📆 <%= photo.created_at.strftime("%d/%m/%Y") %>
+          </p>
 
-          <% if user_signed_in? && @ferment.user == current_user %>
-            <%= button_to destroy_photo_user_ferment_path(@ferment.user, @ferment, photo_id: photo.id),
-                method: :delete,
-                data: { confirm: "¿Seguro que querés eliminar esta foto?" },
-                class: "btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-3" do %>
-              <i class="bi bi-x-lg"></i>
+          <div class="col-6 col-md-4 col-lg-3 position-relative">
+
+            <%= image_tag photo, class: "img-fluid rounded shadow-sm ferment-photo" %>
+
+            <% if user_signed_in? && @ferment.user == current_user %>
+              <%= button_to destroy_photo_user_ferment_path(@ferment.user, @ferment, photo_id: photo.id),
+                  method: :delete,
+                  data: { confirm: "Seguro que querés eliminar esta foto?" },
+                  class: "btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-3" do %>
+                <i class="bi bi-x-lg"></i>
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
+
         </div>
+
       <% end %>
     </section>
   <% else %>
-    <p class="text-center text-muted">No hay fotos disponibles.</p>
+
+    <p class="text-center text-light">No hay fotos disponibles.</p>
+
   <% end %>
 </div>
 
