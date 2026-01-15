@@ -6,102 +6,98 @@
 
     <% if user_signed_in? %>
       <%= link_to user_path(current_user) do %>
-        <%= image_tag current_user.photo, class: "img-fluid rounded-circle profile-avatar"%>
+        <%= image_tag current_user.photo, class: "img-fluid profile-avatar" %>
       <% end %>
     <% end %>
   </div>
 </nav>
 
+<div class="container">
 
-<div class="d-flex flex-column align-items-center sticky-top justify-content-center">
+  <!-- HEADER -->
+  <div class="my-4 text-center">
+    <h1 class="mb-3">Todos los fermentos</h1>
 
-  <div class="d-flex flex-column align-items-center my-3">
-    <h1 class="text-center my-2">Todos los fermentos</h1>
+    <%= link_to '➕ Nuevo fermento', new_ferment_path,
+          class: "btn btn-outline-success mb-3" %>
 
-    <div class="text-center mb-3">
-      <%= link_to '➕ Nuevo fermento', new_ferment_path, class: "btn btn-outline-success p-2 rounded-3 w-100" %>
-    </div>
-
-    <div class="search-container w-100" >
-      <%= form_with(url: ferments_path, method: :get, local: true, class: 'search-form') do %>
+    <div class="search-container mx-auto">
+      <%= form_with url: ferments_path, method: :get, local: true do %>
         <div class="input-group">
-          <%= text_field_tag :query, params[:query], placeholder: "Buscar fermento...", class: 'form-control', autocomplete: "on" %>
-          <%= submit_tag '🔍', class: 'btn btn-outline-none' %>
+          <%= text_field_tag :query, params[:query],
+                placeholder: "Buscar fermento...",
+                class: "form-control" %>
+          <%= submit_tag "🔍", class: "btn btn-outline-light" %>
         </div>
       <% end %>
     </div>
-
   </div>
 
-  <div class="container mb-5 pb-3">
-    <ul class="list-group ">
-      <% @ferments.each do |ferment| %>
-        <li class="ferment-card ">
-          <div class="d-flex flex-column flex-grow-1 p-2">
+  <!-- GRID -->
+  <div class="ferments-grid">
+    <% @ferments.each do |ferment| %>
 
-            <div class="d-flex align-items-center justify-content-between">
+      <div class="ferment-card position-relative">
 
-              <%= link_to ferment_path(ferment), class: "text-decoration-none " do %>
-                <h4 class="ferment-name"><%= ferment.name %></h4>
-              <% end %>
+        <!-- LINK OVERLAY -->
+        <%= link_to ferment_path(ferment), class: "card-link-overlay" do %><% end %>
 
-              <% if ferment.comments.any? %>
-                <small>
-                  💬 <%= link_to ferment.comments.count, ferment_path(ferment), class: "text-decoration-none text-light" %>
-                </small>
-              <% end %>
+        <!-- IMAGE -->
+        <% if ferment.photos.attached? %>
+          <%= image_tag ferment.photos.first,
+            alt: ferment.name%>
+        <% else %>
+          <%= image_tag "https://res.cloudinary.com/dk4bh7tkl/image/upload/v1768395316/plachodeer_sqjar9.jpg",
+                alt: "Placeholder",
+                class: "placeholder-image" %>
+        <% end %>
 
-            </div>
+        <!-- BODY -->
+        <div class="ferment-card-body">
 
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="ferment-name"><%= ferment.name %></h4>
 
-            <p class="ferment-time">
-              <span class="label">Descripción:</span>
-              <%= ferment.description %>
-            </p>
-
-            <p class="ferment-text">
-              <span class="label">Ingredientes:</span>
-              <%= ferment.ingredients %>
-            </p>
-
-
-            <div class="d-flex align-items-center justify-content-around mt-2">
-              <p class="ferment-time">
-                ⏳<%= ferment.fermentation_time %>
-              </p>
-
-              <small class="d-block">
-                📅 <%= ferment.formatted_start_date %>
-              </small>
-
-              <% if ferment.user.present? %>
-                <small>
-                  👤<%= link_to ferment.user.full_name, profile_path(ferment.user), class: "text-decoration-none text-warning" %>
-                </small>
-              <% end %>
-
-            </div>
-
-          </div>
-
-          <div class="ferment-actions">
-
-            <%= link_to "Ver", ferment_path(ferment), class: "btn btn-outline-success btn-sm me-2 rounded" %>
-
-            <% if ferment.user == current_user %>
-              <%= link_to "🗑", ferment_path(ferment), method: :delete, class: "btn btn-outline-danger btn-sm rounded" %>
+            <% if ferment.comments.any? %>
+              <small class="text-light">💬 <%= ferment.comments.count %></small>
             <% end %>
-
           </div>
 
-        </li>
-      <% end %>
-    </ul>
+          <p class="ferment-text">
+            <span class="label">Ingredientes:</span>
+            <span class="clamp-2"><%= ferment.ingredients %></span>
+          </p>
 
+          <% if ferment.user.present? %>
+            <p class="ferment-time">
+              👤 <%= link_to ferment.user.full_name,
+                    profile_path(ferment.user),
+                    class: "text-warning text-decoration-none position-relative" %>
+            </p>
+          <% end %>
+
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="ferment-actions position-relative">
+          <%= link_to "Ver", ferment_path(ferment),
+                class: "btn btn-outline-success btn-sm" %>
+
+          <% if ferment.user == current_user %>
+            <%= link_to "X", ferment_path(ferment),
+                  method: :delete,
+                  class: "btn btn-outline-danger btn-sm" %>
+          <% end %>
+        </div>
+
+      </div>
+
+    <% end %>
   </div>
+
 
   <% if @ferments.total_pages > 1 %>
-    <div class="pagination rounded">
+    <div class="pagination mt-4">
       <%= paginate @ferments %>
     </div>
   <% end %>

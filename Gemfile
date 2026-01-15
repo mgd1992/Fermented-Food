@@ -99,3 +99,4 @@ end
 gem "kaminari", "~> 1.2"
 
 gem "dockerfile-rails", ">= 1.7", :group => :development
+
