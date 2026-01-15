@@ -1,90 +1,94 @@
-<div class="auth-page">
-  <div class="auth-card fade-in">
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
 
-    <%= link_to '/', class: "brand" do %>
-      Cool Beans
-    <% end %>
+      <div class="card shadow-sm">
+        <div class="card-body">
 
-    <h2 class="auth-title text-center">Nuevo fermento</h2>
-    <p class="auth-subtitle text-center">Registrá tu fermento y seguí el proceso 🧂</p>
+          <%= form_with(model: @ferment, local: true, html: { multipart: true }) do |form| %>
 
-    <%= form_with(model: @ferment, local: true, html: { class: "auth-form" }) do |form| %>
+            <h2 class="text-center mb-4 fw-semibold">
+              <%= @ferment.new_record? ? "Nuevo fermento" : "Editar fermento" %>
+            </h2>
 
-      <% if @ferment.errors.any? %>
-        <div class="alert alert-danger">
-          <p class="fw-semibold mb-2">No se pudo crear el fermento:</p>
-          <ul class="mb-0">
-            <% @ferment.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
+            <% if @ferment.errors.any? %>
+              <div class="alert alert-danger">
+                <p class="fw-semibold mb-2">No se pudo guardar el fermento:</p>
+                <ul class="mb-0">
+                  <% @ferment.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                </ul>
+              </div>
             <% end %>
-          </ul>
+
+            <!-- Información básica -->
+            <div class="mb-4">
+              <%= form.label :name, "Nombre del fermento", class: "form-label" %>
+              <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "Ej: Kimchi clásico" %>
+
+              <%= form.label :description, "Descripción", class: "form-label mt-3" %>
+              <%= form.text_area :description, rows: 3, class: "form-control", placeholder: "Descripción breve" %>
+
+              <%= form.label :ingredients, "Ingredientes", class: "form-label mt-3" %>
+              <%= form.text_area :ingredients, rows: 3, class: "form-control", placeholder: "Ej: repollo, sal, ajo, jengibre" %>
+
+
+              <%= form.label :instructions, "Pasos de preparación", class: "form-label mt-3" %>
+              <%= form.text_area :instructions, rows: 4, class: "form-control", placeholder: "Ej: cortar, salar, fermentar en frasco" %>
+            </div>
+
+            <!-- Tiempos -->
+            <div class="mb-4">
+              <%= form.label :fermentation_time, "Duración estimada", class: "form-label" %>
+              <%= form.text_field :fermentation_time, class: "form-control", placeholder: "Ej: 7 días" %>
+
+              <%= form.label :start_date, "Fecha de inicio", class: "form-label mt-3" %>
+              <%= form.text_field :start_date, class: "form-control", data: { controller: "datepicker" } %>
+
+              <%= form.label :revisar_fermentos, "Cada cuántos días revisarlo", class: "form-label mt-3" %>
+              <%= form.number_field :revisar_fermentos, min: 1, class: "form-control", placeholder: "Ej: 3" %>
+            </div>
+
+            <!-- Fotos actuales -->
+            <% if @ferment.photos.attached? %>
+              <div class="mb-4">
+                <p class="text-uppercase text-muted small fw-semibold mb-2">Fotos actuales</p>
+                <div class="d-flex flex-wrap gap-2">
+                  <% @ferment.photos.each do |photo| %>
+
+                    <div class="position-relative" style="width: 120px; height: 100px;">
+                      <%= image_tag photo.variant(resize_to_fill: [120, 100]), class: "img-thumbnail" %>
+                      <%= link_to "✖", destroy_photo_ferment_path(@ferment, photo_id: photo.id),
+                            method: :delete,
+                            data: { confirm: "¿Eliminar esta foto?" },
+                            class: "position-absolute top-0 end-0 btn btn-sm btn-danger p-0 m-0" %>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <!-- Subir nuevas fotos -->
+            <div class="mb-4">
+              <%= form.label :photos, "Agregar fotos (opcional)", class: "form-label" %>
+              <%= form.file_field :photos, multiple: true, class: "form-control" %>
+              <div class="form-text">Las fotos nuevas se sumarán a las existentes.</div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="d-grid gap-2 mt-4">
+              <%= form.submit @ferment.new_record? ? "Crear fermento" : "Guardar cambios",
+                    class: "btn btn-primary btn-lg" %>
+              <%= link_to "Cancelar", @ferment.new_record? ? ferments_path : ferment_path(@ferment),
+                    class: "btn btn-outline-secondary btn-lg" %>
+            </div>
+
+          <% end %>
+
         </div>
-      <% end %>
-
-      <div class="auth-inputs">
-
-        <!-- 🫘 Nombre del fermento -->
-        <div class="mb-3">
-          <p class="form-section-label">🫘 Qué estás fermentando?</p>
-          <%= form.text_field :name,
-                placeholder: "Ej: Kimchi clásico, Kombucha de jengibre",
-                class: "form-control mb-3" %>
-
-          <%= form.text_area :description,
-                rows: 2,
-                placeholder: "Descripción breve (opcional)",
-                class: "form-control mb-3" %>
-
-          <%= form.text_area :ingredients,
-                rows: 3,
-                placeholder: "Ingredientes: repollo, sal, ajo, jengibre",
-                class: "form-control mb-3" %>
-        </div>
-
-        <!-- 🧪 Cómo se prepara -->
-        <div class="mb-3">
-          <p class="form-section-label">🧪 Cómo se hace?</p>
-          <%= form.text_area :instructions,
-                rows: 4,
-                placeholder: "instrucciones: cortar, salar, masajear, fermentar en frasco",
-                class: "form-control mb-3" %>
-        </div>
-
-        <!-- ⏱️ Tiempos y seguimiento -->
-        <div class="mb-3">
-          <p class="form-section-label">⏱️ Tiempos y seguimiento</p>
-          <%= form.text_field :fermentation_time,
-                placeholder: "Ej: 7 días, 2 semanas",
-                class: "form-control mb-3" %>
-
-          <%= form.text_field :start_date,
-                data: { controller: "datepicker" },
-                placeholder: "📅 Fecha de inicio",
-                class: "form-control mb-3" %>
-
-          <%= form.number_field :revisar_fermentos,
-                min: 1,
-                placeholder: "Cada cuántos días hay que revisarlo?",
-                class: "form-control mb-3" %>
-        </div>
-
-        <!-- 📸 Fotos -->
-        <div class="mb-3">
-          <p class="form-section-label">📸 Fotos (opcional)</p>
-          <%= form.file_field :photos,
-                multiple: true,
-                class: "form-control mb-3" %>
-        </div>
-
       </div>
 
-      <!-- Botones -->
-      <div class="d-grid gap-2 mt-4">
-        <%= form.submit "Crear fermento", class: "auth-button" %>
-        <%= link_to "Cancelar", ferments_path, class: "btn btn-outline-light" %>
-      </div>
-
-    <% end %>
-
+    </div>
   </div>
 </div>

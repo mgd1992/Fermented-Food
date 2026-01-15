@@ -1,6 +1,6 @@
 class FermentsController < ApplicationController
   before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo]
-  before_action :authorize_user!, only: [:new, :create, :destroy, :destroy_photo]
+  before_action :authorize_user!, only: [:new, :create, :edit, :update, :destroy, :destroy_photo]
 
   def index
     if params[:query].present?
@@ -32,12 +32,11 @@ class FermentsController < ApplicationController
     @ferment.user = current_user
 
     if @ferment.save
-      review_date = @ferment.start_date + @ferment.revisar_fermentos.days
-      ReviewReminderJob.set(wait_until: review_date).perform_later(@ferment.id)
-
-      redirect_to @ferment, notice: "Fermento creado con éxito."
+      attach_photos_if_present
+      schedule_review_job
+      redirect_to @ferment, notice: "Fermento creado con éxito ✨"
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -45,28 +44,28 @@ class FermentsController < ApplicationController
   end
 
   def update
-    if @ferment.update(ferment_params)
-      redirect_to @ferment, notice: "Fermento actualizado con éxito."
+    if @ferment.update(ferment_params_except_photos)
+      attach_photos_if_present
+      redirect_to @ferment, notice: "Fermento actualizado con éxito ✨"
     else
-      render :edit, alert: "No se pudo actualizar el fermento."
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @ferment.user == current_user
       @ferment.destroy!
-      redirect_to @ferment.user, notice: "Fermento eliminado con éxito."
+      redirect_to @ferment.user, notice: "Fermento eliminado con éxito 🗑️"
     else
-      redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento."
+      redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento 🚫"
     end
   end
 
-  # Eliminar fotos
   def destroy_photo
     photo = @ferment.photos.find(params[:photo_id])
     photo.purge
 
-    redirect_to ferment_path(@ferment), notice: "Foto eliminada con éxito."
+    redirect_to @ferment, notice: "Foto eliminada 📸"
   end
 
   private
@@ -75,23 +74,36 @@ class FermentsController < ApplicationController
     @ferment = Ferment.includes(:user, photos_attachments: :blob, comments: []).find(params[:id])
   end
 
-  # ✅ Campos permitidos para create
   def ferment_params
     params.require(:ferment).permit(
-      :name, :instructions, :ingredients, :fermentation_time,
-      :start_date, :description ,:revisar_fermentos, photos: []
+      :name, :description, :instructions, :ingredients,
+      :fermentation_time, :start_date, :revisar_fermentos
     )
   end
 
-  # ✅ Campos permitidos para update (sin fotos)
   def ferment_params_except_photos
     params.require(:ferment).permit(
-      :name, :instructions, :ingredients, :fermentation_time,
-      :start_date, :revisar_fermentos
+      :name, :description, :instructions, :ingredients,
+      :fermentation_time, :start_date, :revisar_fermentos
     )
   end
 
   def authorize_user!
-    redirect_to new_user_session_path, alert: "Debes iniciar sesión para continuar"
+    if @ferment.present?
+      redirect_to new_user_session_path, alert: "Debes iniciar sesión para continuar" unless @ferment.user == current_user
+    else
+      redirect_to new_user_session_path, alert: "Debes iniciar sesión para continuar" unless user_signed_in?
+    end
+  end
+
+  def attach_photos_if_present
+    return unless params[:ferment][:photos].present?
+    @ferment.photos.attach(params[:ferment][:photos])
+  end
+
+  def schedule_review_job
+    return unless @ferment.start_date && @ferment.revisar_fermentos
+    review_date = @ferment.start_date + @ferment.revisar_fermentos.days
+    ReviewReminderJob.set(wait_until: review_date).perform_later(@ferment.id)
   end
 end
