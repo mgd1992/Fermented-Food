@@ -1,102 +1,98 @@
-<div class="container mx-auto my-5 w-75 p-5 border rounded-3 shadow-sm">
-  <div class="ferment-container container mx-auto p-5 rounded-3 shadow bg-dark">
-  <div class="text-center mb-4">
-    <h1 class="text-light mb-3"><%= @ferment.name %></h1>
-    <%= link_to "← Volver", profile_path(@ferment.user), class: "btn btn-sm btn-outline-info" %>
-    <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-sm btn-outline-info" %>
-  </div>
-  <section class="ferment-details text-light mb-4">
+<div class="container ferment-page my-5 p-4 rounded-4 shadow-sm">
 
-    <p><strong> Descripción:</strong> <%= @ferment.description %> </p>
+  <div class="text-center mb-4">
+    <h1 class="ferment-title mb-2"><%= @ferment.name %></h1>
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <%= link_to "← Volver al perfil", profile_path(@ferment.user), class: "btn btn-outline-primary btn-sm" %>
+      <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-outline-primary btn-sm" %>
+      <% if user_signed_in? && @ferment.user == current_user %>
+        <%= link_to "✏️ Editar", edit_ferment_path(@ferment), class: "btn btn-outline-success btn-sm" %>
+      <% end %>
+    </div>
+  </div>
+
+  <section class="ferment-details p-4 mb-5 rounded-3 shadow-sm">
+    <p><strong>   Descripción:</strong> <%= @ferment.description %></p>
     <p><strong>🧂 Ingredientes:</strong> <%= @ferment.ingredients %></p>
     <p><strong>📋 Instrucciones:</strong> <%= @ferment.instructions %></p>
     <p><strong>🗓️ Fecha de inicio:</strong> <%= @ferment.formatted_start_date %></p>
-    <p><strong>⏰ Revisar en:</strong> <%= @ferment.revisar_fermentos %> </p>
-
-    <% if user_signed_in? && @ferment.user == current_user %>
-      <%= link_to "✏️ Editar", edit_ferment_path(@ferment), class: "btn btn-sm btn-outline-info" %>
-    <% end %>
-
+    <p><strong>⏰ Revisar en:</strong> <%= @ferment.revisar_fermentos %> días</p>
   </section>
 
   <% if @ferment.photos.attached? %>
-    <section class="ferment-gallery d-flex justify-content-center g-3 mb-4">
+    <section class="ferment-gallery row g-3 mb-5">
       <% @ferment.photos.each do |photo| %>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <p class="text-light small mt-1">
-              📆 <%= photo.created_at.strftime("%d/%m/%Y") %>
-          </p>
-
-          <div class="col-6 col-md-4 col-lg-3 position-relative">
-
-            <%= image_tag photo, class: "img-fluid rounded shadow-sm ferment-photo" %>
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="ferment-photo-card position-relative rounded-3 shadow-sm overflow-hidden">
+            <%= image_tag photo, class: "img-fluid" %>
+            <p class="photo-date m-2"><i class="bi bi-calendar"></i> <%= photo.created_at.strftime("%d/%m/%Y") %></p>
 
             <% if user_signed_in? && @ferment.user == current_user %>
               <%= button_to destroy_photo_user_ferment_path(@ferment.user, @ferment, photo_id: photo.id),
                   method: :delete,
                   data: { confirm: "Seguro que querés eliminar esta foto?" },
-                  class: "btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-3" do %>
+                  class: "btn btn-sm btn-outline-danger position-absolute top-0 end-0 m-2" do %>
                 <i class="bi bi-x-lg"></i>
               <% end %>
             <% end %>
           </div>
-
         </div>
-
       <% end %>
     </section>
   <% else %>
-
-    <p class="text-center text-light">No hay fotos disponibles.</p>
-
+    <p class="text-center text-muted">No hay fotos disponibles.</p>
   <% end %>
-</div>
 
-<hr>
-<% if user_signed_in? %>
-  <%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "mb-5") do |form| %>
-    <h3 class="text-center m-4">Deja un comentario</h3>
-
-    <div class="form-group">
-      <%= form.label :Titulo, class: 'font-weight-bold mb-1' %>
-      <%= form.text_field :title, placeholder: "Escribe el título aquí...", class: 'form-control mb-3 rounded-3', aria: { label: "Título del comentario" } %>
+  <section class="comments-section mb-5">
+    <div class="comments-header mb-3">
+      <h4 class="text-primary text-center">Comentarios (<%= @comments.count %>)</h4>
     </div>
 
-    <div class="form-group">
-      <%= form.label :Comentario, class: 'font-weight-bold mb-1' %>
-      <%= form.text_area :content, placeholder: "Escribe tu comentario aquí...", class: 'form-control mb-3 rounded-3', rows: 10, aria: { label: "Contenido del comentario" } %>
-    </div>
-
-    <div class="text-center">
-      <%= form.submit "Comentar", class: 'btn btn-outline-light btn-sm w-50' %>
-    </div>
-  <% end %>
-<% end %>
-
-<section class="comments-section mt-5">
-  <% if @comments.any? %>
-    <h4 class="text-center">Comentarios</h4>
-    <hr class="my-5">
-    <% @comments.each do |comment| %>
-      <article class="card mb-3 rounded-3">
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <h5 class="card-title"><%= comment.title %></h5>
-            <% if user_signed_in? && comment.user == current_user %>
-              <%= button_to user_ferment_comment_path(@ferment.user, @ferment, comment), method: :delete, data: { confirm: "¿Estás seguro de eliminar este comentario?" }, class: "btn btn-sm btn-outline-danger rounded-3" do %>
-                <i class="bi bi-trash"></i>
-              <% end %>
-            <% end %>
-          </div>
-          <h6 class="card-subtitle mb-2 text-muted">
-            <small>Por <%= link_to comment.user.full_name , comment.user , class: "text-decoration-none text-dark" %> el <%= comment.created_at.strftime("%Y-%m-%d %H:%M") %></small>
-          </h6>
-          <p class="card-text"><%= comment.content %></p>
-
+    <% if user_signed_in? %>
+      <%= form_with(model: [@ferment.user, @ferment, @comment], local: true, class: "comment-form mb-4") do |form| %>
+        <div class="mb-3">
+          <%= form.text_field :title, placeholder: "Título", class: "form-control rounded-3" %>
         </div>
-      </article>
+        <div class="mb-3">
+          <%= form.text_area :content, placeholder: "Comentario", rows: 4, class: "form-control rounded-3" %>
+        </div>
+        <div class="text-center">
+          <%= form.submit "Comentar", class: "btn btn-primary w-50" %>
+        </div>
+      <% end %>
     <% end %>
-  <% else %>
-    <p class="text-center">No hay comentarios todavía.</p>
-  <% end %>
-</section>
+
+    <% if @comments.any? %>
+      <% @comments.each do |comment| %>
+        <div class="comment-card p-3 rounded-3 shadow-sm mb-3 d-flex gap-3">
+          <% if comment.user.photo.attached? %>
+            <%= image_tag comment.user.photo.variant(resize_to_fill: [50,50]),
+                class: "rounded-circle comment-avatar" %>
+          <% else %>
+            <div class="default-avatar rounded-circle"></div>
+          <% end %>
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <strong class="text-dark"><%= comment.title %></strong>
+              <% if user_signed_in? && comment.user == current_user %>
+                <%= button_to user_ferment_comment_path(@ferment.user, @ferment, comment),
+                    method: :delete,
+                    data: { confirm: "¿Eliminar comentario?" },
+                    class: "btn btn-sm btn-outline-danger ms-2" do %>
+                  <i class="bi bi-trash"></i>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="text-muted small mb-2">
+              Por <%= link_to comment.user.full_name, comment.user, class: "text-decoration-none text-primary" %>
+              • <%= time_ago_in_words(comment.created_at) %> atrás
+            </div>
+            <p class="mb-0 text-dark"><%= comment.content %></p>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-center text-muted">Sé el primero en comentar 📝</p>
+    <% end %>
+  </section>
+</div>
