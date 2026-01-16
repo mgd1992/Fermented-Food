@@ -4,12 +4,13 @@
 
 ## Funcionalidades
 
-- Registro y autenticación de usuarios
-- Crear, editar y eliminar fermentos
-- Instrucciones e ingredientes detallados
-- Carga de imágenes de cada fermento
-- Recordatorios por correo en fechas clave
-- Ver perfiles y fermentos creados por otros usuarios
+- Registro y autenticación de usuarios.
+- Crear, editar y eliminar fermentos.
+- Instrucciones e ingredientes detallados.
+- Cargar y actualizar imágenes de cada fermento.
+- Recordatorios por correo en fechas clave.
+- Navegar por perfiles y fermentos creados por otros usuarios.
+- Dejar comentarios en fermentos.
 
 ## Tecnologías utilizadas
 
@@ -41,7 +42,6 @@ cd Fermented-Food
 
 ```bash
 bundle install
-yarn install
 ```
 
 3. Configurar la base de datos:
@@ -60,20 +60,18 @@ rails s
 Acceder a la app en:
 http://localhost:3000
 
-5. Iniciar Sidekiq (en otra terminal):
-
-```bash
-bundle exec sidekiq
-```
-
-6. Instalar y correr Redis (necesario para Sidekiq):
-
+5. Instalar y correr Redis en nueva terminal (necesario para Sidekiq):
 ```bash
 sudo apt update
 sudo apt install redis-server
 sudo systemctl start redis-server
 ```
 
+6. Iniciar Sidekiq (en otra terminal):
+
+```bash
+bundle exec sidekiq
+```
 
 ## Probar envío de recordatorios manualmente
 Para probar que los recordatorios por email llegan correctamente, podés ejecutar el job manualmente desde la consola de Rails:
@@ -87,7 +85,8 @@ rails c
 2. Ejecutá el job que envía los recordatorios:
 
 ```bash
-ReviewReminderJob.perform_now
+ferment = Ferment.last
+FermentMailer.review_reminder(ferment).deliver_later
 ```
 
 3. Luego, abrí en tu navegador la URL donde letter_opener muestra los emails generados:
@@ -108,4 +107,4 @@ Podés abrir un issue en este repositorio o contactarme directamente:
 - GitHub: [@mgd1992](https://github.com/mgd1992/Fermented-Food)
 - Email: marcoogarbini@gmail.com
 
-¡Gracias por tu interés en Cool Beans! 🫘
+Gracias por tu interés en Cool Beans! 🫘
