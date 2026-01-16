@@ -7,15 +7,31 @@
 }
 
 .profile {
-  height: 550px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: #1c1c1c;
   border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.profile h3 {
+  font-size: 1.8rem;
+  margin-top: 15px;
+  color: #f5f5f5;
+}
+
+.profile p {
+  color: #ccc;
+  margin: 5px 0;
+}
+
+.profile .btn {
+  min-width: 150px;
 }
 
 .ferments-side {
@@ -26,29 +42,44 @@
 
 .ferment-list {
   width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin: 0;
+  gap: 12px;
 }
 
 .ferment-item {
-  background-color: #2e2e2e;
-  border-radius: 8px;
-  border: 1px solid #aeacac;
-  transition: transform 0.2s ease;
-  width: 100%;
-  padding: 16px;
+  background-color: #2b2b2b;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.02);
     background-color: #383838;
   }
 }
 
 li {
   list-style: none;
+}
+
+.ferment-card-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.ferment-card-img.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3a3a3a;
+  color: #888;
+  font-size: 0.8rem;
 }
 
 .ferment-link {

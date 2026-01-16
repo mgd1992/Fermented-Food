@@ -1,11 +1,10 @@
 <div class="container">
 
-  <!-- HEADER -->
   <div class="my-4 text-center">
     <h1 class="mb-3">Todos los fermentos</h1>
 
-    <%= link_to '➕ Nuevo fermento', new_ferment_path,
-          class: "btn btn-outline-success mb-3" %>
+    <%= link_to 'Crear fermento', new_ferment_path,
+          class: "btn btn-outline-warning mb-3" %>
 
     <div class="search-container mx-auto">
       <%= form_with url: ferments_path, method: :get, local: true do %>
@@ -19,16 +18,13 @@
     </div>
   </div>
 
-  <!-- GRID -->
   <div class="ferments-grid">
     <% @ferments.each do |ferment| %>
 
       <div class="ferment-card position-relative">
 
-        <!-- LINK OVERLAY -->
         <%= link_to ferment_path(ferment), class: "card-link-overlay" do %><% end %>
 
-        <!-- IMAGE -->
         <% if ferment.photos.attached? %>
           <%= image_tag ferment.photos.first,
             alt: ferment.name%>
@@ -38,7 +34,6 @@
                 class: "placeholder-image" %>
         <% end %>
 
-        <!-- BODY -->
         <div class="ferment-card-body">
 
           <div class="d-flex justify-content-between align-items-center">
@@ -64,7 +59,6 @@
 
         </div>
 
-        <!-- ACTIONS -->
         <div class="ferment-actions position-relative">
           <%= link_to "Ver", ferment_path(ferment),
                 class: "btn btn-outline-success btn-sm" %>

@@ -1,6 +1,5 @@
 <div class="show-page mt-2">
 
-  <!-- Perfil usuario -->
   <div class="profile text-center text-light bg-dark">
     <% if @user.photo.attached? %>
       <%= image_tag @user.photo, class: "img-fluid rounded-circle mb-3", style: "width: 200px; height: 200px; object-fit: cover;" %>
@@ -12,8 +11,6 @@
     <p class="text-light"><%= @user.email %></p>
     <p class="text-warning">Cantidad de fermentos: <strong><%= @user.ferments.count %></strong> </p>
     <div class="text-center">
-      <%= link_to "Todos", ferments_path, class:"btn btn-outline-info px-4 py-2 rounded-3" %>
-
       <div class="d-flex flex-column justify-content-center">
         <% if user_signed_in? && @user == current_user %>
           <%= link_to 'Crear Fermento', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3 my-2" %>
@@ -28,42 +25,38 @@
 
   </div>
 
-  <!-- Fermentos lista del usuario -->
   <div class="ferments-side">
-    <h4 class="text-center text-light mt-5 mb-2">Mis Fermentos</h4>
-    <hr class=" w-75 mx-auto">
+    <h4 class="text-center text-light my-4">Mis Fermentos</h4>
     <% if @user.ferments.any? %>
-
-      <ul class="ferment-list">
+      <div class="ferment-list">
         <% @user.ferments.each do |ferment| %>
-          <li class="ferment-item d-flex align-items-center justify-content-between">
-            <%= link_to ferment_path(ferment), class: "ferment-link d-flex align-items-center" do %>
-              <div class="ferment-content d-flex align-items-center">
-                <% if ferment.photos.attached? %>
-                  <%= image_tag ferment.photos.first.variant(resize_to_limit: [75, 75]), class: "ferment-image me-3" %>
-                <% end %>
-                <div>
-                  <p class="ferment-name mb-0"><%= ferment.name %></p>
-                  <span class="text-small mt-2"><%= ferment.formatted_start_date %></span>
-                </div>
+          <div class="ferment-item d-flex justify-content-between align-items-center p-3 rounded-3 shadow-sm">
+            <%= link_to ferment_path(ferment), class: "d-flex align-items-center text-decoration-none" do %>
+              <% if ferment.photos.attached? %>
+                <%= image_tag ferment.photos.first.variant(resize_to_limit: [80, 80]), class: "ferment-card-img me-3" %>
+              <% end %>
+              <div>
+                <p class="mb-1 ferment-name"><%= ferment.name %></p>
+                <small class="text-light"><%= ferment.formatted_start_date %></small>
               </div>
             <% end %>
 
             <% if user_signed_in? && ferment.user == current_user %>
-              <%= button_to ferment_path(ferment), method: :delete, data: { confirm: "¿Estás seguro de eliminar este fermento?" }, class: "btn btn-sm btn-outline-danger ms-3" do %>
-                ×
-              <% end %>
+              <div class="d-flex gap-2">
+                <%= link_to '✏️', edit_ferment_path(ferment), class: "btn btn-sm btn-outline-info" %>
+                <%= button_to ferment_path(ferment), method: :delete, data: { confirm: "¿Eliminar fermento?" }, class: "btn btn-sm btn-outline-danger" do %>×<% end %>
+              </div>
             <% end %>
-          </li>
+          </div>
         <% end %>
-      </ul>
+      </div>
     <% else %>
       <div class="text-center text-muted my-5">
-        <h4>Todavía no tenés fermentos? 🫙 </h4>
-        <p>Empezá creando el primero! </p>
-
-        <%= link_to 'Nuevo Fermento', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3 my-2 btn-sm" %>
+        <h4>No hay fermentos aún 🫙</h4>
+        <p>Crea tu primer fermento!</p>
+        <%= link_to 'Crear Fermento', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3 my-2" %>
       </div>
     <% end %>
   </div>
+
 </div>
