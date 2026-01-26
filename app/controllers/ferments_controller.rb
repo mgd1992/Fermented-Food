@@ -3,20 +3,17 @@ class FermentsController < ApplicationController
   before_action :authorize_user!, only: [:new, :create, :edit, :update, :destroy, :destroy_photo]
 
   def index
+    ferments = Ferment.order(created_at: :desc)
+                      .includes(:user, :comments, photos_attachments: :blob)
+
     if params[:query].present?
       query = "%#{params[:query]}%"
-      @ferments = Ferment
-        .where("name ILIKE :q OR ingredients ILIKE :q", q: query)
-        .order(created_at: :desc)
-        .page(params[:page])
-        .per(10)
-    else
-      @ferments = Ferment
-        .order(created_at: :desc)
-        .page(params[:page])
-        .per(10)
+      ferments = ferments.where("name ILIKE :q OR ingredients ILIKE :q", q: query)
     end
+
+    @ferments = ferments.page(params[:page]).per(10).load_async
   end
+
 
   def show
     @comments = @ferment.comments.includes(:user)
@@ -28,15 +25,19 @@ class FermentsController < ApplicationController
   end
 
   def create
-    @ferment = Ferment.new(ferment_params)
-    @ferment.user = current_user
+    @ferment = current_user.ferments.build(ferment_params)
 
-    if @ferment.save
-      attach_photos_if_present
-      schedule_review_job
-      redirect_to @ferment, notice: "Fermento creado con éxito ✨"
-    else
-      render :new, status: :unprocessable_entity
+    respond_to do |format|
+      if @ferment.save
+        attach_photos_if_present
+        schedule_review_job
+
+        format.html { redirect_to @ferment, notice: "Fermento creado con éxito ✨" }
+        format.turbo_stream { render :create }  # renderiza create.turbo_stream.erb
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
+      end
     end
   end
 
@@ -46,7 +47,10 @@ class FermentsController < ApplicationController
   def update
     if @ferment.update(ferment_params_except_photos)
       attach_photos_if_present
-      redirect_to @ferment, notice: "Fermento actualizado con éxito ✨"
+      respond_to do |format|
+        format.html { redirect_to @ferment, notice: "Fermento actualizado con éxito ✨" }
+        format.turbo_stream # renderiza update.turbo_stream.erb
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -55,7 +59,10 @@ class FermentsController < ApplicationController
   def destroy
     if @ferment.user == current_user
       @ferment.destroy!
-      redirect_to @ferment.user, notice: "Fermento eliminado con éxito 🗑️"
+      respond_to do |format|
+        format.html { redirect_to @ferment.user, notice: "Fermento eliminado con éxito 🗑️" }
+        format.turbo_stream  # renderiza destroy.turbo_stream.erb
+      end
     else
       redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento 🚫"
     end

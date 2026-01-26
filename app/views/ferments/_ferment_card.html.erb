@@ -1,0 +1,52 @@
+<div class="ferment-card position-relative">
+
+  <%= link_to ferment, class: "card-link-overlay" do %><% end %>
+
+  <% photo = ferment.photos.first %>
+  <% if photo.present? %>
+    <%= image_tag photo, alt: ferment.name %>
+  <% else %>
+    <%= image_tag "https://res.cloudinary.com/dk4bh7tkl/image/upload/v1768395316/plachodeer_sqjar9.jpg",
+          alt: "Placeholder",
+          class: "placeholder-image" %>
+  <% end %>
+
+  <div class="ferment-card-body">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h4 class="ferment-name"><%= ferment.name %></h4>
+
+      <% comments_count = ferment.comments.size %>
+      <% if comments_count.positive? %>
+        <small class="text-light">💬 <%= comments_count %></small>
+      <% end %>
+    </div>
+
+    <p class="ferment-text">
+      <span class="label">Ingredientes:</span>
+      <span class="clamp-2"><%= ferment.ingredients %></span>
+    </p>
+
+    <% if (user = ferment.user) %>
+      <p class="ferment-time">
+        👤  <%= link_to user.full_name,
+              profile_path(user),
+              class: "text-warning text-decoration-none position-relative" %>
+      </p>
+    <% end %>
+
+  </div>
+
+  <div class="ferment-actions position-relative">
+    <%= link_to "Ver", ferment_path(ferment),
+          class: "btn btn-outline-success btn-sm" %>
+
+    <% if ferment.user == current_user %>
+      <%= link_to "X", ferment_path(ferment),
+            method: :delete,
+            class: "btn btn-outline-danger btn-sm",
+            data: { confirm: "¿Seguro?" } %>
+    <% end %>
+  </div>
+
+</div>

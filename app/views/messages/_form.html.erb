@@ -1,0 +1,17 @@
+<%= form_with(model: message, local: true) do |form| %>
+  <%= form.hidden_field :recipient_id %>
+
+  <div class="mb-3">
+    <%= form.label :subject, "Asunto" %>
+    <%= form.text_field :subject, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :content, "Mensaje" %>
+    <%= form.text_area :content, class: "form-control", rows: 5 %>
+  </div>
+
+  <div class="d-grid mt-3">
+    <%= form.submit "Enviar", class: "btn btn-outline-warning" %>
+  </div>
+<% end %>

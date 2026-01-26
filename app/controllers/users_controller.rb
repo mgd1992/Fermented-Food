@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update]
 
   def show
-    @user = User.includes(ferments: { photos_attachments: :blob }).find(params[:id])
+    @ferments = @user.ferments.with_attached_photos
   end
 
   def create

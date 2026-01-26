@@ -1,0 +1,13 @@
+<section class="ferment-details p-4 mb-5 rounded-3 shadow-sm">
+  <% details = {
+       "Descripción" => ferment.description,
+       "🧂 Ingredientes" => ferment.ingredients,
+       "📋 Instrucciones" => ferment.instructions,
+       "🗓️ Fecha de inicio" => ferment.formatted_start_date,
+       "⏰ Revisar en" => "#{ferment.revisar_fermentos} días"
+     } %>
+
+  <% details.each do |label, value| %>
+    <p><strong><%= label %>:</strong> <%= value %></p>
+  <% end %>
+</section>

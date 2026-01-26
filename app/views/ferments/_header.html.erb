@@ -1,0 +1,10 @@
+<div class="text-center mb-4">
+  <h1 class="ferment-title mb-2"><%= ferment.name %></h1>
+  <div class="d-flex justify-content-center gap-2 flex-wrap">
+    <%= link_to "← Volver al perfil", profile_path(ferment.user), class: "btn btn-outline-warning rounded-3 btn-sm" %>
+    <%= link_to "Todos los fermentos", ferments_path, class: "btn btn-outline-warning rounded-3 btn-sm" %>
+    <% if user_signed_in? && ferment.user == current_user %>
+      <%= link_to "Editar", edit_ferment_path(ferment), class: "btn btn-outline-warning rounded-3 btn-sm" %>
+    <% end %>
+  </div>
+</div>

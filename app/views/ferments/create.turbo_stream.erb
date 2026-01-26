@@ -1,0 +1,3 @@
+<%= turbo_stream.prepend "ferment-list" do %>
+  <%= render partial: "ferments/ferment_item", locals: { ferment: @ferment } %>
+<% end %>

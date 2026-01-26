@@ -1,0 +1,20 @@
+<div id="ferment_<%= ferment.id %>" class="ferment-item d-flex justify-content-between align-items-center p-3 rounded-3 shadow-sm mb-2">
+  <%= link_to ferment_path(ferment), class: "d-flex align-items-center text-decoration-none" do %>
+    <% if ferment.photos.attached? %>
+      <%= image_tag ferment.photos.first.variant(resize_to_limit: [80, 80]), class: "ferment-card-img me-3" %>
+    <% else %>
+      <div class="placeholder-img me-3 rounded-2 bg-secondary" style="width: 80px; height: 80px;"></div>
+    <% end %>
+    <div>
+      <p class="mb-1 ferment-name text-light"><%= ferment.name %></p>
+      <small class="text-light"><%= ferment.formatted_start_date %></small>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? && ferment.user == current_user %>
+    <div class="d-flex gap-2">
+      <%= link_to '✏️', edit_ferment_path(ferment), class: "btn btn-sm btn-outline-info" %>
+      <%= link_to ferment_path(ferment), data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-danger" do %>×<% end %>
+    </div>
+  <% end %>
+</div>

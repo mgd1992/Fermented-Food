@@ -1,0 +1,16 @@
+<div id="ferment-list" class="ferment-list">
+
+  <% if ferments.any? %>
+
+    <%= render partial: "ferments/ferment_item", collection: ferments, as: :ferment %>
+
+  <% else %>
+
+    <div class="text-center text-muted my-5">
+      <h4>No hay fermentos aún 🫙</h4>
+      <p>Crea tu primer fermento!</p>
+      <%= link_to 'Crear Fermento', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3 my-2" %>
+    </div>
+    
+  <% end %>
+</div>
