@@ -18,61 +18,10 @@
     </div>
   </div>
 
-  <div class="ferments-grid">
-    <% @ferments.each do |ferment| %>
+  <div class="ferments-grid" id="ferment-list">
 
-      <div class="ferment-card position-relative">
+    <%= render partial: "ferments/ferment_card", collection: @ferments, as: :ferment %>
 
-        <%= link_to ferment_path(ferment), class: "card-link-overlay" do %><% end %>
-
-        <% if ferment.photos.attached? %>
-          <%= image_tag ferment.photos.first,
-            alt: ferment.name%>
-        <% else %>
-          <%= image_tag "https://res.cloudinary.com/dk4bh7tkl/image/upload/v1768395316/plachodeer_sqjar9.jpg",
-                alt: "Placeholder",
-                class: "placeholder-image" %>
-        <% end %>
-
-        <div class="ferment-card-body">
-
-          <div class="d-flex justify-content-between align-items-center">
-            <h4 class="ferment-name"><%= ferment.name %></h4>
-
-            <% if ferment.comments.any? %>
-              <small class="text-light">💬 <%= ferment.comments.count %></small>
-            <% end %>
-          </div>
-
-          <p class="ferment-text">
-            <span class="label">Ingredientes:</span>
-            <span class="clamp-2"><%= ferment.ingredients %></span>
-          </p>
-
-          <% if ferment.user.present? %>
-            <p class="ferment-time">
-              👤 <%= link_to ferment.user.full_name,
-                    profile_path(ferment.user),
-                    class: "text-warning text-decoration-none position-relative" %>
-            </p>
-          <% end %>
-
-        </div>
-
-        <div class="ferment-actions position-relative">
-          <%= link_to "Ver", ferment_path(ferment),
-                class: "btn btn-outline-success btn-sm" %>
-
-          <% if ferment.user == current_user %>
-            <%= link_to "X", ferment_path(ferment),
-                  method: :delete,
-                  class: "btn btn-outline-danger btn-sm" %>
-          <% end %>
-        </div>
-
-      </div>
-
-    <% end %>
   </div>
 
 

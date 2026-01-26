@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     end
   end
   resources :ferments
+  resources :messages, only: [:index, :new, :create, :show]
+
+  get 'users/:recipient_id/message', to: 'messages#new', as: :new_user_message
+
 
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
