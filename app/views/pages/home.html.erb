@@ -2,20 +2,20 @@
 
   <div class="landing-inner">
 
-    <!-- Navbar -->
     <nav class="nav d-flex justify-content-between align-items-center w-100 px-3 py-2" data-controller="navbar">
 
-      <!-- Logo -->
       <%= link_to root_path, class: 'nav-link text-light' do %>
         <h1 class="nav-title m-0">Cool Beans</h1>
       <% end %>
 
-      <!-- Links Desktop -->
       <div class="nav-links d-none d-md-flex align-items-center justify-content-center gap-2">
         <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm' %>
 
-        <%= link_to 'Crear fermento', new_ferment_path,
-          class: "btn btn-outline-light btn-sm" %>
+        <% if user_signed_in? %>
+          <%= link_to 'Crear fermento', new_user_ferment_path(current_user), class: "btn btn-outline-light btn-sm" %>
+        <% else %>
+          <%= link_to 'Crear fermento', new_user_session_path, class: "btn btn-outline-light btn-sm" %>
+        <% end %>
 
         <% if user_signed_in? %>
           <%= link_to user_path(current_user) do %>
@@ -26,17 +26,13 @@
           <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-light btn-sm text-dark' %>
         <% end %>
       </div>
-
-      <!-- Hamburger Mobile -->
       <button class="nav-toggle btn btn-outline-light d-md-none" type="button" aria-label="Toggle menu" data-action="click->navbar#toggle">
         ☰
       </button>
-
-      <!-- Menú Mobile -->
       <div class="nav-mobile-menu d-none flex-column align-items-center bg-dark text-light p-3" data-navbar-target="menu">
         <% if user_signed_in? %>
           <%= link_to 'Mi perfil', user_path(current_user), class: 'btn btn-outline-light w-50 ' %>
-          <%= link_to 'Crear fermento', new_ferment_path, class: "btn btn-outline-light w-50" %>
+          <%= link_to 'Crear fermento', new_user_ferment_path(current_user), class: "btn btn-outline-light w-50" %>
         <% else %>
           <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light w-100 mb-2' %>
           <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-light w-100 text-dark mb-2' %>
@@ -46,16 +42,10 @@
 
     </nav>
 
-
-    <!-- Landing content -->
     <div class="landing-content text-center mt-auto mb-auto">
       <h2 class="landing-title">Explora y crea fermentos</h2>
       <p class="landing-subtitle">Descubrí, compartí y sigue tus fermentos favoritos 🧂</p>
       <%= link_to "Explorar fermentos", ferments_path, class: "btn btn-lg btn-outline-light me-2" %>
-      <% unless user_signed_in? %>
-        <%= link_to "Registrate", new_user_registration_path, class: "btn btn-lg btn-light text-dark" %>
-      <% end %>
-
 
     </div>
 

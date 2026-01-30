@@ -11,10 +11,11 @@
 
   <% if user_signed_in? && user == current_user %>
     <div class="d-flex flex-column justify-content-center mt-3">
-      <%= link_to 'Crear Fermento', new_ferment_path, class: "btn btn-outline-info px-4 py-2 rounded-3 my-2" %>
-      <%= link_to 'Editar Perfil', edit_user_path(user), class: "btn btn-outline-light btn-sm my-2 py-2" %>
+      <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), class: "btn btn-outline-info px-4 py-2 rounded-3 my-2" %>
+      <%= link_to 'Editar Perfil', edit_user_path(current_user), class: "btn btn-outline-light btn-sm my-2 py-2" %>
     </div>
   <% end %>
+  
   <div class="mt-3">
     <% if user_signed_in? && current_user == @user %>
       <%= link_to "📥 Bandeja de entrada", messages_path, class: "btn btn-outline-warning" %>

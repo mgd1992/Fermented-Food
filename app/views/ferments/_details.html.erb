@@ -1,13 +1,35 @@
 <section class="ferment-details p-4 mb-5 rounded-3 shadow-sm">
-  <% details = {
-       "Descripción" => ferment.description,
-       "🧂 Ingredientes" => ferment.ingredients,
-       "📋 Instrucciones" => ferment.instructions,
-       "🗓️ Fecha de inicio" => ferment.formatted_start_date,
-       "⏰ Revisar en" => "#{ferment.revisar_fermentos} días"
-     } %>
+
+  <%
+    details = {
+      "📖 Descripción" => ferment.description,
+      "🧂 Ingredientes" => ferment.ingredients,
+      "📋 Instrucciones" => ferment.instructions,
+      "🗓️ Fecha de inicio" => ferment.formatted_start_date,
+      "⏰ Revisar en" => "#{ferment.revisar_fermentos} días"
+    }
+  %>
 
   <% details.each do |label, value| %>
     <p><strong><%= label %>:</strong> <%= value %></p>
   <% end %>
+  <% if current_user?(@ferment.user) %>
+    <%= link_to "Editar fermento 🛠️", edit_user_ferment_path(current_user, @ferment), class:"btn btn-outline-warning btn-sm" %>
+  <% end %>
+
+
+  <% if ferment.photos.any? %>
+    <div class="border-top my-4">
+      <p class="text-muted text-center mb-3">
+        📸 <%= ferment.photos.count %> fotos
+      </p>
+
+      <%= render "ferments/photo_ferments", ferment: ferment %>
+    </div>
+  <% else %>
+    <p class="text-muted fst-italic mt-3 fs-5 text-center border-top pt-3">
+      📷 Todavía no hay fotos de este fermento
+    </p>
+  <% end %>
+
 </section>

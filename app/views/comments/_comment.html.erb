@@ -1,4 +1,4 @@
-<div class="comment-card p-3 rounded-3 shadow-sm mb-3 d-flex gap-3">
+<div class="comment-card p-3 rounded-3 shadow-sm mb-3 d-flex gap-3 ">
 
   <% user = comment.user %>
 
@@ -14,16 +14,13 @@
       <strong class="text-dark"><%= comment.title %></strong>
 
       <% if user_signed_in? && user == current_user %>
-        <%= button_to user_ferment_comment_path(
-              ferment.user,
-              ferment,
-              comment
-            ),
-            method: :delete,
-            data: { confirm: "Queres eliminar el comentario?" },
-            class: "btn btn-sm btn-outline-danger ms-2" do %>
+        <%= button_to user_ferment_comment_path(ferment.user, ferment, comment),
+                method: :delete,
+                data: { confirm: "Estás seguro?" },
+                class: "btn btn-outline-danger btn-sm" do %>
           <i class="bi bi-trash"></i>
-        <% end %>
+              <% end %>
+
       <% end %>
     </div>
 

@@ -13,10 +13,12 @@
     <% else %>
 
       <div class="text-center text-muted my-5">
+        
         <h4>No hay fermentos aún 🫙</h4>
         <p>Crea tu primer fermento!</p>
+
         <% if user_signed_in? && @user == current_user %>
-          <%= link_to 'Crear Fermento', new_ferment_path, class: "btn btn-outline-info" %>
+          <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), class: "btn btn-outline-info" %>
         <% end %>
       </div>
 

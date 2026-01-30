@@ -42,10 +42,10 @@
           class: "btn btn-outline-success btn-sm" %>
 
     <% if ferment.user == current_user %>
-      <%= link_to "X", ferment_path(ferment),
+      <%= link_to "X", user_ferment_path(current_user, ferment),
             method: :delete,
             class: "btn btn-outline-danger btn-sm",
-            data: { confirm: "¿Seguro?" } %>
+            data: { confirm: "Seguro?" } %>
     <% end %>
   </div>
 

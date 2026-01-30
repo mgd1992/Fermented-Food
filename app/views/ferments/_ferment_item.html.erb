@@ -13,8 +13,8 @@
 
   <% if user_signed_in? && ferment.user == current_user %>
     <div class="d-flex gap-2">
-      <%= link_to '✏️', edit_ferment_path(ferment), class: "btn btn-sm btn-outline-info" %>
-      <%= link_to ferment_path(ferment), data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-danger" do %>×<% end %>
+      <%= link_to '✏️', edit_user_ferment_path(ferment.user, ferment), class: "btn btn-sm btn-outline-info" %>
+      <%= link_to user_ferment_path(ferment.user, ferment), data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-danger" do %>×<% end %>
     </div>
   <% end %>
 </div>

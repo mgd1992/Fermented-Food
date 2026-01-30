@@ -1,4 +1,5 @@
 class FermentsController < ApplicationController
+  before_action :set_user, only: [:new, :create, :edit, :update]
   before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo]
   before_action :authorize_user!, only: [:new, :create, :edit, :update, :destroy, :destroy_photo]
 
@@ -14,7 +15,6 @@ class FermentsController < ApplicationController
     @ferments = ferments.page(params[:page]).per(10).load_async
   end
 
-
   def show
     @comments = @ferment.comments.includes(:user)
     @comment = Comment.new
@@ -22,6 +22,7 @@ class FermentsController < ApplicationController
 
   def new
     @ferment = Ferment.new
+    session[:return_to] = request.referer unless request.referer&.include?('new')
   end
 
   def create
@@ -31,9 +32,7 @@ class FermentsController < ApplicationController
       if @ferment.save
         attach_photos_if_present
         schedule_review_job
-
-        format.html { redirect_to @ferment, notice: "Fermento creado con éxito ✨" }
-        format.turbo_stream { render :create }  # renderiza create.turbo_stream.erb
+        format.html { redirect_to ferment_path(@ferment), notice: "Fermento creado con éxito ✨" }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
@@ -45,14 +44,16 @@ class FermentsController < ApplicationController
   end
 
   def update
-    if @ferment.update(ferment_params_except_photos)
+    if @ferment.update(ferment_params.except(:photos))
       attach_photos_if_present
       respond_to do |format|
-        format.html { redirect_to @ferment, notice: "Fermento actualizado con éxito ✨" }
-        format.turbo_stream # renderiza update.turbo_stream.erb
+        format.html { redirect_to ferment_path(@ferment), notice: "Fermento actualizado con éxito ✨" }
       end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
+      end
     end
   end
 
@@ -60,11 +61,11 @@ class FermentsController < ApplicationController
     if @ferment.user == current_user
       @ferment.destroy!
       respond_to do |format|
-        format.html { redirect_to @ferment.user, notice: "Fermento eliminado con éxito 🗑️" }
-        format.turbo_stream  # renderiza destroy.turbo_stream.erb
+        format.html { redirect_to profile_path(current_user), notice: "Fermento eliminado con éxito " }
+        format.turbo_stream
       end
     else
-      redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento 🚫"
+      redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento "
     end
   end
 
@@ -72,10 +73,17 @@ class FermentsController < ApplicationController
     photo = @ferment.photos.find(params[:photo_id])
     photo.purge
 
-    redirect_to @ferment, notice: "Foto eliminada 📸"
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("ferment_photo_#{photo.id}") }
+      format.html { redirect_to @ferment, notice: "Foto eliminada " }
+    end
   end
 
   private
+
+  def set_user
+    @user = current_user
+  end
 
   def set_ferment
     @ferment = Ferment.includes(:user, photos_attachments: :blob, comments: []).find(params[:id])
@@ -84,28 +92,26 @@ class FermentsController < ApplicationController
   def ferment_params
     params.require(:ferment).permit(
       :name, :description, :instructions, :ingredients,
-      :fermentation_time, :start_date, :revisar_fermentos
-    )
-  end
-
-  def ferment_params_except_photos
-    params.require(:ferment).permit(
-      :name, :description, :instructions, :ingredients,
-      :fermentation_time, :start_date, :revisar_fermentos
+      :fermentation_time, :start_date, :revisar_fermentos, photos: []
     )
   end
 
   def authorize_user!
     if @ferment.present?
-      redirect_to new_user_session_path, alert: "Debes iniciar sesión para continuar" unless @ferment.user == current_user
+      unless @ferment.user == current_user
+        redirect_to root_path, alert: "No tienes permiso"
+      end
     else
-      redirect_to new_user_session_path, alert: "Debes iniciar sesión para continuar" unless user_signed_in?
+      unless user_signed_in?
+        redirect_to new_user_session_path, alert: "Debes iniciar sesión"
+      end
     end
   end
 
   def attach_photos_if_present
     return unless params[:ferment][:photos].present?
-    @ferment.photos.attach(params[:ferment][:photos])
+    photos_to_attach = params[:ferment][:photos].reject(&:blank?)
+    @ferment.photos.attach(photos_to_attach) if photos_to_attach.any?
   end
 
   def schedule_review_job
