@@ -1,6 +1,6 @@
 <div id="ferment_form">
 
-  <%= form_with(model: [current_user, ferment], html: { multipart: true }) do |form| %>
+  <%= form_with(model: [current_user, ferment], data: { turbo_frame: "_top" }, html: { multipart: true }) do |form| %>
     <h2 class="text-center mb-4 fw-semibold">
       <%= ferment.new_record? ? "Nuevo fermento" : "Editar fermento" %>
     </h2>
@@ -50,12 +50,14 @@
       <% if ferment.photos.attached? %>
         <div class="d-flex flex-wrap gap-2 mb-3">
           <% ferment.photos.each do |photo| %>
-            <div id="ferment_photo_<%= photo.id %>" class="position-relative">
-              <%= image_tag photo.variant(resize_to_limit: [100, 100]), class: "rounded border" %>
-              <%= link_to "×", destroy_photo_ferment_path(ferment, photo_id: photo.id),
-                  data: { turbo_method: :delete, turbo_confirm: "¿Borrar foto?" },
-                  class: "btn btn-danger btn-sm position-absolute top-0 end-0 py-0 px-1" %>
-            </div>
+            <% if photo.persisted? %>
+              <div id="ferment_photo_<%= photo.id %>" class="position-relative">
+                <%= image_tag photo.variant(resize_to_limit: [100, 100]), class: "rounded border" %>
+                <%= link_to "×", destroy_photo_ferment_path(ferment, photo_id: photo.id),
+                    data: { turbo_method: :delete, turbo_confirm: "¿Borrar foto?" },
+                    class: "btn btn-danger btn-sm position-absolute top-0 end-0 py-0 px-1" %>
+              </div>
+            <% end %>
           <% end %>
         </div>
       <% end %>

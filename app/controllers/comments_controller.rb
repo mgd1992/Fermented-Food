@@ -5,19 +5,30 @@ class CommentsController < ApplicationController
   before_action :authorize_user!, only: [:destroy]
 
   def create
-    @comment = @ferment.comments.new(comment_params)
+    @comment = @ferment.comments.build(comment_params)
     @comment.user = current_user
 
-    if @comment.save
-      redirect_to @ferment, notice: 'Comentario creado con éxito.'
-    else
-      redirect_to @ferment, alert: 'Hubo un problema al crear el comentario.'
+    respond_to do |format|
+      if @comment.save
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.prepend("comments", partial: "comments/comment", locals: { comment: @comment, ferment: @ferment }),
+            turbo_stream.replace("new_comment", partial: "comments/form", locals: { ferment: @ferment, comment: Comment.new })
+          ]
+        end
+        format.html { redirect_to user_ferment_path(@user, @ferment) }
+      else
+        format.html { render "ferments/show", status: :unprocessable_entity }
+      end
     end
   end
 
   def destroy
     @comment.destroy
-    redirect_to @ferment, notice: 'Comentario eliminado con éxito.'
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(helpers.dom_id(@comment)) }
+      format.html { redirect_to user_ferment_path(@user, @ferment), status: :see_other }
+    end
   end
 
 

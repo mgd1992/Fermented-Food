@@ -1,6 +1,5 @@
 <div class="ferment-card position-relative">
-
-  <%= link_to ferment, class: "card-link-overlay" do %><% end %>
+  <%= link_to ferment, class: "card-link-overlay", data: { turbo_frame: "_top" } do %><% end %>
 
   <% photo = ferment.photos.first %>
   <% if photo.present? %>
@@ -12,10 +11,8 @@
   <% end %>
 
   <div class="ferment-card-body">
-
     <div class="d-flex justify-content-between align-items-center">
       <h4 class="ferment-name"><%= ferment.name %> </h4>
-
       <% comments_count = ferment.comments.size %>
       <% if comments_count.positive? %>
         <small class="text-light">💬 <%= comments_count %></small>
@@ -29,24 +26,23 @@
 
     <% if (user = ferment.user) %>
       <p class="ferment-time">
-        👤  <%= link_to user.full_name,
+        👤 <%= link_to user.full_name,
               profile_path(user),
-              class: "text-warning text-decoration-none position-relative" %>
+              class: "text-warning text-decoration-none position-relative",
+              data: { turbo_frame: "_top" } %>
       </p>
     <% end %>
-
   </div>
 
   <div class="ferment-actions position-relative">
     <%= link_to "Ver", ferment_path(ferment),
-          class: "btn btn-outline-success btn-sm" %>
+          class: "btn btn-outline-success btn-sm",
+          data: { turbo_frame: "_top" } %>
 
     <% if ferment.user == current_user %>
       <%= link_to "X", user_ferment_path(current_user, ferment),
-            method: :delete,
-            class: "btn btn-outline-danger btn-sm",
-            data: { confirm: "Seguro?" } %>
+            data: { turbo_method: :delete },
+            class: "btn btn-outline-danger btn-sm" %>
     <% end %>
   </div>
-
 </div>
