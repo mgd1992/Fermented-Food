@@ -1,4 +1,4 @@
-<div class="p-5 ">
+<div class="p-5 w-75 mx-auto">
 
   <h1 class="text-center my-2"><%= @ferment.name %></h1>
 
@@ -6,6 +6,6 @@
 
   <%= render "comments/form", ferment: @ferment, comment: @comment %>
 
-  <%= render @comments %>
+  <%= render partial: 'comments/comment', collection: @comments, as: :comment, locals: { ferment: @ferment } %>
 
 </div>

@@ -2,12 +2,12 @@
   <%= form.hidden_field :recipient_id %>
 
   <div class="mb-3">
-    <%= form.label :subject, "Asunto" %>
-    <%= form.text_field :subject, class: "form-control" %>
+    <%= form.label :subject, "Asunto", class: "form-label" %>
+    <%= form.text_field :subject, class: "form-control", value: @subject %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :content, "Mensaje" %>
+    <%= form.label :content, "Mensaje", class: "form-label"  %>
     <%= form.text_area :content, class: "form-control", rows: 5 %>
   </div>
 

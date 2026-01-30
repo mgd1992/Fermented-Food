@@ -1,0 +1,39 @@
+<% if messages.any? %>
+  <div class="list-group list-group-flush">
+    <% messages.each do |msg| %>
+      <%= link_to message_path(msg),
+          id: dom_id(msg),
+          class: "list-group-item list-group-item-action py-3 border-bottom" do %>
+
+        <div class="d-flex justify-content-between align-items-start">
+          <div class="me-3">
+            <div class="fw-semibold mb-1">
+              <%= msg.subject %>
+              <% if type == :received && !msg.read? %>
+                <span class="badge border border-success text-success ms-2">Nuevo</span>
+              <% end %>
+            </div>
+
+            <div class="text-muted small">
+              <% if type == :received %>
+                De: <%= msg.sender.full_name %>
+              <% else %>
+                Para: <%= msg.recipient.full_name %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="text-muted small text-nowrap">
+            <%= msg.created_at.strftime("%d %b %Y") %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-5">
+      <p class="text-muted fs-5 mb-0">
+        <%= type == :received ? "No tienes mensajes recibidos 📥" : "No has enviado mensajes aún 📤" %>
+      </p>
+  </div>
+<% end %>

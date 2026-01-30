@@ -19,22 +19,29 @@ class UsersController < ApplicationController
   end
 
   def update
-    if params[:user][:password].blank?
-      params[:user].delete(:password)
-    end
-
-    if @user.update(user_params)
-      redirect_to user_path(@user), notice: 'Perfil actualizado'
+    if params[:user][:password].present?
+      if @user.update_with_password(user_params)
+        bypass_sign_in(@user)  # mantiene sesión
+        redirect_to user_path(@user), notice: "Perfil y contraseña actualizados ✅"
+      else
+        render :edit
+      end
     else
-      render :edit
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+      params[:user].delete(:current_password) 
+      if @user.update(user_params)
+        redirect_to user_path(@user), notice: "Perfil actualizado ✅"
+      else
+        render :edit
+      end
     end
-
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :photo)
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password, :photo)
   end
 
   def set_user

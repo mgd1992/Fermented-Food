@@ -3,8 +3,11 @@
   <div class="my-4 text-center">
     <h1 class="mb-3">Todos los fermentos</h1>
 
-    <%= link_to 'Crear fermento', new_ferment_path,
-          class: "btn btn-outline-warning mb-3" %>
+    <% if user_signed_in? %>
+      <%= link_to 'Crear fermento', new_user_ferment_path(current_user),
+            class: "btn btn-outline-warning mb-3",
+            data: { turbo_frame: "_top" } %>
+    <% end %>
 
     <div class="search-container mx-auto">
       <%= form_with url: ferments_path, method: :get, local: true do %>
