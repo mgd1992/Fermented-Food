@@ -1,0 +1,23 @@
+<% if notice %>
+  <div class="alert alert-success alert-dismissible fade show mt-3"
+      role="alert"
+      data-controller="flash">
+    <%= notice %>
+    <button type="button"
+            class="btn-close"
+            data-action="click->flash#cerrar"
+            aria-label="Close"></button>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="alert alert-danger alert-dismissible fade show mt-3"
+      role="alert"
+      data-controller="flash">
+    <%= alert %>
+    <button type="button"
+            class="btn-close"
+            data-action="click->flash#dismiss"
+            aria-label="Close"></button>
+  </div>
+<% end %>

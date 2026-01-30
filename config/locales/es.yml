@@ -1,0 +1,29 @@
+es:
+  activerecord:
+    errors:
+      models:
+        ferment:
+          attributes:
+            name:
+              blank: "es obligatorio, ponle algo creativo"
+            description:
+              blank: "no puede estar vacía si quieres que otros aprendan"
+            ingredients:
+              blank: "no puede estar vacía"
+            instructions:
+              blank: "no puede estar vacía"
+            fermentation_time:
+              blank: "no puede estar vacía"
+    attributes:
+      ferment:
+        name: "Nombre del fermento"
+        description: "Descripción"
+        ingredients: "Ingredientes"
+        instructions: "Instrucciones"
+        fermentation_time: "Tiempo de fermentación"
+        notes: "Notas"
+      user:
+        email: "Correo electrónico"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de contraseña"
+        current_password: "Contraseña actual"

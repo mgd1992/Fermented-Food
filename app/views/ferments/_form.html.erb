@@ -6,13 +6,16 @@
     </h2>
 
     <% if ferment.errors.any? %>
-      <div class="alert alert-danger">
-        <p class="fw-semibold mb-2">No se pudo guardar el fermento:</p>
-        <ul class="mb-0">
+      <div class="alert alert-danger alert-dismissible fade show mt-3 "
+          role="alert"
+          data-controller="flash">
           <% ferment.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
           <% end %>
-        </ul>
+        <button type="button"
+                class="btn-close"
+                data-action="click->flash#cerrar"
+                aria-label="Close"></button>
       </div>
     <% end %>
 
@@ -49,7 +52,6 @@
           <% ferment.photos.each do |photo| %>
             <div id="ferment_photo_<%= photo.id %>" class="position-relative">
               <%= image_tag photo.variant(resize_to_limit: [100, 100]), class: "rounded border" %>
-              <%# Link para borrar foto individualmente %>
               <%= link_to "×", destroy_photo_ferment_path(ferment, photo_id: photo.id),
                   data: { turbo_method: :delete, turbo_confirm: "¿Borrar foto?" },
                   class: "btn btn-danger btn-sm position-absolute top-0 end-0 py-0 px-1" %>
