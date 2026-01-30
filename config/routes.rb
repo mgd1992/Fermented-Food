@@ -15,6 +15,7 @@
     # Ferments independientes
     resources :ferments, only: [:show, :index, :edit, :update, :destroy] do
       member do
+        patch :restart
         delete "photos/:photo_id", to: "ferments#destroy_photo", as: :destroy_photo
       end
     end

@@ -17,29 +17,8 @@
   </head>
 
   <body>
-    <% if notice %>
-      <div class="alert alert-success alert-dismissible fade show container mt-3"
-          role="alert"
-          data-controller="flash"> <%# Conecta el JS %>
-        <%= notice %>
-        <button type="button"
-                class="btn-close"
-                data-action="click->flash#dismiss" <%# Ejecuta la función dismiss %>
-                aria-label="Close"></button>
-      </div>
-    <% end %>
 
-    <% if alert %>
-      <div class="alert alert-danger alert-dismissible fade show container mt-3"
-          role="alert"
-          data-controller="flash">
-        <%= alert %>
-        <button type="button"
-                class="btn-close"
-                data-action="click->flash#dismiss"
-                aria-label="Close"></button>
-      </div>
-    <% end %>
+    <%= render "shared/flash" %>
 
     <%= render "shared/navbar" if show_global_navbar? %>
 

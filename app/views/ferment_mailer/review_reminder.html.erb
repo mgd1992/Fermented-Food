@@ -1,52 +1,41 @@
-<div style="max-width:600px;margin:0 auto;font-family:Arial,sans-serif;background:#f4f4f8;border-radius:12px;padding:16px;">
+<div style="max-width: 600px; margin: 0 auto; border: 1px solid #dee2e6; border-radius: 0.5rem; font-family: sans-serif;">
 
-  <!-- Header -->
-  <div style="text-align:center;color:#fff;background:#6f42c1;padding:16px;border-radius:12px 12px 0 0;">
-    <h2 style="margin:0;font-size:1.4rem;">⏰ ¡Hora de revisar tu fermento!</h2>
+  <div style="background-color: #0d6efd; color: white; padding: 1.5rem; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; text-align: center;">
+    <h2 style="margin: 0;">🧪 Fermented Food</h2>
   </div>
 
-  <!-- Imagen -->
-  <div style="text-align:center;margin:16px 0;">
-    <% if @ferment.photos.attached? %>
-      <% @ferment.photos.each do |photo| %>
-        <%= image_tag url_for(photo), style:"width:80px;height:80px;object-fit:cover;border-radius:6px;margin:0 4px;" %>
-      <% end %>
-    <% else %>
-      <p style="font-style:italic;color:#868e96;">No hay fotos adjuntas</p>
-    <% end %>
-  </div>
+  <div style="padding: 1.5rem; background-color: white;">
+    <h4 style="margin-bottom: 1rem; color: #212529;">¡Hora de revisar tu fermento!</h4>
 
-  <!-- Información -->
-  <div style="text-align:center;padding:0 12px;">
-    <h4 style="margin-bottom:8px;color:#343a40;"><%= @ferment.name %></h4>
-    <p style="color:#495057;font-size:0.95rem;line-height:1.4;margin-bottom:12px;">
-      Comenzó el <strong><%= @ferment.start_date.strftime("%d/%m/%Y") %></strong><br>
-      Tiempo de fermentación: <strong><%= @ferment.revisar_fermentos %> días</strong><br>
-      Llevas <strong><%= ((Time.current.to_date - @ferment.start_date.to_date).to_i) %> días</strong>
+    <p style="color: #6c757d; line-height: 1.5;">
+      Hola, <strong><%= @user.first_name %></strong>. <br>
+      Tu fermento <strong><%= @ferment.name %></strong> ya cumplió su tiempo estimado de <%= @ferment.revisar_fermentos %> días.
     </p>
 
-    <!-- Barra de progreso -->
-    <div style="background:#dee2e6;height:18px;border-radius:9px;margin-bottom:12px;">
-      <% progress = [((Time.current.to_date - @ferment.start_date.to_date).to_i.to_f / @ferment.revisar_fermentos)*100, 100].min.round %>
-      <div style="width:<%= progress %>%;background:<%= progress < 100 ? '#ffc107' : '#28a745' %>;height:18px;border-radius:9px;text-align:center;color:#fff;font-weight:bold;line-height:18px;">
-        <%= progress %>%
+    <% if @ferment.photos.attached? %>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <%= image_tag url_for(@ferment.photos.first),
+            style: "max-width: 100%; height: auto; border-radius: 0.25rem; border: 1px solid #dee2e6;" %>
+      </div>
+    <% end %>
+
+    <div style="background-color: #e9ecef; border-radius: 0.25rem; height: 1.5rem; margin-bottom: 1rem; overflow: hidden;">
+      <div style="width: <%= @ferment.progress_percentage %>%; background-color: #198754; height: 100%; text-align: center; color: white; font-size: 0.8rem; line-height: 1.5rem; font-weight: bold;">
+        <%= @ferment.progress_percentage %>%
       </div>
     </div>
 
-    <!-- Mensaje dinámico -->
-    <p style="font-weight:600;color:#212529;margin-bottom:12px;">
-      <%= progress < 100 ? "¡Ya casi está listo!" : "¡Tu fermento debería revisarse hoy!" %>
-    </p>
+    <div style="background-color: #fff3cd; color: #664d03; padding: 1rem; border-radius: 0.25rem; border: 1px solid #ffe69c; margin-bottom: 1.5rem; font-size: 0.9rem;">
+      <strong>Dato:</strong> Empezó el <%= @ferment.formatted_start_date %> (<%= @ferment.days_passed %> días transcurridos).
+    </div>
 
-    <!-- Botón -->
-    <a href="<%= ferment_url(@ferment) %>" style="display:inline-block;background:#6f42c1;color:#fff;font-weight:bold;padding:8px 16px;border-radius:25px;text-decoration:none;font-size:1rem;">
-      Ver fermento
-    </a>
+    <div style="text-align: center;">
+      <%= link_to "Ver detalles y Reiniciar Ciclo", ferment_url(@ferment),
+          style: "display: block; background-color: #0d6efd; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 0.3rem; font-weight: bold;" %>
+    </div>
   </div>
 
-  <!-- Footer -->
-  <div style="text-align:center;color:#868e96;font-size:0.85rem;padding:8px;border-top:1px solid #dee2e6;margin-top:12px;">
-    Si ya revisaste este fermento, puedes ignorar este correo.
+  <div style="background-color: #f8f9fa; color: #6c757d; padding: 1rem; font-size: 0.8rem; text-align: center; border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem;">
+    Si ya lo revisaste, recuerda pulsar <strong>"Reiniciar Ciclo"</strong> para programar el próximo aviso.
   </div>
-
 </div>

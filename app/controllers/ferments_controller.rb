@@ -12,6 +12,13 @@ class FermentsController < ApplicationController
       ferments = ferments.where("name ILIKE :q OR ingredients ILIKE :q", q: query)
     end
 
+    case params[:status]
+    when "ready"
+      ferments = ferments.where("review_date <= ?", Date.today)
+    when "active"
+      ferments = ferments.where("review_date > ?", Date.today)
+    end
+
     @ferments = ferments.page(params[:page]).per(10).load_async
   end
 
@@ -54,6 +61,19 @@ class FermentsController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
       end
+    end
+  end
+
+  def restart
+    @ferment = Ferment.find(params[:id])
+    if @ferment.user == current_user
+      if @ferment.update(start_date: Date.today)
+        redirect_to ferment_path(@ferment), notice: "¡Ciclo reiniciado! El fermento vuelve a contar desde hoy."
+      else
+        redirect_to ferment_path(@ferment), alert: "No se pudo reiniciar el fermento."
+      end
+    else
+      redirect_to root_path, alert: "No tienes permiso para realizar esta acción."
     end
   end
 
