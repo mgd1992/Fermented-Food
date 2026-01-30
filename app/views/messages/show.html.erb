@@ -27,7 +27,6 @@
           <%= link_to message_path(@message),
               data: {
                 turbo_method: :delete,
-                turbo_confirm: "¿Borrar este mensaje?",
                 turbo_frame: "_top"
               },
               class: "btn btn-outline-danger" do %>

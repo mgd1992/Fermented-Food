@@ -1,13 +1,13 @@
 <div class="ferment-gallery">
   <% ferment.photos.each do |photo| %>
-    <div  class="ferment-photo-card">
+    <div  class="ferment-photo-card"  id="<%= dom_id(photo) %>">
 
       <% if ferment.user == current_user %>
 
         <%= link_to "✖",
           destroy_photo_ferment_path(ferment_id: ferment.id, photo_id: photo.id),
           class: "delete-photo-btn",
-          data: { turbo_method: :delete, turbo_confirm: "Eliminar esta foto?" }
+          data: { turbo_method: :delete }
         %>
 
       <% end %>

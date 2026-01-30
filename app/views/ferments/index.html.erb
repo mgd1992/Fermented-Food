@@ -1,5 +1,4 @@
 <div class="container">
-
   <div class="my-4 text-center">
     <h1 class="mb-3">Todos los fermentos</h1>
 
@@ -9,44 +8,47 @@
             data: { turbo_frame: "_top" } %>
     <% end %>
 
-    <div class="search-container mx-auto mb-3">
-      <%= form_with url: ferments_path, method: :get, local: true do %>
-        <div class="input-group">
-          <%= text_field_tag :query, params[:query],
-                placeholder: "Buscar fermento...",
-                class: "form-control" %>
-          <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
-          <%= submit_tag "🔍", class: "btn btn-outline-light" %>
+    <%= turbo_frame_tag "ferments_filter_frame" do %>
+
+      <div class="search-container mx-auto mb-3">
+        <%= form_with url: ferments_path, method: :get, data: { turbo_frame: "ferments_filter_frame" } do %>
+          <div class="input-group">
+            <%= text_field_tag :query, params[:query],
+                  placeholder: "Buscar fermento...",
+                  class: "form-control" %>
+            <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
+            <%= submit_tag "🔍", class: "btn btn-outline-light" %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="d-flex justify-content-center gap-2 mb-4">
+        <%= link_to "Todos", ferments_path(query: params[:query]),
+            class: "btn btn-sm #{params[:status].blank? ? 'btn-warning' : 'btn-outline-secondary'}" %>
+
+        <%= link_to "⏳ En curso", ferments_path(status: :active, query: params[:query]),
+            class: "btn btn-sm #{params[:status] == 'active' ? 'btn-warning' : 'btn-outline-secondary'}" %>
+
+        <%= link_to "✅ Listos", ferments_path(status: :ready, query: params[:query]),
+            class: "btn btn-sm #{params[:status] == 'ready' ? 'btn-warning' : 'btn-outline-secondary'}" %>
+      </div>
+
+      <div class="ferments-grid" id="ferment-list">
+        <% if @ferments.any? %>
+          <%= render partial: "ferments/ferment_card", collection: @ferments, as: :ferment %>
+        <% else %>
+          <div class="text-center w-100 mt-5">
+            <p class="text-muted fs-5">No se encontraron fermentos en esta categoría.</p>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @ferments.total_pages > 1 %>
+        <div class="pagination mt-4 d-flex justify-content-center">
+          <%= paginate @ferments %>
         </div>
       <% end %>
-    </div>
 
-    <div class="d-flex justify-content-center gap-2 mb-4">
-      <%= link_to "Todos", ferments_path(query: params[:query]),
-          class: "btn btn-sm #{params[:status].blank? ? 'btn-warning' : 'btn-outline-secondary'}" %>
-
-      <%= link_to "⏳ En curso", ferments_path(status: :active, query: params[:query]),
-          class: "btn btn-sm #{params[:status] == 'active' ? 'btn-warning' : 'btn-outline-secondary'}" %>
-
-      <%= link_to "✅ Listos", ferments_path(status: :ready, query: params[:query]),
-          class: "btn btn-sm #{params[:status] == 'ready' ? 'btn-warning' : 'btn-outline-secondary'}" %>
-    </div>
-  </div>
-
-  <div class="ferments-grid" id="ferment-list">
-    <% if @ferments.any? %>
-      <%= render partial: "ferments/ferment_card", collection: @ferments, as: :ferment %>
-    <% else %>
-      <div class="text-center w-100 mt-5">
-        <p class="text-muted fs-5">No se encontraron fermentos en esta categoría.</p>
-      </div>
     <% end %>
-  </div>
-
-  <% if @ferments.total_pages > 1 %>
-    <div class="pagination mt-4 d-flex justify-content-center">
-      <%= paginate @ferments %>
-    </div>
-  <% end %>
 
 </div>

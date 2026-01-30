@@ -37,9 +37,7 @@ class FermentsController < ApplicationController
 
     respond_to do |format|
       if @ferment.save
-        attach_photos_if_present
-        schedule_review_job
-        format.html { redirect_to ferment_path(@ferment), notice: "Fermento creado con éxito ✨" }
+        format.html { redirect_to @ferment, status: :see_other, notice: "Fermento creado con éxito " }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
@@ -54,7 +52,7 @@ class FermentsController < ApplicationController
     if @ferment.update(ferment_params.except(:photos))
       attach_photos_if_present
       respond_to do |format|
-        format.html { redirect_to ferment_path(@ferment), notice: "Fermento actualizado con éxito ✨" }
+        format.html { redirect_to ferment_path(@ferment), notice: "Fermento actualizado con éxito " }
       end
     else
       respond_to do |format|
@@ -91,11 +89,18 @@ class FermentsController < ApplicationController
 
   def destroy_photo
     photo = @ferment.photos.find(params[:photo_id])
-    photo.purge
+    photo.purge_later
 
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove("ferment_photo_#{photo.id}") }
-      format.html { redirect_to @ferment, notice: "Foto eliminada " }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove(helpers.dom_id(photo)),
+          (@ferment.photos.reload.empty? ?
+            turbo_stream.update("photos-container-#{@ferment.id}", render_to_string(partial: 'ferments/empty_photos')) :
+            nil)
+        ].compact
+      end
+      format.html { redirect_to @ferment }
     end
   end
 

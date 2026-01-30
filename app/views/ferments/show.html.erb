@@ -4,8 +4,11 @@
 
   <%= render "ferments/details", ferment: @ferment %>
 
-  <%= render "comments/form", ferment: @ferment, comment: @comment %>
+  <%= turbo_frame_tag "new_comment" do %>
+    <%= render "comments/form", ferment: @ferment, comment: @comment %>
+  <% end %>
 
-  <%= render partial: 'comments/comment', collection: @comments, as: :comment, locals: { ferment: @ferment } %>
-
+  <div id="comments">
+    <%= render partial: 'comments/comment', collection: @comments, as: :comment, locals: { ferment: @ferment } %>
+  </div>
 </div>
