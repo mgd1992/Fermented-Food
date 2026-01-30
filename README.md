@@ -6,19 +6,26 @@
 
 - Registro y autenticación de usuarios.
 - Crear, editar y eliminar fermentos.
-- Instrucciones e ingredientes detallados.
 - Cargar y actualizar imágenes de cada fermento.
 - Recordatorios por correo en fechas clave.
 - Navegar por perfiles y fermentos creados por otros usuarios.
 - Dejar comentarios en fermentos.
+- Enviar mensajes privados entre usuarios.
+
+## 🚀 Highlights Técnicos
+
+- **Gestión Automatizada de Ciclos:** Sistema de tracking que calcula fechas de revisión y estados de progreso en tiempo real.
+- **Arquitectura de Background Jobs:** Implementación de Sidekiq + Redis para procesar recordatorios de salud del fermento sin bloquear el hilo principal de la aplicación.
+- **Feed Optimizado:** Uso de `load_async` y precarga de asociaciones para garantizar una navegación fluida (Zero N+1).
+- **UX Centrado en el Proceso:** Botón de "Reinicio de Ciclo" que permite gestionar tandas infinitas sin duplicar datos.
 
 ## Tecnologías utilizadas
 
-- **Backend:** Ruby on Rails
+- **Backend:** Ruby on Rails 7.1.4
 - **Frontend:** Stimulus.js + Bootstrap + SCSS
 - **Base de datos:** PostgreSQL
-- **Background Jobs:** Sidekiq (para envío de correos y recordatorios)
-- **Otros:** ActionMailer, ActiveStorage
+- **Background Jobs:** Sidekiq + Redis
+- **Mailing:** ActionMailer + Letter Opener
 
 ## Instalación y uso
 
@@ -61,6 +68,7 @@ Acceder a la app en:
 http://localhost:3000
 
 5. Instalar y correr Redis en nueva terminal (necesario para Sidekiq):
+
 ```bash
 sudo apt update
 sudo apt install redis-server
@@ -74,6 +82,7 @@ bundle exec sidekiq
 ```
 
 ## Probar envío de recordatorios manualmente
+
 Para probar que los recordatorios por email llegan correctamente, podés ejecutar el job manualmente desde la consola de Rails:
 
 1. Abrí la consola de Rails con:
@@ -89,7 +98,7 @@ ferment = Ferment.last
 FermentMailer.review_reminder(ferment).deliver_later
 ```
 
-3. Luego, abrí en tu navegador la URL donde letter_opener muestra los emails generados:
+3. Luego, abres en tu navegador la URL donde letter_opener muestra los emails generados:
 
 ```bash
 http://localhost:3000/letter_opener/
@@ -100,9 +109,9 @@ http://localhost:3000/letter_opener/
 🚧 Esta aplicación está en desarrollo, pero ya es funcional.
 
 Me encantaría que la pruebes y me cuentes qué te parece.
-Si encontrás errores, tenés ideas para mejorarla o simplemente querés dar tu opinión, cualquier feedback es más que bienvenido.
+Si encuentras errores, tenés ideas para mejorarla o simplemente querés dar tu opinión, cualquier feedback es bienvenido.
 
-Podés abrir un issue en este repositorio o contactarme directamente:
+Puedes abrir un issue en este repositorio o contactarme directamente:
 
 - GitHub: [@mgd1992](https://github.com/mgd1992/Fermented-Food)
 - Email: marcoogarbini@gmail.com
