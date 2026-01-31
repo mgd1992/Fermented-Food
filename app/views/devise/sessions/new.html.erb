@@ -9,8 +9,8 @@
               <%= link_to root_path, class: "text-decoration-none" do %>
                 <h1 class="fw-bold text-warning mb-2" style="letter-spacing: -1px;">Cool Beans</h1>
               <% end %>
-              <h2 class="fw-bold text-white mb-1">¡Bienvenido!</h2>
-              <p class="text-secondary small text-uppercase letter-spacing-1">Continúa tu aventura fermentista</p>
+              <h2 class="fw-bold text-white mb-1">Bienvenido!</h2>
+              <p class="text-secondary small text-uppercase letter-spacing-1">Continua fermentando!</p>
             </div>
 
             <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "custom-dark-form" }) do |f| %>
@@ -18,7 +18,7 @@
               <section class="form-section mb-4">
                 <div class="mb-3">
                   <%= f.label :email, "Correo Electrónico", class: "form-label-custom" %>
-                  <%= f.email_field :email, autofocus: true, class: "input-custom", placeholder: "tu@email.com" %>
+                  <%= f.email_field :email, autofocus: true, class: "input-custom", placeholder: "your_email@email.com" %>
                 </div>
 
                 <div class="mb-3 position-relative" data-controller="password">
@@ -41,7 +41,7 @@
                 <%= f.submit "ENTRAR", class: "btn btn-warning btn-lg fw-bold rounded-pill shadow" %>
 
                 <div class="text-center mt-2">
-                  <span class="text-secondary small">¿No tienes cuenta?</span>
+                  <span class="text-secondary small">No tienes cuenta?</span>
                   <%= link_to "REGÍSTRATE", new_registration_path(resource_name), class: "text-warning fw-bold small text-decoration-none ms-2 letter-spacing-1" %>
                 </div>
               </div>
