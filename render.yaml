@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: fermented-food
+    runtime: ruby
+    plan: free
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fermented-food-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: NODE_VERSION
+        value: 20.x
+
+databases:
+  - name: fermented-food-db
+    plan: free
+    databaseName: fermented_food_db
