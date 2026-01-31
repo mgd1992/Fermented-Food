@@ -1,34 +1,21 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["menu"]
-
-  connect() {
-    console.log("Navbar connected", this.menuTarget)
-
-    window.addEventListener("resize", () => {
-      this.closeMenuOnDesktop()
-    })
-
-    this.closeMenuOnDesktop()
-  }
+  static targets = ["menu", "toggleBtn", "brand"];
 
   toggle() {
-    if (this.hasMenuTarget) {
-      if (this.menuTarget.classList.contains("d-none")) {
-        this.menuTarget.classList.remove("d-none")
-        this.menuTarget.style.display = "flex"
-      } else {
-        this.menuTarget.classList.add("d-none")
-        this.menuTarget.style.display = "none"
-      }
-    }
+    const isOpened = this.menuTarget.classList.toggle("show");
+
+    this.brandTarget.classList.toggle("nav-brand-hidden", isOpened);
+
+    this.toggleBtnTarget.innerHTML = isOpened ? "✕" : "☰";
+    document.body.style.overflow = isOpened ? "hidden" : "auto";
   }
 
-  closeMenuOnDesktop() {
-    if (window.innerWidth > 768 && this.hasMenuTarget) {
-      this.menuTarget.classList.add("d-none")
-      this.menuTarget.style.display = "none"
-    }
+  close() {
+    this.menuTarget.classList.remove("show");
+    this.brandTarget.classList.remove("nav-brand-hidden");
+    this.toggleBtnTarget.innerHTML = "☰";
+    document.body.style.overflow = "auto";
   }
 }

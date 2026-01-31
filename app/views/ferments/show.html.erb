@@ -1,14 +1,26 @@
-<div class="p-5 w-75 mx-auto">
+<div class="show-layout py-5">
+  <div class="container container-narrow">
 
-  <h1 class="text-center my-2"><%= @ferment.name %></h1>
+    <div class="d-flex align-items-center mb-4">
+      <%= link_to ferments_path, class: "btn-back me-3" do %>
+        <i class="bi bi-arrow-left border p-1 text-warning rounded-3"></i>
+      <% end %>
+      <h1 class="h2 text-white fw-bold mb-0"><%= @ferment.name %></h1>
+    </div>
 
-  <%= render "ferments/details", ferment: @ferment %>
+    <%= render "ferments/details", ferment: @ferment %>
 
-  <%= turbo_frame_tag "new_comment" do %>
-    <%= render "comments/form", ferment: @ferment, comment: @comment %>
-  <% end %>
+    <section class="comments-section mt-5">
+      <h3 class="text-white fw-bold mb-4 h4">Comentarios</h3>
 
-  <div id="comments">
-    <%= render partial: 'comments/comment', collection: @comments, as: :comment, locals: { ferment: @ferment } %>
+      <%= turbo_frame_tag "new_comment" do %>
+        <%= render "comments/form", ferment: @ferment, comment: @comment %>
+      <% end %>
+
+      <div id="comments" class="mt-4">
+        <%= render partial: 'comments/comment', collection: @comments, as: :comment, locals: { ferment: @ferment } %>
+      </div>
+    </section>
+
   </div>
 </div>

@@ -1,0 +1,128 @@
+$cb-black: #0d0d0d;
+$cb-dark-grey: #1a1a1a;
+$cb-input-bg: #121212;
+$cb-warning: #ffc107;
+$cb-text-muted: #888;
+$cb-border: #2a2a2a;
+
+.form-page-layout {
+  background-color: $cb-black;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.f-form-card {
+  background: $cb-dark-grey;
+  border: 1px solid $cb-border;
+  border-radius: 24px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.form-header {
+  .brand-logo {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+    color: $cb-warning;
+    text-decoration: none;
+    display: inline-block;
+  }
+}
+
+.section-title-box {
+  border-bottom: 1px solid rgba($cb-warning, 0.2);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+
+  i {
+    color: $cb-warning;
+    margin-right: 0.5rem;
+  }
+
+  span {
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+}
+
+.form-label-custom {
+  color: $cb-text-muted;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input-custom {
+  background: $cb-input-bg !important;
+  border: 1px solid $cb-border !important;
+  color: white !important;
+  padding: 12px 16px !important;
+  border-radius: 12px !important;
+  width: 100%;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none !important;
+    border-color: $cb-warning !important;
+    background: lighten($cb-input-bg, 2%) !important;
+    box-shadow: 0 0 0 4px rgba($cb-warning, 0.1) !important;
+  }
+}
+
+.btn-auth-submit {
+  background: $cb-warning !important;
+  color: $cb-black !important;
+  font-weight: 800 !important;
+  border-radius: 50px !important;
+  padding: 1rem !important;
+  letter-spacing: 1px;
+  border: none !important;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: darken($cb-warning, 5%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba($cb-warning, 0.2);
+  }
+}
+
+.auth-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+  .highlight-link {
+    color: $cb-warning;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.fade-in {
+  animation: authFadeUp 0.6s ease-out;
+}
+
+@keyframes authFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,54 +1,58 @@
 <div class="landing">
-
   <div class="landing-inner">
 
-    <nav class="nav d-flex justify-content-between align-items-center w-100 px-3 py-2" data-controller="navbar">
+    <nav class="nav d-flex justify-content-between align-items-center w-100 px-4 py-3" data-controller="navbar">
 
-      <%= link_to root_path, class: 'nav-link text-light' do %>
+      <%= link_to root_path, class: 'nav-link text-light z-max', data: { navbar_target: "brand" } do %>
         <h1 class="nav-title m-0">Cool Beans</h1>
       <% end %>
 
-      <div class="nav-links d-none d-md-flex align-items-center justify-content-center gap-2">
-        <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm' %>
-
-        <% if user_signed_in? %>
-          <%= link_to 'Crear fermento', new_user_ferment_path(current_user), class: "btn btn-outline-light btn-sm" %>
-        <% else %>
-          <%= link_to 'Crear fermento', new_user_session_path, class: "btn btn-outline-light btn-sm" %>
-        <% end %>
-
-        <% if user_signed_in? %>
-          <%= link_to user_path(current_user) do %>
-            <%= image_tag current_user.photo, class: "profile-avatar" %>
-          <% end %>
-        <% else %>
-          <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light btn-sm' %>
-          <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-light btn-sm text-dark' %>
-        <% end %>
-      </div>
-      <button class="nav-toggle btn btn-outline-light d-md-none" type="button" aria-label="Toggle menu" data-action="click->navbar#toggle">
+      <button class="nav-toggle btn text-light z-max d-md-none"
+              type="button"
+              data-action="click->navbar#toggle"
+              data-navbar-target="toggleBtn">
         ☰
       </button>
-      <div class="nav-mobile-menu d-none flex-column align-items-center bg-dark text-light p-3" data-navbar-target="menu">
-        <% if user_signed_in? %>
-          <%= link_to 'Mi perfil', user_path(current_user), class: 'btn btn-outline-light w-50 ' %>
-          <%= link_to 'Crear fermento', new_user_ferment_path(current_user), class: "btn btn-outline-light w-50" %>
-        <% else %>
-          <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light w-100 mb-2' %>
-          <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-light w-100 text-dark mb-2' %>
-        <% end %>
-        <%= link_to "GitHub", "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light w-50' %>
+
+      <div class="nav-mobile-menu" data-navbar-target="menu">
+        <div class="menu-header mb-5">
+           <h2 class="nav-title fs-1">Cool Beans</h2>
+        </div>
+
+        <div class="w-100 px-4 d-flex flex-column align-items-center">
+          <% if user_signed_in? %>
+            <%= link_to 'Mi Perfil', user_path(current_user), data: { action: "click->navbar#close" }, class: 'nav-mobile-item' %>
+            <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), data: { action: "click->navbar#close" }, class: 'nav-mobile-item' %>
+          <% else %>
+            <%= link_to "Log in", new_user_session_path, class: 'nav-mobile-item' %>
+            <%= link_to "Sign up", new_user_registration_path, class: 'nav-mobile-item' %>
+          <% end %>
+
+          <hr class="w-25 border-light opacity-25 my-4">
+          <%= link_to "GitHub", "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'text-light opacity-50 text-decoration-none' %>
+        </div>
       </div>
 
+      <div class="nav-links d-none d-md-flex align-items-center gap-3">
+        <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm' %>
+        <% if user_signed_in? && current_user.photo.attached? %>
+          <%= link_to user_path(current_user) do %>
+            <%= image_tag current_user.photo, class: "profile-avatar-sm" %>
+          <% end %>
+        <% end %>
+      </div>
     </nav>
 
-    <div class="landing-content text-center mt-auto mb-auto">
-      <h2 class="landing-title">Explora y crea fermentos</h2>
-      <p class="landing-subtitle">Descubrí, compartí y sigue tus fermentos favoritos 🧂</p>
-      <%= link_to "Explorar fermentos", ferments_path, class: "btn btn-lg btn-outline-light me-2" %>
-
+    <div class="landing-content">
+      <div class="hero-text-container">
+        <h2 class="landing-title">Explora y crea <span class="text-highlight">fermentos</span></h2>
+        <p class="landing-subtitle">Descubrí, compartí y sigue tus procesos favoritos de fermentación artesanal.</p>
+        <div class="landing-actions">
+          <%= link_to "Explorar ahora", ferments_path, class: "btn-hero" %>
+        </div>
+      </div>
     </div>
 
-
+    <div class="d-none d-md-block" style="height: 60px;"></div>
   </div>
 </div>

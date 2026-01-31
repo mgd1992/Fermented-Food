@@ -1,51 +1,49 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10 col-lg-12">
+<div class="form-page-layout py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
 
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <div class="d-flex flex-column justify-content-center align-items-center">
-          <h2 class="fw-bold">💌 Mis Mensajes</h2>
-          <div class="d-flex align-items-center justify-content-center gap-2">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+          <div>
+            <h2 class="text-white fw-bold mb-1">💌 Mis Mensajes</h2>
+            <p class="text-secondary small text-uppercase letter-spacing-1">Gestiona tus conversaciones fermentistas</p>
+          </div>
 
+          <div class="d-flex gap-2">
             <%= link_to messages_path(tab: 'received'),
-                class: "#{'active' if @active_tab == 'received'} btn btn-outline-secondary btn-sm text-center p-1 mt-2 border" do %>
-              📥 <span class="d-md-inline">Recibidos</span>
+                class: "btn #{ @active_tab == 'received' ? 'btn-warning' : 'btn-outline-secondary opacity-75' } rounded-pill px-3 fw-bold" do %>
+              📥 Recibidos
             <% end %>
-
             <%= link_to messages_path(tab: 'sent'),
-                class: "#{'active' if @active_tab == 'sent'} btn btn-outline-secondary btn-sm text-center p-1 mt-2  border" do %>
-              📤 <span class="d-md-inline">Enviados</span>
+                class: "btn #{ @active_tab == 'sent' ? 'btn-warning' : 'btn-outline-secondary opacity-75' } rounded-pill px-3 fw-bold" do %>
+              📤 Enviados
             <% end %>
           </div>
         </div>
 
-        <%= link_to user_path(current_user), class: "btn btn-outline-secondary btn-sm " do %>
-          <i class="bi bi-arrow-left"></i> <span class="d-none d-sm-inline">Volver a mi perfil</span><span class="d-inline d-sm-none">Volver</span>
-        <% end %>
-      </div>
+        <div class="f-form-card shadow-lg overflow-hidden">
+          <div class="card-header bg-dark border-bottom border-secondary border-opacity-25 p-3">
+            <small class="text-warning fw-bold text-uppercase small">
+              <%= @active_tab == 'received' ? "Bandeja de Entrada" : "Mensajes Enviados" %>
+            </small>
+          </div>
 
-    </div>
-
-
-    <div class="card  rounded-3">
-      <div class="card-body p-1">
-        <div class="table-responsive">
-
-          <% if @active_tab == 'received' %>
-            <div class="p-3 bg-light border-bottom ">
-              <small class="text-uppercase fw-bold text-muted">Bandeja de Entrada</small>
-            </div>
-            <%= render "messages/list", messages: @received_messages, type: :received %>
-          <% else %>
-            <div class="p-3 bg-light border-bottom">
-              <small class="text-uppercase fw-bold text-muted">Mensajes Enviados</small>
-            </div>
-            <%= render "messages/list", messages: @sent_messages, type: :sent %>
-          <% end %>
-
+          <div class="card-body p-0">
+            <% if @active_tab == 'received' %>
+              <%= render "messages/list", messages: @received_messages, type: :received %>
+            <% else %>
+              <%= render "messages/list", messages: @sent_messages, type: :sent %>
+            <% end %>
+          </div>
         </div>
+
+        <div class="text-center mt-4">
+          <%= link_to user_path(current_user), class: "btn btn-link text-secondary text-decoration-none small fw-bold" do %>
+            <i class="bi bi-arrow-left"></i> VOLVER A MI PERFIL
+          <% end %>
+        </div>
+
       </div>
     </div>
-
   </div>
 </div>

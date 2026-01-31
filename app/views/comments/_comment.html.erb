@@ -1,40 +1,26 @@
-<div id="<%= dom_id(comment) %>" class="comment-card p-3 rounded-3 shadow-sm mb-3 d-flex gap-3">
+<% user = comment.user %>
 
-  <% user = comment.user %>
-
+<div id="<%= dom_id(comment) %>" class="f-comment-card p-3 rounded-4 mb-3 d-flex gap-3">
   <div class="flex-shrink-0">
     <% if user.photo.attached? %>
-      <%= image_tag user.photo.variant(resize_to_fill: [50, 50]),
-          class: "rounded-circle comment-avatar" %>
+      <%= image_tag user.photo.variant(resize_to_fill: [45, 45]), class: "rounded-circle border border-warning border-opacity-25" %>
     <% else %>
-      <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white" style="width: 50px; height: 50px;">
-        <%= user.full_name.first %>
-      </div>
+      <div class="avatar-placeholder"><%= user.full_name.first %></div>
     <% end %>
   </div>
 
   <div class="flex-grow-1">
-    <div class="d-flex justify-content-between align-items-start mb-1">
-      <strong class="text-dark"><%= comment.title %></strong>
-
+    <div class="d-flex justify-content-between align-items-start">
+      <div>
+        <span class="text-white fw-bold d-block"><%= comment.title %></span>
+        <span class="text-secondary tiny">@<%= user.full_name.downcase.gsub(" ", "") %> • <%= time_ago_in_words(comment.created_at) %></span>
+      </div>
       <% if user_signed_in? && user == current_user %>
-        <%= button_to user_ferment_comment_path(ferment.user, ferment, comment),
-                method: :delete,
-                class: "btn btn-outline-danger btn-sm border-0" do %>
+        <%= button_to user_ferment_comment_path(ferment.user, ferment, comment), method: :delete, class: "btn-delete-tiny" do %>
           <i class="bi bi-trash"></i>
         <% end %>
       <% end %>
     </div>
-
-    <div class="text-muted small mb-2">
-      Por
-      <%= link_to user.full_name,
-            user_path(user),
-            class: "text-decoration-none text-secondary fw-bold",
-            data: { turbo_frame: "_top" } %>
-      • <%= time_ago_in_words(comment.created_at) %> atrás
-    </div>
-
-    <p class="mb-0 text-dark" style="white-space: pre-line;"><%= comment.content %></p>
+    <p class="text-light-gray mt-2 mb-0 small"><%= comment.content %></p>
   </div>
 </div>

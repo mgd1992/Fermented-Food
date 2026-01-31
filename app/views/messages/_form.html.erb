@@ -1,17 +1,18 @@
 <%= form_with(model: message, local: true) do |form| %>
   <%= form.hidden_field :recipient_id %>
 
-  <div class="mb-3">
-    <%= form.label :subject, "Asunto", class: "form-label" %>
-    <%= form.text_field :subject, class: "form-control", value: @subject %>
+  <div class="mb-4">
+    <%= form.label :subject, "Asunto", class: "form-label-custom" %>
+    <%= form.text_field :subject, class: "input-custom", value: @subject, placeholder: "Asunto:" %>
   </div>
 
-  <div class="mb-3">
-    <%= form.label :content, "Mensaje", class: "form-label"  %>
-    <%= form.text_area :content, class: "form-control", rows: 5 %>
+  <div class="mb-4">
+    <%= form.label :content, "Tu mensaje", class: "form-label-custom" %>
+    <%= form.text_area :content, class: "input-custom", rows: 6, placeholder: "Escribe aquí..." %>
   </div>
 
-  <div class="d-grid mt-3">
-    <%= form.submit "Enviar", class: "btn btn-outline-warning" %>
+  <div class="d-grid gap-3 mt-5">
+    <%= form.submit "ENVIAR AHORA", class: "btn btn-warning btn-lg rounded-pill fw-bold" %>
+    <%= link_to "CANCELAR", messages_path, class: "btn btn-link text-secondary text-decoration-none small" %>
   </div>
 <% end %>

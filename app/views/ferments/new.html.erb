@@ -1,13 +1,13 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
-      <div class="card shadow-sm">
-        <div class="card-body">
-
-          <turbo-frame id="ferment_form">
-            <%= render "form", ferment: @ferment %>
-          </turbo-frame>
-
+<div class="form-page-layout py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-7">
+        <div class="f-form-card shadow-lg">
+          <div class="card-body p-4 p-md-5">
+            <turbo-frame id="ferment_form">
+              <%= render "form", ferment: @ferment %>
+            </turbo-frame>
+          </div>
         </div>
       </div>
     </div>

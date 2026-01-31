@@ -15,8 +15,6 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -48,13 +46,11 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 # production:
-  # <<: *default
-  # url: <%= ENV['DATABASE_URL'] %>
-  # database: fermented_food_production
-  # username: fermented_food
-  # password: <%= ENV["FERMENTED_FOOD_DATABASE_PASSWORD"] %>
+# <<: *default
+# url: <%= ENV['DATABASE_URL'] %>
+# database: fermented_food_production
+# username: fermented_food
+# password: <%= ENV["FERMENTED_FOOD_DATABASE_PASSWORD"] %>
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  url: <%= ENV["DATABASE_URL"] %>
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

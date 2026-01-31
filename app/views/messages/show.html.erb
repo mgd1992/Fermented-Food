@@ -1,47 +1,52 @@
-<div class="container my-5">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="fw-bold">📬 <%= @message.subject %></h1>
-    <%= link_to "Volver a la bandeja", messages_path, class: "btn btn-outline-secondary" %>
-  </div>
+<div class="form-page-layout py-5">
+  <div class="container" style="max-width: 800px;">
 
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex flex-column justify-content-between align-items-center">
-          <p class="mb-2">
-            <strong>De:</strong>
-            <%= link_to @message.sender.full_name, profile_path(@message.sender), class: "text-decoration-none text-success" %>
-          </p>
-          <p class="mb-2">
-            <strong>Para:</strong>
-            <%= link_to @message.recipient.full_name, profile_path(@message.recipient), class: "text-decoration-none text-warning" %>
-          </p>
+    <div class="f-form-card shadow-lg">
+      <div class="card-header bg-dark border-bottom border-secondary border-opacity-25 p-4 d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="h4 text-white fw-bold mb-1"><%= @message.subject %></h1>
         </div>
-        <div class="d-flex gap-2 justify-content-between align-items-center">
+        <%= link_to messages_path, class: "btn-edit-circle" do %>
+          <i class="bi bi-x-lg"></i>
+        <% end %>
+      </div>
+
+      <div class="card-body p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-start mb-4 bg-dark p-3 rounded-4 border border-secondary border-opacity-10">
+          <div>
+            <p class="mb-1 small">
+              <strong class="text-secondary text-uppercase tiny">De:</strong>
+              <%= link_to @message.sender.full_name, profile_path(@message.sender), class: "text-warning text-decoration-none fw-bold ms-2" %>
+            </p>
+            <p class="mb-0 small">
+              <strong class="text-secondary text-uppercase tiny">Para:</strong>
+              <%= link_to @message.recipient.full_name, profile_path(@message.recipient), class: "text-warning text-decoration-none fw-bold ms-2" %>
+            </p>
+          </div>
+          <div class="text-end text-secondary tiny">
+            <%= @message.created_at.strftime("%d %b %Y, %H:%M") %>
+          </div>
+        </div>
+
+        <div class="message-content text-light-gray fs-5 mb-5 p-2" style="line-height: 1.6;">
+          <%= simple_format(@message.content) %>
+        </div>
+
+        <div class="d-flex gap-2 justify-content-center border-top border-secondary border-opacity-10 pt-4">
           <% if @message.sender != current_user %>
             <%= link_to new_message_path(recipient_id: @message.sender_id, subject: "Re: #{@message.subject}"),
-                class: "btn btn-outline-secondary p-1" do %>
-              <i class="bi bi-reply-fill"></i> Responder
+                class: "btn btn-warning rounded-pill px-4 fw-bold" do %>
+              <i class="bi bi-reply-fill me-2"></i> RESPONDER
             <% end %>
           <% end %>
+
           <%= link_to message_path(@message),
-              data: {
-                turbo_method: :delete,
-                turbo_frame: "_top"
-              },
-              class: "btn btn-outline-danger" do %>
-              <i class="bi bi-trash"></i>
+              data: { turbo_method: :delete },
+              class: "btn btn-outline-danger rounded-pill px-4 fw-bold" do %>
+            <i class="bi bi-trash"></i>
           <% end %>
         </div>
       </div>
-
-      <div class="border-top pt-1 mt-3">
-        <p class="mb-0"><%= simple_format(@message.content) %></p>
-        <p class="text-muted mb-0"><small>Recibido: <%= @message.created_at.strftime("%d %b %Y, %H:%M") %></small></p>
-      </div>
     </div>
-
   </div>
-
-
 </div>

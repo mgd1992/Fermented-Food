@@ -1,88 +1,61 @@
-<section class="ferment-details p-4 mb-5 rounded-3 shadow-sm bg-white">
-
-  <div class="fermentation-progress-container mb-4 p-3 border rounded bg-light">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h6 class="mb-0 fw-bold text-uppercase small tracking-wider">Estado de fermentación</h6>
-      <span class="badge <%= ferment.needs_review? ? 'bg-danger animate-pulse' : 'bg-success' %>">
-        <%= ferment.needs_review? ? '⚠️ Toca revisar' : 'En curso' %>
+<section class="f-details-card mb-5">
+  <div class="f-progress-banner p-4 rounded-top-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <span class="status-pill <%= ferment.needs_review? ? 'urgent' : 'active' %>">
+        <i class="bi <%= ferment.needs_review? ? 'bi-exclamation-triangle-fill' : 'bi-clock-history' %> me-2"></i>
+        <%= ferment.needs_review? ? 'TOCA REVISAR' : 'FERMENTANDO' %>
       </span>
-    </div>
 
-    <%
-      bar_class = "bg-success"
-      bar_class = "bg-warning" if ferment.progress_percentage > 70
-      bar_class = "bg-danger" if ferment.needs_review?
-    %>
-
-    <div class="progress mb-2" style="height: 25px; border-radius: 10px;">
-      <div class="progress-bar progress-bar-striped progress-bar-animated <%= bar_class %>"
-           role="progressbar"
-           style="width: <%= ferment.progress_percentage %>%"
-           aria-valuenow="<%= ferment.progress_percentage %>"
-           aria-valuemin="0"
-           aria-valuemax="100">
-        <span class="fw-bold"><%= ferment.progress_percentage %>%</span>
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-between mt-1">
-      <small class="text-muted">Inicio: <%= ferment.formatted_start_date %></small>
-      <small class="fw-bold <%= 'text-danger' if ferment.needs_review? %>">
-      <% if ferment.needs_review? %>
-        ¡Pasado por <%= ferment.days_passed - ferment.revisar_fermentos %> días!
-      <% else %>
-        Faltan <%= ferment.days_left %> días para revisarlo
-      <% end %>
-      </small>
-      <% if ferment.needs_review? && current_user == ferment.user %>
-        <%= link_to restart_ferment_path(ferment),
-                      data: { turbo_method: :patch },
-                      class: "btn btn-outline-success fw-bold" do %>
-            <i class="bi bi-arrow-repeat"></i> Reiniciar
+      <% if current_user == ferment.user %>
+        <%= link_to edit_user_ferment_path(current_user, ferment), class: "btn-edit-circle" do %>
+          <i class="bi bi-pencil"></i>
         <% end %>
       <% end %>
     </div>
+
+    <div class="progress-wrapper mb-3">
+      <div class="progress custom-progress" style="height: 12px;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated <%= ferment.needs_review? ? 'bg-danger' : 'bg-warning' %>"
+             style="width: <%= ferment.progress_percentage %>%"></div>
+      </div>
+      <div class="d-flex justify-content-between mt-2 small">
+        <span class="text-secondary">Inicio: <%= ferment.formatted_start_date %></span>
+        <span class="text-warning fw-bold"><%= ferment.progress_percentage %>% completado</span>
+      </div>
+    </div>
+
+    <% if ferment.needs_review? && current_user == ferment.user %>
+      <%= link_to restart_ferment_path(ferment), data: { turbo_method: :patch }, class: "btn btn-warning w-100 fw-bold rounded-pill py-2" do %>
+        <i class="bi bi-arrow-repeat me-2"></i> REINICIAR CICLO
+      <% end %>
+    <% end %>
   </div>
 
-
-
-  <%
-    details = {
-      "📖 Descripción" => simple_format(ferment.description),
-      "🧂 Ingredientes" => simple_format(ferment.ingredients),
-      "📋 Instrucciones" => simple_format(ferment.instructions),
-      "⏰ Tiempo total" => "#{ferment.revisar_fermentos} días"
-    }
-  %>
-
-  <div class="mt-3">
-    <% details.each do |label, value| %>
-      <div class="mb-3">
-        <strong class="d-block mb-1 text-secondary text-uppercase small" style="letter-spacing: 1px;">
-          <%= label %>
-        </strong>
-        <div class="ps-2 border-start border-3 border-light">
-          <%= value %>
+  <div class="p-4">
+    <div class="row g-4">
+      <% [
+        { label: "📖 Descripción", val: ferment.description, icon: "bi-info-circle" },
+        { label: "🧂 Ingredientes", val: ferment.ingredients, icon: "bi-egg-fried" },
+        { label: "📋 Instrucciones", val: ferment.instructions, icon: "bi-journal-text" }
+      ].each do |item| %>
+        <div class="col-12">
+          <label class="text-secondary text-uppercase small fw-bold mb-2 d-block">
+            <i class="<%= item[:icon] %> text-warning me-2"></i><%= item[:label] %>
+          </label>
+          <div class="text-light-gray ps-4 border-start border-secondary opacity-75">
+            <%= simple_format(item[:val]) %>
+          </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
 
-  <% if current_user?(ferment.user) %>
-    <%= link_to "Editar fermento 🛠️", edit_user_ferment_path(current_user, ferment), class:"btn btn-outline-warning btn-sm w-25 w-md-auto" %>
-  <% end %>
-
-  <div id="photos-container-<%= ferment.id %>">
-    <% if ferment.photos.any? %>
-      <div class="border-top my-4">
-        <p class="text-muted text-center my-3" id="photo-count-<%= ferment.id %>">
-          📸 <%= ferment.photos.count %> fotos del proceso
-        </p>
+    <div id="photos-container-<%= ferment.id %>" class="mt-5 pt-4 border-top border-secondary border-opacity-25">
+      <% if ferment.photos.any? %>
+        <h6 class="text-center text-secondary small mb-4">📸 GALERÍA DEL PROCESO (<%= ferment.photos.count %>)</h6>
         <%= render "ferments/photo_ferments", ferment: ferment %>
-      </div>
-    <% else %>
-      <%= render "ferments/empty_photos" %>
-    <% end %>
+      <% else %>
+        <%= render "ferments/empty_photos" %>
+      <% end %>
+    </div>
   </div>
-
 </section>
