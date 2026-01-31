@@ -5,7 +5,7 @@ class FermentsController < ApplicationController
 
   def index
     ferments = Ferment.order(created_at: :desc)
-                      .includes(:user, :comments, photos_attachments: :blob)
+                      .includes(:comments, photos_attachments: :blob, user: { photo_attachment: :blob })
 
     if params[:query].present?
       query = "%#{params[:query]}%"

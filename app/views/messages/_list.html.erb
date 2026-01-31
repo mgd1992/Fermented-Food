@@ -1,30 +1,34 @@
 <% if messages.any? %>
   <div class="list-group list-group-flush">
     <% messages.each do |msg| %>
-      <%= link_to message_path(msg),
-          id: dom_id(msg),
-          class: "list-group-item list-group-item-action py-3 border-bottom" do %>
+      <%= link_to message_path(msg), id: dom_id(msg),
+          class: "list-group-item list-group-item-action bg-transparent border-secondary border-opacity-10 py-3 px-4 transition-all" do %>
 
-        <div class="d-flex justify-content-between align-items-start">
+        <div class="d-flex justify-content-between align-items-center">
           <div class="me-3">
-            <div class="fw-semibold mb-1">
+            <div class="text-white fw-bold mb-1 d-flex align-items-center gap-2">
               <%= msg.subject %>
               <% if type == :received && !msg.read? %>
-                <span class="badge border border-success text-success ms-2">Nuevo</span>
+                <span class="badge bg-warning text-dark rounded-pill" style="font-size: 0.6rem;">NUEVO</span>
               <% end %>
             </div>
 
-            <div class="text-muted small">
+            <div class="text-secondary small">
               <% if type == :received %>
-                De: <%= msg.sender.full_name %>
+                <span class="opacity-50 text-uppercase tiny fw-bold">De:</span>
+                <span class="text-warning"><%= msg.sender.full_name %></span>
               <% else %>
-                Para: <%= msg.recipient.full_name %>
+                <span class="opacity-50 text-uppercase tiny fw-bold">Para:</span>
+                <span class="text-warning"><%= msg.recipient.full_name %></span>
               <% end %>
             </div>
           </div>
 
-          <div class="text-muted small text-nowrap">
-            <%= msg.created_at.strftime("%d %b %Y") %>
+          <div class="text-end">
+            <div class="text-secondary tiny text-uppercase opacity-50 fw-bold">
+              <%= msg.created_at.strftime("%d %b") %>
+            </div>
+            <i class="bi bi-chevron-right text-secondary small opacity-25"></i>
           </div>
         </div>
       <% end %>
@@ -32,8 +36,11 @@
   </div>
 <% else %>
   <div class="text-center py-5">
-      <p class="text-muted fs-5 mb-0">
-        <%= type == :received ? "No tienes mensajes recibidos 📥" : "No has enviado mensajes aún 📤" %>
-      </p>
+    <div class="display-1 text-secondary opacity-10 mb-3">
+      <i class="bi <%= type == :received ? 'bi-envelope' : 'bi-send' %>"></i>
+    </div>
+    <p class="text-secondary fs-5">
+      <%= type == :received ? "Bandeja vacía" : "Aún no has enviado mensajes" %>
+    </p>
   </div>
 <% end %>

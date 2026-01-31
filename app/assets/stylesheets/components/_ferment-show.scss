@@ -111,3 +111,111 @@
 .default-avatar {
   background-color: #ffad85;
 }
+
+.show-layout {
+  background-color: #0d0d0d;
+  min-height: 100vh;
+}
+
+.container-narrow {
+  max-width: 800px;
+}
+
+.f-details-card {
+  background: #1a1a1a;
+  border-radius: 24px;
+  border: 1px solid #2a2a2a;
+  overflow: hidden;
+}
+
+.f-progress-banner {
+  background: linear-gradient(145deg, #222, #111);
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.status-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 50px;
+
+  &.active {
+    background: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+  }
+
+  &.urgent {
+    background: rgba(220, 53, 69, 0.1);
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+  }
+}
+
+.custom-progress {
+  background-color: #333;
+  overflow: visible;
+
+  .progress-bar {
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 193, 7, 0.3);
+  }
+}
+
+.btn-edit-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #333;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.3s;
+
+  &:hover {
+    background: #ffc107;
+    color: black;
+  }
+}
+
+.f-comment-form {
+  background: #121212;
+  border: 1px solid #2a2a2a;
+}
+
+.f-comment-card {
+  background: #161616;
+  border: 1px solid #222;
+
+  .avatar-placeholder {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #333;
+    color: #ffc107;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+}
+
+.text-light-gray {
+  color: #ccc;
+}
+
+.tiny {
+  font-size: 0.75rem;
+}
+
+.btn-delete-tiny {
+  background: transparent;
+  border: none;
+  color: #444;
+
+  &:hover {
+    color: #dc3545;
+  }
+}

@@ -1,14 +1,11 @@
-<div class="container my-5">
-  <div class="mb-4">
-    <h1 class="fw-bold">💌 Nuevo mensaje</h1>
-    <h5 class="text-muted">Enviar mensaje a <%= @recipient.full_name %></h5>
-  </div>
-
-  <div class="card shadow-sm p-4">
-    <%= render "form", message: @message %>
-  </div>
-
-  <div class="mt-3">
-    <%= link_to "Volver a la bandeja", messages_path, class: "btn btn-outline-secondary" %>
+<div class="form-page-layout py-5">
+  <div class="container" style="max-width: 700px;">
+    <div class="f-form-card shadow-lg p-4 p-md-5">
+      <div class="text-center mb-5">
+        <h2 class="text-white fw-bold letter-spacing-1">ENVÍAR MENSAJE</h2>
+        <p class="text-secondary">Para: <span class="text-warning fw-bold"><%= @recipient.full_name %></span></p>
+      </div>
+      <%= render "form", message: @message %>
+    </div>
   </div>
 </div>

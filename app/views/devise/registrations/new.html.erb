@@ -1,34 +1,71 @@
-<div class="auth-page">
-  <div class="auth-card fade-in">
+<div class="form-page-layout py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 col-lg-7">
+        <div class="f-form-card shadow-lg">
+          <div class="card-body p-4 p-md-5">
 
-    <%= link_to '/', class: "brand" do %>
-      Cool Beans
-    <% end %>
+            <div class="form-header text-center mb-5">
+              <h2 class="fw-bold text-white mb-2">Crear Cuenta</h2>
+              <p class="text-secondary small text-uppercase letter-spacing-1">Únete a la comunidad pro-fermentación</p>
+            </div>
 
-    <h2 class="auth-title">Crear cuenta</h2>
-    <p class="auth-subtitle">Empieza a fermentar como un pro 🧂</p>
+            <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { multipart: true, class: "custom-dark-form" }) do |f| %>
+              <%= f.error_notification %>
 
-    <%= simple_form_for(resource,
-      as: resource_name,
-      url: registration_path(resource_name),
-      html: { multipart: true }) do |f| %>
+              <section class="form-section mb-5">
+                <div class="section-title-box mb-3">
+                  <i class="bi bi-person text-warning me-2"></i>
+                  <span class="text-white fw-bold">Perfil</span>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <%= f.label :first_name, "Nombre", class: "form-label-custom" %>
+                    <%= f.text_field :first_name, class: "input-custom", placeholder: "Tu nombre" %>
+                  </div>
+                  <div class="col-md-6">
+                    <%= f.label :last_name, "Apellido", class: "form-label-custom" %>
+                    <%= f.text_field :last_name, class: "input-custom", placeholder: "Tu apellido" %>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <%= f.label :photo, "Foto de perfil", class: "form-label-custom" %>
+                  <div class="photo-upload-zone p-3 text-center">
+                    <%= f.file_field :photo, class: "form-control bg-dark text-secondary border-0" %>
+                  </div>
+                </div>
+              </section>
 
-      <div class="auth-inputs">
-        <%= f.input :first_name, label: false, input_html: { placeholder: "Nombre" } %>
-        <%= f.input :last_name, label: false, input_html: { placeholder: "Apellidos" } %>
-        <%= f.input :email, label: false, input_html: { placeholder: "Email" } %>
-        <%= f.input :password, label: false, input_html: { placeholder: "Contraseña" } %>
-        <%= f.input :photo, as: :file, label: false %>
+              <section class="form-section mb-5">
+                <div class="section-title-box mb-3">
+                  <i class="bi bi-shield-lock text-warning me-2"></i>
+                  <span class="text-white fw-bold">Seguridad</span>
+                </div>
+                <div class="mb-3">
+                  <%= f.label :email, "Email", class: "form-label-custom" %>
+                  <%= f.email_field :email, class: "input-custom", placeholder: "ejemplo@coolbeans.com" %>
+                </div>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <%= f.label :password, "Contraseña", class: "form-label-custom" %>
+                    <%= f.password_field :password, class: "input-custom", placeholder: "Mín. 6 caracteres" %>
+                  </div>
+                  <div class="col-md-6">
+                    <%= f.label :password_confirmation, "Confirmar contraseña", class: "form-label-custom" %>
+                    <%= f.password_field :password_confirmation, class: "input-custom" %>
+                  </div>
+                </div>
+              </section>
+
+              <div class="d-grid gap-3 mt-5">
+                <%= f.submit "REGISTRARME", class: "btn btn-warning btn-lg fw-bold rounded-pill shadow" %>
+                <%= link_to "YA TENGO CUENTA", new_session_path(resource_name), class: "btn btn-outline-secondary btn-sm border-0 fw-bold opacity-50" %>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
       </div>
-
-      <%= f.button :submit, "Crear cuenta", class: "auth-button" %>
-
-    <% end %>
-
-    <div class="auth-footer">
-      <span>¿Ya tienes cuenta?</span>
-      <%= link_to "Entrar", new_session_path(resource_name) %>
     </div>
-
   </div>
 </div>

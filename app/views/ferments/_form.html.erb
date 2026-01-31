@@ -1,84 +1,115 @@
-<div id="ferment_form">
+<div id="ferment_form_container">
+  <%= form_with(model: [current_user, ferment], data: { turbo_frame: "_top" }, html: { multipart: true, class: "custom-dark-form" }) do |form| %>
 
-  <%= form_with(model: [current_user, ferment], data: { turbo_frame: "_top" }, html: { multipart: true }) do |form| %>
-    <h2 class="text-center mb-4 fw-semibold">
-      <%= ferment.new_record? ? "Nuevo fermento" : "Editar fermento" %>
-    </h2>
+    <div class="form-header text-center mb-5">
+      <h2 class="fw-bold text-white mb-2">
+        <%= ferment.new_record? ? "Nuevo Fermento" : "Editar Proceso" %>
+      </h2>
+      <p class="text-secondary small text-uppercase letter-spacing-1">Registra los detalles de tu producción</p>
+    </div>
 
     <% if ferment.errors.any? %>
-      <div class="alert alert-danger alert-dismissible fade show mt-3 "
-          role="alert"
-          data-controller="flash">
+      <div class="alert alert-custom-danger mb-4" role="alert">
+        <ul class="mb-0 small">
           <% ferment.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
+            <li><i class="bi bi-exclamation-circle me-2"></i><%= msg %></li>
           <% end %>
-        <button type="button"
-                class="btn-close"
-                data-action="click->flash#cerrar"
-                aria-label="Close"></button>
+        </ul>
       </div>
     <% end %>
 
-    <div class="mb-4">
-      <%= form.label :name, "Nombre del fermento", class: "form-label" %>
-      <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "Ej: Kimchi clásico" %>
+    <section class="form-section mb-5">
+      <div class="section-title-box mb-3">
+        <i class="bi bi-tag text-warning me-2"></i>
+        <span class="text-white fw-bold">General</span>
+      </div>
 
-      <%= form.label :description, "Descripción", class: "form-label mt-3" %>
-      <%= form.text_area :description, rows: 3, class: "form-control", placeholder: "Descripción breve" %>
+      <div class="mb-3">
+        <%= form.label :name, "Nombre del fermento", class: "form-label-custom" %>
+        <%= form.text_field :name, class: "input-custom", placeholder: "Ej: Kombucha de Jengibre" %>
+      </div>
 
-      <%= form.label :ingredients, "Ingredientes", class: "form-label mt-3" %>
-      <%= form.text_area :ingredients, rows: 3, class: "form-control", placeholder: "Ej: repollo, sal, ajo, jengibre" %>
+      <div class="mb-3">
+        <%= form.label :description, "Descripción breve", class: "form-label-custom" %>
+        <%= form.text_area :description, rows: 2, class: "input-custom", placeholder: "Breve descripción del fermento.." %>
+      </div>
+    </section>
 
-      <%= form.label :instructions, "Pasos de preparación", class: "form-label mt-3" %>
-      <%= form.text_area :instructions, rows: 4, class: "form-control", placeholder: "Ej: cortar, salar, fermentar en frasco" %>
-    </div>
+    <section class="form-section mb-5">
+      <div class="section-title-box mb-3">
+        <i class="bi bi-list-check text-warning me-2"></i>
+        <span class="text-white fw-bold">Receta</span>
+      </div>
 
-    <div class="mb-4">
-      <%= form.label :fermentation_time, "Duración estimada", class: "form-label" %>
-      <%= form.text_field :fermentation_time, class: "form-control", placeholder: "Ej: 7 días" %>
+      <div class="mb-3">
+        <%= form.label :ingredients, "Ingredientes", class: "form-label-custom" %>
+        <%= form.text_area :ingredients, rows: 3, class: "input-custom", placeholder: "Listado de ingredientes..." %>
+      </div>
 
-      <%= form.label :start_date, "Fecha de inicio", class: "form-label mt-3" %>
-      <%= form.text_field :start_date, class: "form-control", data: { controller: "datepicker" } %>
+      <div class="mb-3">
+        <%= form.label :instructions, "Pasos a seguir", class: "form-label-custom" %>
+        <%= form.text_area :instructions, rows: 4, class: "input-custom", placeholder: "1. Esterilizar, 2. Mezclar..." %>
+      </div>
+    </section>
 
-      <%= form.label :revisar_fermentos, "Cada cuántos días revisarlo", class: "form-label mt-3" %>
-      <%= form.number_field :revisar_fermentos, min: 1, class: "form-control", placeholder: "Ej: 3" %>
-    </div>
+    <section class="form-section mb-5">
+      <div class="section-title-box mb-3">
+        <i class="bi bi-calendar-event text-warning me-2"></i>
+        <span class="text-white fw-bold">Seguimiento</span>
+      </div>
 
-    <div class="mb-4">
-      <p class="text-uppercase text-muted small fw-semibold mb-3">Fotos del fermento</p>
-
-      <% if ferment.photos.attached? %>
-        <div class="d-flex flex-wrap gap-2 mb-3">
-          <% ferment.photos.each do |photo| %>
-            <% if photo.persisted? %>
-              <div id="ferment_photo_<%= photo.id %>" class="position-relative">
-                <%= image_tag photo.variant(resize_to_limit: [100, 100]), class: "rounded border" %>
-                <%= link_to "×", destroy_photo_ferment_path(ferment, photo_id: photo.id),
-                    data: { turbo_method: :delete, turbo_confirm: "¿Borrar foto?" },
-                    class: "btn btn-danger btn-sm position-absolute top-0 end-0 py-0 px-1" %>
-              </div>
-            <% end %>
-          <% end %>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <%= form.label :start_date, "Fecha de inicio", class: "form-label-custom" %>
+          <%= form.text_field :start_date, class: "input-custom", data: { controller: "datepicker" } %>
         </div>
-      <% end %>
+        <div class="col-md-6">
+          <%= form.label :fermentation_time, "Duración estimada", class: "form-label-custom" %>
+          <%= form.text_field :fermentation_time, class: "input-custom", placeholder: "Ej: 14 días" %>
+        </div>
+        <div class="col-12 mt-3">
+          <%= form.label :revisar_fermentos, "Frecuencia de revisión (días)", class: "form-label-custom" %>
+          <%= form.number_field :revisar_fermentos, min: 1, class: "input-custom", placeholder: "Cada cuánto chequearlo..." %>
+        </div>
+      </div>
+    </section>
 
-      <%= form.label :photos, "Agregar más fotos", class: "form-label" %>
-      <%= form.file_field :photos, multiple: true, class: "form-control" %>
-      <div class="form-text">Las fotos anteriores se mantendrán a menos que las borres manualmente.</div>
-    </div>
+    <section class="form-section mb-5">
+      <div class="section-title-box mb-3">
+        <i class="bi bi-camera text-warning me-2"></i>
+        <span class="text-white fw-bold">Fotos</span>
+      </div>
 
-    <div class="d-grid gap-2 mt-4">
-      <%= form.submit (ferment.persisted? ? "Guardar cambios" : "Crear fermento"), class: "btn btn-primary btn-lg" %>
-      <%
-        cancel_path = if ferment.persisted?
-                        ferment_path(ferment)
-                      else
-                        session[:return_to] || ferments_path
-                      end
-      %>
+      <div class="photo-upload-zone p-4 text-center mb-3">
+        <% if ferment.photos.attached? %>
+          <div class="d-flex flex-wrap gap-3 justify-content-center mb-4">
+            <% ferment.photos.each do |photo| %>
+              <% if photo.persisted? %>
+                <div id="ferment_photo_<%= photo.id %>" class="photo-preview-wrapper">
+                  <%= image_tag photo.variant(resize_to_fill: [100, 100]), class: "rounded-3 shadow-sm border border-secondary border-opacity-25" %>
+                  <%= link_to destroy_photo_ferment_path(ferment, photo_id: photo.id),
+                      data: { turbo_method: :delete, turbo_confirm: "¿Borrar foto?" },
+                      class: "photo-delete-btn" do %>
+                    <i class="bi bi-x-circle-fill"></i>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
 
-      <%= link_to "Cancelar", cancel_path, class: "btn btn-outline-secondary btn-lg", data: { turbo_frame: "_top" } %>
+        <%= form.file_field :photos, multiple: true, class: "form-control bg-dark text-secondary border-secondary border-opacity-25" %>
+        <p class="text-muted small mt-2 mb-0">Puedes seleccionar varias fotos a la vez.</p>
+      </div>
+    </section>
+
+    <div class="sticky-bottom-actions py-4 border-top border-secondary border-opacity-10 bg-dark-card mt-5">
+      <div class="d-grid gap-3">
+        <%= form.submit (ferment.persisted? ? "GUARDAR CAMBIOS" : "Crear fermento"), class: "btn btn-warning btn-lg fw-bold rounded-pill shadow" %>
+
+        <% cancel_path = ferment.persisted? ? ferment_path(ferment) : (session[:return_to] || ferments_path) %>
+        <%= link_to "CANCELAR", cancel_path, class: "btn btn-outline-secondary btn-sm border-0 text-uppercase fw-bold opacity-50", data: { turbo_frame: "_top" } %>
+      </div>
     </div>
   <% end %>
-
 </div>
