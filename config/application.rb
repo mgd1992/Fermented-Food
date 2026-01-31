@@ -17,6 +17,7 @@ module FermentedFood
 
     config.load_defaults 7.1
 
+    config.i18n.available_locales = [:en, :es]
     config.i18n.default_locale = :es
 
     config.autoload_lib(ignore: %w(assets tasks))

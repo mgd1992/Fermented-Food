@@ -43,9 +43,9 @@
     <% end %>
 
     <div class="mt-5 pt-4 border-top border-secondary border-opacity-10 text-center">
-      <p class="text-danger small opacity-75">¿Quieres irte?</p>
+      <p class="text-danger small opacity-75">Quieres irte?</p>
       <%= button_to "Borrar mi cuenta", registration_path(resource_name),
-          data: { confirm: "¿Estás seguro? Esta acción es irreversible.", turbo_confirm: "¿Estás seguro?" },
+          data: { confirm: "Estás seguro? Esta acción es irreversible.", turbo_confirm: "Borrando cuenta.. Estás seguro?" },
           method: :delete,
           class: "btn btn-link text-danger tiny text-decoration-none" %>
     </div>

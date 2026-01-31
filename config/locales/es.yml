@@ -1,5 +1,5 @@
 es:
-  activerecord:
+  global:
     errors:
       models:
         ferment:
