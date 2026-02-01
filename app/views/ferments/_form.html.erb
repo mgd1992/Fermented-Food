@@ -98,8 +98,8 @@
           </div>
         <% end %>
 
-        <%= form.file_field :photos, multiple: true, class: "form-control bg-dark text-secondary border-secondary border-opacity-25" %>
-        <p class="text-muted small mt-2 mb-0">Puedes seleccionar varias fotos a la vez.</p>
+        <%= form.file_field :photos, multiple: true, accept: 'image/*', capture: 'camera', class: "form-control bg-dark text-secondary border-secondary border-opacity-25" %>
+        <p class="text-light small mt-2 mb-0">Puedes seleccionar varias fotos a la vez.</p>
       </div>
     </section>
 

@@ -29,7 +29,7 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <%= f.label :photo, "Foto de perfil", class: "form-label-custom" %>
+                  <%= f.label :photo, "Foto de perfil", accept: 'image/*', capture: 'camera', class: "form-label-custom" %>
                   <div class="photo-upload-zone p-3 text-center">
                     <%= f.file_field :photo, class: "form-control bg-dark text-secondary border-0" %>
                   </div>
