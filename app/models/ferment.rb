@@ -26,8 +26,20 @@ class Ferment < ApplicationRecord
   def progress_percentage
     return 0 if revisar_fermentos.to_i <= 0 || start_date.nil?
 
-    percentage = (days_passed.to_f / revisar_fermentos.to_f * 100).round
+    return 100 if Date.today >= review_date
+
+    total_days = (review_date - start_date.to_date).to_i
+    return 100 if total_days <= 0
+
+    days_from_start = (Date.today - start_date.to_date).to_i
+
+    percentage = (days_from_start.to_f / total_days.to_f * 100).round
     [[percentage, 0].max, 100].min
+
+  end
+
+  def restart_cycle!
+    update(start_date: Date.today)
   end
 
   def days_left
@@ -42,8 +54,10 @@ class Ferment < ApplicationRecord
   private
 
   def set_review_date
-    if start_date.present? && revisar_fermentos.present?
-      self.review_date = start_date + revisar_fermentos.days
+    if start_date_changed? || revisar_fermentos_changed?
+      if start_date.present? && revisar_fermentos.present?
+        self.review_date = start_date.to_date + revisar_fermentos.days
+      end
     end
   end
 

@@ -1,26 +1,36 @@
-<div class="ferment-gallery">
-  <% ferment.photos.each do |photo| %>
-    <div  class="ferment-photo-card"  id="<%= dom_id(photo) %>">
+<div class="mt-4">
+  <% @photos_by_day.sort.reverse.each do |date, photos| %>
+    <div class="mb-5">
+      <div class="d-flex align-items-center mb-3">
+        <div class="p-2 bg-warning text-dark rounded fw-bold text-center" style="min-width: 50px;">
+          <div class="small"><%= date.strftime("%b") %></div>
+          <div><%= date.strftime("%d") %></div>
+        </div>
+        <div class="ms-3 text-secondary border-bottom w-100 pb-1">
+          <%= date == Date.today ? "Subido hoy" : "Registro del #{date.strftime("%Y")}" %>
+        </div>
+      </div>
 
-      <% if ferment.user == current_user %>
+      <div class="row g-2">
+        <% photos.each do |photo| %>
+          <div class="col-4 col-md-3" id="<%= dom_id(photo) %>">
+            <div class="position-relative photo-item">
+              <%= cl_image_tag photo.key,
+                  height: 300,
+                  width: 300,
+                  crop: :fill,
+                  class: "img-fluid rounded border border-secondary" %>
 
-        <%= link_to "✖",
-          destroy_photo_ferment_path(ferment_id: ferment.id, photo_id: photo.id),
-          class: "delete-photo-btn",
-          data: { turbo_method: :delete }
-        %>
-
-      <% end %>
-      <%= image_tag photo,
-            alt: ferment.name,
-            class: "ferment-photo-img" %>
-
-
-      <span class="photo-date">
-        <%= photo.created_at.strftime("%d/%m/%Y") %>
-      </span>
-
-
+              <% if @ferment.user == current_user %>
+                <%= link_to "✕",
+                    destroy_photo_ferment_path(@ferment, photo_id: photo.id),
+                    class: "delete-photo-btn",
+                    data: { turbo_method: :delete } %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>

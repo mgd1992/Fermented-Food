@@ -23,6 +23,7 @@ class FermentsController < ApplicationController
   end
 
   def show
+    @photos_by_day = @ferment.photos.group_by { |photo| photo.created_at.to_date }
     @comments = @ferment.comments.includes(:user)
     @comment = Comment.new
   end
