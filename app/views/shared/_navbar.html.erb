@@ -24,12 +24,16 @@
         <%= link_to "Log in", new_user_session_path, class: 'nav-mobile-item' %>
         <%= link_to "Sign up", new_user_registration_path, class: 'nav-mobile-item' %>
       <% end %>
+      <hr class="w-25 border-light opacity-25 my-4">
+      <%= link_to "GitHub", "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'text-light opacity-50 text-decoration-none' %>
     </div>
   </div>
 
   <div class="nav-links d-none d-md-flex align-items-center gap-3">
+    <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm border-0' %>
+
     <% if user_signed_in? %>
-      <%= link_to 'Explorar', ferments_path, class: 'btn btn-sm btn-outline-light border-0' %>
+      <%= link_to 'Explorar', ferments_path, class: 'btn btn-sm text-light' %>
       <%= link_to 'Nuevo Fermento', new_user_ferment_path(current_user), class: 'btn btn-sm btn-outline-warning' %>
       <%= link_to user_path(current_user) do %>
         <% if current_user.photo.attached? %>
@@ -38,12 +42,12 @@
           <i class="bi bi-person-circle fs-3 text-light"></i>
         <% end %>
       <% end %>
-      <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "btn btn-sm btn-outline-danger border-0" do %>
-        <i class="bi bi-box-arrow-right"></i>
+      <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "text-danger ms-2" do %>
+        <i class="bi bi-box-arrow-right fs-5"></i>
       <% end %>
     <% else %>
-      <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light btn-sm' %>
-      <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-warning btn-sm' %>
+      <%= link_to "Log in", new_user_session_path, class: 'btn btn-outline-light btn-sm px-3' %>
+      <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-warning btn-sm px-3 fw-bold' %>
     <% end %>
   </div>
 </nav>
