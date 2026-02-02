@@ -1,41 +1,30 @@
 <div style="max-width: 600px; margin: 0 auto; border: 1px solid #dee2e6; border-radius: 0.5rem; font-family: sans-serif;">
-
-  <div style="background-color: #0d6efd; color: white; padding: 1.5rem; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; text-align: center;">
+  <div style="background-color: #ffc107; color: black; padding: 1.5rem; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem; text-align: center;">
     <h2 style="margin: 0;">🧪 Fermented Food</h2>
   </div>
 
-  <div style="padding: 1.5rem; background-color: white;">
-    <h4 style="margin-bottom: 1rem; color: #212529;">¡Hora de revisar tu fermento!</h4>
+  <div style="padding: 1.5rem; background-color: white; color: #333;">
+    <h4 style="margin-bottom: 1rem;">¡Hora de chequear tu <strong><%= @ferment.name %></strong>!</h4>
 
-    <p style="color: #6c757d; line-height: 1.5;">
+    <p style="line-height: 1.5;">
       Hola, <strong><%= @user.first_name %></strong>. <br>
-      Tu fermento <strong><%= @ferment.name %></strong> ya cumplió su tiempo estimado de <%= @ferment.revisar_fermentos %> días.
+      Han pasado los <strong><%= @ferment.revisar_fermentos %> días</strong> programados para tu revisión.
     </p>
 
-    <% if @ferment.photos.attached? %>
-      <div style="text-align: center; margin-bottom: 1.5rem;">
-        <%= image_tag url_for(@ferment.photos.first),
-            style: "max-width: 100%; height: auto; border-radius: 0.25rem; border: 1px solid #dee2e6;" %>
-      </div>
-    <% end %>
-
-    <div style="background-color: #e9ecef; border-radius: 0.25rem; height: 1.5rem; margin-bottom: 1rem; overflow: hidden;">
-      <div style="width: <%= @ferment.progress_percentage %>%; background-color: #198754; height: 100%; text-align: center; color: white; font-size: 0.8rem; line-height: 1.5rem; font-weight: bold;">
+    <p style="font-size: 0.8rem; margin-bottom: 5px;">Progreso total del fermento:</p>
+    <div style="background-color: #e9ecef; border-radius: 0.25rem; height: 1.5rem; margin-bottom: 1.5rem; overflow: hidden;">
+      <div style="width: <%= @ferment.progress_percentage %>%; background-color: #ffc107; height: 100%; text-align: center; color: black; font-size: 0.8rem; line-height: 1.5rem; font-weight: bold;">
         <%= @ferment.progress_percentage %>%
       </div>
     </div>
 
-    <div style="background-color: #fff3cd; color: #664d03; padding: 1rem; border-radius: 0.25rem; border: 1px solid #ffe69c; margin-bottom: 1.5rem; font-size: 0.9rem;">
-      <strong>Dato:</strong> Empezó el <%= @ferment.formatted_start_date %> (<%= @ferment.days_passed %> días transcurridos).
-    </div>
-
     <div style="text-align: center;">
-      <%= link_to "Ver detalles y Reiniciar Ciclo", ferment_url(@ferment),
-          style: "display: block; background-color: #0d6efd; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 0.3rem; font-weight: bold;" %>
+      <%= link_to "Registrar fotos y Reiniciar aviso", ferment_url(@ferment),
+          style: "display: inline-block; background-color: #000; color: #ffc107; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 0.5rem; font-weight: bold;" %>
     </div>
   </div>
 
-  <div style="background-color: #f8f9fa; color: #6c757d; padding: 1rem; font-size: 0.8rem; text-align: center; border-bottom-left-radius: 0.5rem; border-bottom-right-radius: 0.5rem;">
-    Si ya lo revisaste, recuerda pulsar <strong>"Reiniciar Ciclo"</strong> para programar el próximo aviso.
+  <div style="background-color: #f8f9fa; color: #6c757d; padding: 1rem; font-size: 0.8rem; text-align: center;">
+    Si pulsas <strong>"Reiniciar"</strong> en la app, la fecha de inicio se actualizará a hoy para programar tu siguiente recordatorio en <%= @ferment.revisar_fermentos %> días.
   </div>
 </div>

@@ -3,13 +3,8 @@ class Ferment < ApplicationRecord
   has_many_attached :photos, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-  validates :user, presence: true
-  validates :name, presence: true
-  validates :instructions, presence: true
-  validates :description, presence: true
-  validates :ingredients, presence: true
-  validates :revisar_fermentos, numericality: { greater_than: 0, message: "Debe ser mayor a 0" }
-  validates :start_date, presence: true
+  validates :user, :name, :instructions, :description, :ingredients, :start_date, presence: true
+  validates :revisar_fermentos, numericality: { greater_than: 0 }
 
   before_save :set_review_date
   before_save :reset_reminder, if: :start_date_changed?
@@ -23,32 +18,27 @@ class Ferment < ApplicationRecord
     (Date.today - start_date.to_date).to_i
   end
 
+  def days_left
+    return 0 if fermentation_time.blank? || start_date.nil?
+    total = fermentation_time.to_i
+    restante = total - days_passed
+    [restante, 0].max
+  end
+
   def progress_percentage
-    return 0 if revisar_fermentos.to_i <= 0 || start_date.nil?
-
-    return 100 if Date.today >= review_date
-
-    total_days = (review_date - start_date.to_date).to_i
+    return 0 if start_date.nil? || fermentation_time.blank?
+    total_days = fermentation_time.to_i
     return 100 if total_days <= 0
-
-    days_from_start = (Date.today - start_date.to_date).to_i
-
-    percentage = (days_from_start.to_f / total_days.to_f * 100).round
+    percentage = (days_passed.to_f / total_days.to_f * 100).round
     [[percentage, 0].max, 100].min
-
   end
 
   def restart_cycle!
-    update(start_date: Date.today)
-  end
-
-  def days_left
-    return 0 if revisar_fermentos.nil?
-    [(revisar_fermentos - days_passed), 0].max
+    update(start_date: Date.today, review_reminder_sent: false)
   end
 
   def needs_review?
-    review_date.present? && review_date <= Date.today
+    review_date.present? && review_date <= Date.today && !review_reminder_sent
   end
 
   private
@@ -57,6 +47,7 @@ class Ferment < ApplicationRecord
     if start_date_changed? || revisar_fermentos_changed?
       if start_date.present? && revisar_fermentos.present?
         self.review_date = start_date.to_date + revisar_fermentos.days
+        self.review_reminder_sent = false
       end
     end
   end

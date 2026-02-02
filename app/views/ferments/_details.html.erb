@@ -1,45 +1,39 @@
 <section class="f-details-card mb-5">
   <div class="f-progress-banner p-4 rounded-top-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <span class="status-pill <%= ferment.needs_review? ? 'urgent' : 'active' %>">
-        <i class="bi <%= ferment.needs_review? ? 'bi-exclamation-triangle-fill' : 'bi-clock-history' %> me-2"></i>
-        <%= ferment.needs_review? ? 'TOCA REVISAR' : 'FERMENTANDO' %>
-      </span>
 
-      <% if current_user == ferment.user %>
-        <%= link_to edit_user_ferment_path(current_user, ferment), class: "btn-edit-circle" do %>
-          <i class="bi bi-pencil"></i>
-        <% end %>
-      <% end %>
-    </div>
-
-    <div class="progress-wrapper mb-3">
-      <div class="d-flex justify-content-between mb-1 small">
-        <span class="text-secondary">Progreso del ciclo</span>
-        <span class="text-warning fw-bold">
-          <%= ferment.needs_review? ? "¡TOCA REVISAR!" : "#{ferment.days_left} días restantes" %>
+    <div class="f-progress-banner p-4 rounded-top-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <span class="status-pill <%= ferment.needs_review? ? 'urgent' : 'active' %>">
+          <i class="bi <%= ferment.needs_review? ? 'bi-calendar-check' : 'bi-clock-history' %> me-2"></i>
+          <%= ferment.needs_review? ? 'FINALIZADO' : 'EN PROCESO' %>
         </span>
+
+        <% if current_user == ferment.user %>
+          <%= link_to edit_user_ferment_path(current_user, ferment), class: "btn-edit-circle" do %>
+            <i class="bi bi-pencil"></i>
+          <% end %>
+        <% end %>
       </div>
 
-      <div class="progress custom-progress" style="height: 12px; background-color: rgba(255,255,255,0.1);">
-        <div class="progress-bar progress-bar-striped progress-bar-animated <%= ferment.needs_review? ? 'bg-danger' : 'bg-warning' %>"
-            role="progressbar"
-            style="width: <%= ferment.progress_percentage %>%"
-            aria-valuenow="<%= ferment.progress_percentage %>"
-            aria-valuemin="0"
-            aria-valuemax="100"></div>
-      </div>
+      <div class="progress-wrapper mb-2">
+        <div class="d-flex justify-content-between mb-1 small">
+          <span class="text-secondary">Progreso hasta el final</span>
+          <span class="text-warning fw-bold">
+            <%= ferment.needs_review? ? "Llegó la fecha!" : "#{ferment.days_left} días para el final" %>
+          </span>
+        </div>
 
-      <div class="d-flex justify-content-between mt-2 small">
-        <span class="text-secondary">Inicio: <%= ferment.formatted_start_date %></span>
-        <span class="text-secondary">Próxima: <%= ferment.review_date.strftime("%d/%m/%Y") || "Pendiente" %></span>
+        <div class="progress custom-progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated <%= ferment.needs_review? ? 'bg-success' : 'bg-warning' %>"
+              style="width: <%= ferment.progress_percentage %>%"></div>
+        </div>
+
+        <div class="d-flex justify-content-between mt-2 small">
+          <span class="text-secondary">Desde: <%= ferment.formatted_start_date %></span>
+          <span class="text-secondary">Hasta: <%= ferment.review_date.strftime("%d/%m/%Y") %></span>
+        </div>
       </div>
     </div>
-    <% if ferment.needs_review? && current_user == ferment.user %>
-      <%= link_to restart_ferment_path(ferment), data: { turbo_method: :patch }, class: "btn btn-danger w-100 fw-bold rounded-pill py-2 shadow-sm" do %>
-        <i class="bi bi-check2-circle me-2"></i> REINICIAR
-      <% end %>
-    <% end %>
 
   </div>
 
@@ -47,13 +41,13 @@
     <div class="row g-4">
 
       <% [
-        { label: "📖 Descripción", val: ferment.description, icon: "bi-info-circle" },
-        { label: "🧂 Ingredientes", val: ferment.ingredients, icon: "bi-egg-fried" },
-        { label: "📋 Instrucciones", val: ferment.instructions, icon: "bi-journal-text" },
-        { label: "⏱️ Tiempo estimado", val: ferment.fermentation_time, icon: "bi-clock" },
-        { label: "📅 Fecha Inicio", val: ferment.start_date&.strftime("%d/%m/%Y"), icon: "bi-calendar-play" },
-        { label: "🔔 Revisar cada", val: "#{ferment.revisar_fermentos} días", icon: "bi-arrow-repeat" },
-        { label: "🧐 Próxima revisión", val: ferment.review_date&.strftime("%d/%m/%Y"), icon: "bi-calendar-check" }
+        { label: " Descripción", val: ferment.description, icon: "bi-info-circle" },
+        { label: " Ingredientes", val: ferment.ingredients, icon: "bi-" },
+        { label: " Instrucciones", val: ferment.instructions, icon: "bi-journal-text" },
+        { label: " Tiempo estimado", val: ferment.fermentation_time, icon: "bi-clock" },
+        { label: " Fecha Inicio", val: ferment.start_date&.strftime("%d/%m/%Y"), icon: "bi-calendar3" },
+        { label: " Revisar cada", val: "#{ferment.revisar_fermentos} días", icon: "bi-arrow-repeat" },
+        { label: " Próxima revisión", val: ferment.review_date&.strftime("%d/%m/%Y"), icon: "bi-calendar-check" }
       ].each do |item| %>
 
         <div class="col-12">
