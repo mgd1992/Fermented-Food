@@ -1,5 +1,5 @@
 <div class="mt-4">
-  <% @photos_by_day.sort.reverse.each do |date, photos| %>
+  <% @photos_by_day.sort.each do |date, photos| %>
     <div class="mb-5">
       <div class="d-flex align-items-center mb-3">
         <div class="p-2 bg-warning text-dark rounded fw-bold text-center" style="min-width: 50px;">
@@ -7,7 +7,7 @@
           <div><%= date.strftime("%d") %></div>
         </div>
         <div class="ms-3 text-secondary border-bottom w-100 pb-1">
-          <%= date == Date.today ? "Subido hoy" : "Registro del #{date.strftime("%Y")}" %>
+          <%= date == Date.today ? "Subido hoy" : "Subido el: #{date.strftime("%d %b %Y")}" %>
         </div>
       </div>
 

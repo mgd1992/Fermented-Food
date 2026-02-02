@@ -23,7 +23,7 @@ class FermentsController < ApplicationController
   end
 
   def show
-    @photos_by_day = @ferment.photos.group_by { |photo| photo.created_at.to_date }
+    @photos_by_day = @ferment.photos.group_by { |p| p.created_at.to_date }.sort.to_h
     @comments = @ferment.comments.includes(:user)
     @comment = Comment.new
   end
