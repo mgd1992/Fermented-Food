@@ -4,7 +4,7 @@ class Ferment < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   validates :user, :name, :instructions, :description, :ingredients, :start_date, presence: true
-  validates :revisar_fermentos, numericality: { greater_than: 0 }
+  validates :revisar_fermentos, numericality: { greater_than: 0 }, allow_nil: false
 
   before_save :set_review_date
   before_save :reset_reminder, if: :start_date_changed?

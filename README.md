@@ -104,6 +104,10 @@ FermentMailer.review_reminder(ferment).deliver_later
 http://localhost:3000/letter_opener/
 ```
 
+## Deployment
+
+Esta aplicación está configurada para Render. Ver `render.yaml` para detalles.
+
 ## Estado del proyecto
 
 🚧 Esta aplicación está en desarrollo, pero ya es funcional.

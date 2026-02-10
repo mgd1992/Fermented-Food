@@ -1,7 +1,7 @@
 class FermentsController < ApplicationController
   before_action :set_user, only: [:new, :create, :edit, :update]
-  before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo]
-  before_action :authorize_user!, only: [:new, :create, :edit, :update, :destroy, :destroy_photo]
+  before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo, :restart]
+  before_action :authorize_user!, only: [:new, :create, :edit, :update, :destroy, :destroy_photo, :restart]
 
   def index
     ferments = Ferment.order(created_at: :desc)
@@ -38,6 +38,7 @@ class FermentsController < ApplicationController
 
     respond_to do |format|
       if @ferment.save
+        schedule_review_job
         format.html { redirect_to @ferment, status: :see_other, notice: "Fermento creado con éxito " }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,6 +53,7 @@ class FermentsController < ApplicationController
   def update
     if @ferment.update(ferment_params.except(:photos))
       attach_photos_if_present
+      schedule_review_job
       respond_to do |format|
         format.html { redirect_to ferment_path(@ferment), notice: "Fermento actualizado con éxito " }
       end

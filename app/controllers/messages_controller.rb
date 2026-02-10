@@ -2,9 +2,19 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @received_messages = Message.where(recipient: current_user).order(created_at: :desc)
-    @sent_messages = Message.where(sender: current_user).order(created_at: :desc)
+    @received_messages = Message.where(recipient: current_user)
+                                .order(created_at: :desc)
+                                .page(params[:page])
+                                .per(5)
+
+    @sent_messages = Message.where(sender: current_user)
+                            .order(created_at: :desc)
+                            .page(params[:page])
+                            .per(5)
+                          
     @active_tab = params[:tab] || 'received'
+
+
   end
   def show
     @message = Message.where("sender_id = :user_id OR recipient_id = :user_id", user_id: current_user.id).find_by(id: params[:id])
@@ -41,7 +51,6 @@ class MessagesController < ApplicationController
     @message.destroy
 
     respond_to do |format|
-      # Forzamos la redirección en ambos formatos
       format.html { redirect_to messages_path, notice: "Mensaje eliminado", status: :see_other }
       format.turbo_stream { redirect_to messages_path, notice: "Mensaje eliminado", status: :see_other }
     end

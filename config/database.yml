@@ -5,7 +5,7 @@ default: &default
 
 development:
   <<: *default
-  database: fermented_food_development
+  url: <%= ENV['DATABASE_URL'] %>
 
 test:
   <<: *default
