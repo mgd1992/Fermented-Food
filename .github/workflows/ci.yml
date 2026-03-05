@@ -38,6 +38,7 @@ jobs:
     env:
       RAILS_ENV: test
       REDIS_URL: redis://localhost:6379/0
+      DISABLE_DATABASE_ENVIRONMENT_CHECK: 1
 
     steps:
       - name: Checkout code
@@ -56,7 +57,7 @@ jobs:
           PGPASSWORD: postgres
         run: |
           bundle exec rails db:create
-          bundle exec rails db:schema:load
+          bundle exec rails db:migrate
 
       - name: Run RSpec
         env:
