@@ -42,7 +42,7 @@ gem 'sidekiq-scheduler'
 
 gem 'faraday'
 
-#novu notifications
+# novu notifications
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
@@ -54,7 +54,7 @@ gem 'faraday'
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -73,28 +73,26 @@ gem "cloudinary"
 # Traducciones
 gem 'rails-i18n'
 
-
-
 group :development, :test do
   gem "dotenv-rails"
-  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mswin mswin64 mingw x64_mingw]
   gem "rspec-rails"
 end
 
 group :development do
   gem "web-console"
-
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
 end
 
 gem "kaminari", "~> 1.2"
 
-gem "dockerfile-rails", ">= 1.7", :group => :development
+gem "dockerfile-rails", ">= 1.7", group: :development

@@ -1,7 +1,7 @@
 class FermentsController < ApplicationController
-  before_action :set_user, only: [:new, :create, :edit, :update]
-  before_action :set_ferment, only: [:show, :edit, :update, :destroy, :destroy_photo, :restart]
-  before_action :authorize_user!, only: [:new, :create, :edit, :update, :destroy, :destroy_photo, :restart]
+  before_action :set_user, only: %i[new create edit update]
+  before_action :set_ferment, only: %i[show edit update destroy destroy_photo restart]
+  before_action :authorize_user!, only: %i[new create edit update destroy destroy_photo restart]
 
   def index
     ferments = Ferment.order(created_at: :desc)
@@ -14,9 +14,9 @@ class FermentsController < ApplicationController
 
     case params[:status]
     when "ready"
-      ferments = ferments.where("review_date <= ?", Date.today)
+      ferments = ferments.where(review_date: ..Time.zone.today)
     when "active"
-      ferments = ferments.where("review_date > ?", Date.today)
+      ferments = ferments.where("review_date > ?", Time.zone.today)
     end
 
     @ferments = ferments.page(params[:page]).per(10).load_async
@@ -33,6 +33,9 @@ class FermentsController < ApplicationController
     session[:return_to] = request.referer unless request.referer&.include?('new')
   end
 
+  def edit
+  end
+
   def create
     @ferment = current_user.ferments.build(ferment_params)
 
@@ -42,12 +45,11 @@ class FermentsController < ApplicationController
         format.html { redirect_to @ferment, status: :see_other, notice: "Fermento creado con éxito " }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment })
+        end
       end
     end
-  end
-
-  def edit
   end
 
   def update
@@ -60,7 +62,9 @@ class FermentsController < ApplicationController
     else
       respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment }) }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("ferment_form", partial: "form", locals: { ferment: @ferment })
+        end
       end
     end
   end
@@ -68,7 +72,7 @@ class FermentsController < ApplicationController
   def restart
     @ferment = Ferment.find(params[:id])
     if @ferment.user == current_user
-      if @ferment.update(start_date: Date.today)
+      if @ferment.update(start_date: Time.zone.today)
         redirect_to ferment_path(@ferment), notice: "¡Ciclo reiniciado! El fermento vuelve a contar desde hoy."
       else
         redirect_to ferment_path(@ferment), alert: "No se pudo reiniciar el fermento."
@@ -98,9 +102,9 @@ class FermentsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.remove(helpers.dom_id(photo)),
-          (@ferment.photos.reload.empty? ?
-            turbo_stream.update("photos-container-#{@ferment.id}", render_to_string(partial: 'ferments/empty_photos')) :
-            nil)
+          (if @ferment.photos.reload.empty?
+             turbo_stream.update("photos-container-#{@ferment.id}", render_to_string(partial: 'ferments/empty_photos'))
+           end)
         ].compact
       end
       format.html { redirect_to @ferment }
@@ -126,24 +130,22 @@ class FermentsController < ApplicationController
 
   def authorize_user!
     if @ferment.present?
-      unless @ferment.user == current_user
-        redirect_to root_path, alert: "No tienes permiso"
-      end
+      redirect_to root_path, alert: "No tienes permiso" unless @ferment.user == current_user
     else
-      unless user_signed_in?
-        redirect_to new_user_session_path, alert: "Debes iniciar sesión"
-      end
+      redirect_to new_user_session_path, alert: "Debes iniciar sesión" unless user_signed_in?
     end
   end
 
   def attach_photos_if_present
-    return unless params[:ferment][:photos].present?
-    photos_to_attach = params[:ferment][:photos].reject(&:blank?)
+    return if params[:ferment][:photos].blank?
+
+    photos_to_attach = params[:ferment][:photos].compact_blank
     @ferment.photos.attach(photos_to_attach) if photos_to_attach.any?
   end
 
   def schedule_review_job
     return unless @ferment.start_date && @ferment.revisar_fermentos
+
     review_date = @ferment.start_date + @ferment.revisar_fermentos.days
     ReviewReminderJob.set(wait_until: review_date).perform_later(@ferment.id)
   end

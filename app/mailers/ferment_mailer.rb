@@ -1,5 +1,4 @@
 class FermentMailer < ApplicationMailer
-
   def review_reminder(ferment)
     @ferment = ferment
     @user = ferment.user
@@ -9,5 +8,4 @@ class FermentMailer < ApplicationMailer
       subject: "⏰ Hora de revisar tu fermento: #{@ferment.name}!"
     )
   end
-
 end

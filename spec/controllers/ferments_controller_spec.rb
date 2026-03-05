@@ -19,7 +19,7 @@ RSpec.describe FermentsController, type: :request do
       instructions: "Fermentar repollo",
       ingredients: "Repollo, sal",
       revisar_fermentos: 5,
-      start_date: Date.today
+      start_date: Time.zone.today
     )
   end
 
@@ -52,22 +52,22 @@ RSpec.describe FermentsController, type: :request do
 
   describe "POST #create" do
     it "crea un fermento válido" do
-      expect {
+      expect do
         post ferments_path, params: { ferment: {
           name: "Sauerkraut",
           instructions: "Fermentar repollo",
           ingredients: "Repollo, sal",
           revisar_fermentos: 3,
-          start_date: Date.today
+          start_date: Time.zone.today
         } }
-      }.to change(Ferment, :count).by(1)
+      end.to change(Ferment, :count).by(1)
       expect(response).to redirect_to(Ferment.last)
     end
 
     it "no crea fermento inválido" do
-      expect {
+      expect do
         post ferments_path, params: { ferment: { name: "" } }
-      }.not_to change(Ferment, :count)
+      end.not_to change(Ferment, :count)
       expect(response.body).to include("error") # depende de tu vista
     end
   end
@@ -89,9 +89,9 @@ RSpec.describe FermentsController, type: :request do
 
   describe "DELETE #destroy" do
     it "elimina un fermento propio" do
-      expect {
+      expect do
         delete ferment_path(@ferment)
-      }.to change(Ferment, :count).by(-1)
+      end.to change(Ferment, :count).by(-1)
       expect(response).to redirect_to(@user)
     end
 
@@ -103,9 +103,9 @@ RSpec.describe FermentsController, type: :request do
         last_name: "Usuario"
       )
       sign_in other_user
-      expect {
+      expect do
         delete ferment_path(@ferment)
-      }.not_to change(Ferment, :count)
+      end.not_to change(Ferment, :count)
       expect(response).to redirect_to(ferments_path)
     end
   end
@@ -113,12 +113,13 @@ RSpec.describe FermentsController, type: :request do
   describe "DELETE #destroy_photo" do
     it "elimina una foto adjunta" do
       # Adjuntamos una foto de prueba
-      @ferment.photos.attach(io: File.open(Rails.root.join("spec/fixtures/files/test_image.jpg")), filename: "test_image.jpg", content_type: "image/jpeg")
+      @ferment.photos.attach(io: Rails.root.join("spec/fixtures/files/test_image.jpg").open,
+                             filename: "test_image.jpg", content_type: "image/jpeg")
       photo_id = @ferment.photos.first.id
 
-      expect {
+      expect do
         delete destroy_photo_ferment_path(@ferment, photo_id: photo_id)
-      }.to change(ActiveStorage::Attachment, :count).by(-1)
+      end.to change(ActiveStorage::Attachment, :count).by(-1)
       expect(response).to redirect_to(ferment_path(@ferment))
     end
   end

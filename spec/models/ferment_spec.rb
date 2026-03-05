@@ -20,7 +20,7 @@ RSpec.describe Ferment, type: :model do
         instructions: "Mezclar miel y agua",
         ingredients: "Miel, agua",
         revisar_fermentos: 7,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment).to be_valid
     end
@@ -31,7 +31,7 @@ RSpec.describe Ferment, type: :model do
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 7,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment).not_to be_valid
     end
@@ -42,7 +42,7 @@ RSpec.describe Ferment, type: :model do
         name: "Sauerkraut",
         ingredients: "Repollo",
         revisar_fermentos: 7,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment).not_to be_valid
     end
@@ -53,7 +53,7 @@ RSpec.describe Ferment, type: :model do
         name: "Kimchi",
         instructions: "Fermentar",
         revisar_fermentos: 7,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment).not_to be_valid
     end
@@ -64,7 +64,7 @@ RSpec.describe Ferment, type: :model do
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 7,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment).not_to be_valid
     end
@@ -76,7 +76,7 @@ RSpec.describe Ferment, type: :model do
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 0,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment).not_to be_valid
     end
@@ -107,9 +107,9 @@ RSpec.describe Ferment, type: :model do
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 5,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
-      expect(ferment.review_date.to_date).to eq(Date.today + 5.days)
+      expect(ferment.review_date.to_date).to eq(Time.zone.today + 5.days)
     end
 
     it "needs_review? devuelve true si review_date <= hoy" do
@@ -120,7 +120,7 @@ RSpec.describe Ferment, type: :model do
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 0,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       ferment.review_date = Date.yesterday
       expect(ferment.needs_review?).to be(true)
@@ -133,7 +133,7 @@ RSpec.describe Ferment, type: :model do
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 5,
-        start_date: Date.today
+        start_date: Time.zone.today
       )
       expect(ferment.needs_review?).to be(false)
     end

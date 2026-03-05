@@ -7,15 +7,9 @@ class CommentsController < ApplicationController
   def create
     @comment = @ferment.comments.build(comment_params)
     @comment.user = current_user
-
     respond_to do |format|
       if @comment.save
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.prepend("comments", partial: "comments/comment", locals: { comment: @comment, ferment: @ferment }),
-            turbo_stream.replace("new_comment", partial: "comments/form", locals: { ferment: @ferment, comment: Comment.new })
-          ]
-        end
+        format.turbo_stream { render turbo_stream: comment_turbo_streams }
         format.html { redirect_to user_ferment_path(@user, @ferment) }
       else
         format.html { render "ferments/show", status: :unprocessable_entity }
@@ -31,8 +25,16 @@ class CommentsController < ApplicationController
     end
   end
 
+  private
 
-private
+  def comment_turbo_streams
+    [
+      turbo_stream.prepend("comments", partial: "comments/comment",
+                                       locals: { comment: @comment, ferment: @ferment }),
+      turbo_stream.replace("new_comment", partial: "comments/form",
+                                          locals: { ferment: @ferment, comment: Comment.new })
+    ]
+  end
 
   def set_ferment
     @ferment = Ferment.find(params[:ferment_id])

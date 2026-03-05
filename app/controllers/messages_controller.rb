@@ -11,22 +11,22 @@ class MessagesController < ApplicationController
                             .order(created_at: :desc)
                             .page(params[:page])
                             .per(5)
-                          
+
     @active_tab = params[:tab] || 'received'
-
-
   end
+
   def show
-    @message = Message.where("sender_id = :user_id OR recipient_id = :user_id", user_id: current_user.id).find_by(id: params[:id])
+    @message = Message.where("sender_id = :user_id OR recipient_id = :user_id",
+                             user_id: current_user.id).find_by(id: params[:id])
 
     if @message.nil?
       redirect_to messages_path, alert: "No tienes permiso para ver este mensaje o no existe."
       return
     end
 
-    if @message.recipient == current_user && !@message.read?
-      @message.update(read: true)
-    end
+    return unless @message.recipient == current_user && !@message.read?
+
+    @message.update(read: true)
   end
 
   def new

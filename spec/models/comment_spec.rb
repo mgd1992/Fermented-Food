@@ -17,7 +17,7 @@ RSpec.describe Comment, type: :model do
       instructions: "Fermentar repollo",
       ingredients: "Repollo, sal",
       revisar_fermentos: 5,
-      start_date: Date.today
+      start_date: Time.zone.today
     )
   end
 
