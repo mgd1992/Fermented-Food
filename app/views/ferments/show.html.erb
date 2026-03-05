@@ -1,11 +1,24 @@
 <div class="show-layout py-5">
   <div class="container container-narrow">
 
-    <div class="d-flex align-items-center mb-4">
-      <%= link_to ferments_path, class: "btn-back me-3" do %>
-        <i class="bi bi-arrow-left border p-1 text-warning rounded-3"></i>
-      <% end %>
-      <h1 class="h2 text-white fw-bold mb-0"><%= @ferment.name %></h1>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <div class="d-flex align-items-center">
+
+        <%= link_to ferments_path, class: "btn-back me-3" do %>
+          <i class="bi bi-arrow-left border p-1 text-warning rounded-3"></i>
+        <% end %>
+        <h1 class="h2 text-white fw-bold mb-0"><%= @ferment.name %></h1>
+      </div>
+
+      <div data-controller="share" data-share-url-value="<%= request.base_url %>/f/<%= @ferment.share_token %>">
+        <button class="btn btn-sm btn-outline-warning ms-2"
+                data-action="click->share#copy"
+                data-share-target="btn">
+          <i class="bi bi-share me-1"></i>Compartir
+        </button>
+        <span class="text-success small ms-2 d-none" data-share-target="feedback">Link copiado!</span>
+      </div>
+
     </div>
 
     <%= render "ferments/details", ferment: @ferment %>

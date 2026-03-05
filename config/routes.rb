@@ -12,6 +12,8 @@
       end
     end
 
+    get '/f/:share_token', to: 'ferments#public', as: :public_ferment
+
     # Rutas de usuarios y fermentos anidados
     resources :users do
       resources :ferments do

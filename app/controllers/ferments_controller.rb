@@ -108,6 +108,10 @@ class FermentsController < ApplicationController
     end
   end
 
+  def public
+    @ferment = Ferment.find_by!(share_token: params[:share_token])
+  end
+
   private
 
   def set_user
