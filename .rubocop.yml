@@ -5,6 +5,7 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
   Exclude:
+    - 'lib/tasks/auto_annotate_models.rake'
     - 'bin/**/*'
     - 'db/**/*'
     - 'config/**/*'
