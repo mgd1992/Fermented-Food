@@ -3,7 +3,6 @@ require "securerandom"
 
 RSpec.describe FermentsController, type: :request do
   before(:each) do
-    # Usuario único para cada test
     @user = User.create!(
       email: "user_#{SecureRandom.hex(4)}@example.com",
       password: "1234567",
@@ -12,10 +11,10 @@ RSpec.describe FermentsController, type: :request do
     )
     sign_in @user
 
-    # Fermento asociado al usuario
     @ferment = Ferment.create!(
       user: @user,
       name: "Kimchi",
+      description: "Fermento coreano picante",
       instructions: "Fermentar repollo",
       ingredients: "Repollo, sal",
       revisar_fermentos: 5,
@@ -45,7 +44,7 @@ RSpec.describe FermentsController, type: :request do
 
   describe "GET #new" do
     it "devuelve status 200" do
-      get new_ferment_path
+      get new_user_ferment_path(@user)
       expect(response).to have_http_status(200)
     end
   end
@@ -53,8 +52,9 @@ RSpec.describe FermentsController, type: :request do
   describe "POST #create" do
     it "crea un fermento válido" do
       expect do
-        post ferments_path, params: { ferment: {
+        post user_ferments_path(@user), params: { ferment: {
           name: "Sauerkraut",
+          description: "Fermento alemán de repollo",
           instructions: "Fermentar repollo",
           ingredients: "Repollo, sal",
           revisar_fermentos: 3,
@@ -66,9 +66,9 @@ RSpec.describe FermentsController, type: :request do
 
     it "no crea fermento inválido" do
       expect do
-        post ferments_path, params: { ferment: { name: "" } }
+        post user_ferments_path(@user), params: { ferment: { name: "" } }
       end.not_to change(Ferment, :count)
-      expect(response.body).to include("error") # depende de tu vista
+      expect(response.body).to include("error")
     end
   end
 
@@ -92,7 +92,7 @@ RSpec.describe FermentsController, type: :request do
       expect do
         delete ferment_path(@ferment)
       end.to change(Ferment, :count).by(-1)
-      expect(response).to redirect_to(@user)
+      expect(response).to redirect_to(profile_path(@user))
     end
 
     it "no permite eliminar fermento de otro usuario" do
@@ -106,13 +106,12 @@ RSpec.describe FermentsController, type: :request do
       expect do
         delete ferment_path(@ferment)
       end.not_to change(Ferment, :count)
-      expect(response).to redirect_to(ferments_path)
+      expect(response).to redirect_to(root_path)
     end
   end
 
   describe "DELETE #destroy_photo" do
     it "elimina una foto adjunta" do
-      # Adjuntamos una foto de prueba
       @ferment.photos.attach(io: Rails.root.join("spec/fixtures/files/test_image.jpg").open,
                              filename: "test_image.jpg", content_type: "image/jpeg")
       photo_id = @ferment.photos.first.id
