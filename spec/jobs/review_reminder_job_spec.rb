@@ -23,11 +23,11 @@ RSpec.describe ReviewReminderJob, type: :job do
       revisar_fermentos: 5,
       start_date: Time.zone.today
     )
-    f.update_columns(**overrides) if overrides.any?
+    f.update!(**overrides) if overrides.any?
     f
   end
 
-  before { Ferment.update_all(review_reminder_sent: true) }
+  before { Ferment.find_each { |f| f.update!(review_reminder_sent: true) } }
 
   describe "#perform" do
     it "marca review_reminder_sent como true después de enviar" do
