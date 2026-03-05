@@ -27,6 +27,10 @@ class User < ApplicationRecord
   has_many :ferments, dependent: :destroy
   has_many :comments, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+  has_many :actor_notifications, class_name: "Notification", foreign_key: "actor_id", dependent: :destroy,
+                                 inverse_of: :actor
+
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", dependent: :destroy, inverse_of: :sender
   has_many :received_messages, class_name: "Message", foreign_key: "recipient_id", dependent: :destroy,
                                inverse_of: :recipient

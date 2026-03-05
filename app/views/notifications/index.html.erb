@@ -1,0 +1,10 @@
+<div id="notifications_list" style="max-height:320px; overflow-y:auto;">
+  <% notifications = current_user.notifications.includes(:actor, :notifiable).recent %>
+  <% if notifications.empty? %>
+    <p class="text-muted text-center py-4 small">Sin notificaciones</p>
+  <% else %>
+    <% notifications.each do |n| %>
+      <%= render n %>
+    <% end %>
+  <% end %>
+</div>

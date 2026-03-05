@@ -33,6 +33,35 @@
     <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm border-0' %>
 
     <% if user_signed_in? %>
+      <%= turbo_stream_from "notifications_#{current_user.id}" %>
+
+      <div class="position-relative" data-controller="notifications-dropdown">
+        <button class="btn btn-sm text-light position-relative"
+                data-action="click->notifications-dropdown#toggle"
+                data-notifications-dropdown-target="btn">
+          <i class="bi bi-bell fs-5"></i>
+          <%= render "notifications/count", count: current_user.notifications.unread.count %>
+        </button>
+
+        <div class="notifications-dropdown shadow-lg rounded-3 d-none"
+             data-notifications-dropdown-target="menu">
+          <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+            <span class="fw-bold small">Notificaciones</span>
+            <%= link_to "Ver todas", notifications_path, class: "small text-warning text-decoration-none" %>
+          </div>
+          <div id="notifications_list" style="max-height:320px; overflow-y:auto;">
+            <% notifications = current_user.notifications.includes(:actor, :notifiable).recent %>
+            <% if notifications.empty? %>
+              <p class="text-muted text-center py-4 small">Sin notificaciones</p>
+            <% else %>
+              <% notifications.each do |n| %>
+                <%= render n %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
       <%= link_to 'Explorar', ferments_path, class: 'btn btn-sm text-light' %>
       <%= link_to 'Nuevo Fermento', new_user_ferment_path(current_user), class: 'btn btn-sm btn-outline-warning' %>
       <%= link_to user_path(current_user) do %>
