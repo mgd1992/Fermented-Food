@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_05_143537) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_05_155920) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -81,6 +81,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_143537) do
     t.integer "revisar_fermentos"
     t.date "review_date"
     t.boolean "review_reminder_sent", default: false, null: false
+    t.string "share_token"
+    t.index ["share_token"], name: "index_ferments_on_share_token", unique: true
     t.index ["user_id"], name: "index_ferments_on_user_id"
   end
 

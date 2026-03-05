@@ -1,0 +1,51 @@
+<div class="show-layout py-5">
+  <div class="container container-narrow">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h1 class="h2 text-white fw-bold mb-0"><%= @ferment.name %></h1>
+      <span class="badge bg-warning text-dark">Receta pública</span>
+    </div>
+
+    <div class="f-details-card mb-5">
+      <div class="p-4">
+        <div class="row g-4">
+          <% [
+            { label: "Descripción", val: @ferment.description, icon: "bi-info-circle" },
+            { label: "Ingredientes", val: @ferment.ingredients, icon: "bi-list-ul" },
+            { label: "Instrucciones", val: @ferment.instructions, icon: "bi-journal-text" },
+            { label: "Tiempo estimado", val: @ferment.fermentation_time, icon: "bi-clock" }
+          ].each do |item| %>
+            <div class="col-12">
+              <label class="text-secondary text-uppercase small fw-bold mb-2 d-block">
+                <i class="<%= item[:icon] %> text-warning me-2"></i><%= item[:label] %>
+              </label>
+              <div class="text-light-gray ps-4 border-start border-secondary opacity-75">
+                <%= simple_format(item[:val].to_s) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <% if @ferment.photos.any? %>
+          <div class="mt-5 pt-4 border-top border-secondary border-opacity-25">
+            <h6 class="text-center text-secondary small mb-4">📸 GALERÍA (<%= @ferment.photos.count %> imágenes)</h6>
+            <div class="row g-2">
+              <% @ferment.photos.each do |photo| %>
+                <div class="col-4 col-md-3">
+                  <%= image_tag photo.variant(resize_to_limit: [300, 300]), class: "img-fluid rounded border border-secondary" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <p class="text-secondary small">¿Te interesa fermentar? <br>
+        <%= link_to "Creá tu cuenta en Cool Beans", new_user_registration_path, class: "text-warning" %>
+      </p>
+    </div>
+
+  </div>
+</div>
