@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
 
   def index
     @notifications = current_user.notifications.includes(:actor, :notifiable).recent
-    current_user.notifications.unread.update_all(read: true)
+    current_user.notifications.unread.each { |n| n.update(read: true) }
   end
 
   def mark_as_read
