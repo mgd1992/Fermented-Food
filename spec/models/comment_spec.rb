@@ -3,7 +3,6 @@ require "securerandom"
 
 RSpec.describe Comment, type: :model do
   before(:each) do
-    # Usuario único para cada test
     @user = User.create!(
       email: "user_#{SecureRandom.hex(4)}@example.com",
       password: "1234567",
@@ -11,10 +10,10 @@ RSpec.describe Comment, type: :model do
       last_name: "Gonzalez"
     )
 
-    # Fermento asociado al usuario
     @ferment = Ferment.create!(
       user: @user,
       name: "Kimchi",
+      description: "Un fermento coreano picante",
       instructions: "Fermentar repollo",
       ingredients: "Repollo, sal",
       revisar_fermentos: 5,
