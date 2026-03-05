@@ -7,10 +7,7 @@ class FermentsController < ApplicationController
     ferments = Ferment.order(created_at: :desc)
                       .includes(:comments, photos_attachments: :blob, user: { photo_attachment: :blob })
 
-    if params[:query].present?
-      query = "%#{params[:query]}%"
-      ferments = ferments.where("name ILIKE :q OR ingredients ILIKE :q", q: query)
-    end
+    ferments = ferments.search_by_details(params[:query]) if params[:query].present?
 
     case params[:status]
     when "ready"

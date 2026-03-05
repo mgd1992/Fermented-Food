@@ -18,13 +18,33 @@
     <%= turbo_frame_tag "ferments_filter_frame" do %>
 
       <div class="toolbar-box mb-4">
+
         <div class="search-area">
-          <%= form_with url: ferments_path, method: :get, class: "w-100", data: { turbo_frame: "ferments_filter_frame" } do %>
+          <%= form_with url: ferments_path, method: :get, class: "w-100", data: {
+            turbo_frame: "ferments_filter_frame",
+            controller: "search-form",
+            turbo_action: "advance"
+            } do %>
+
             <div class="search-input-group">
               <i class="bi bi-search text-secondary"></i>
-              <%= text_field_tag :query, params[:query], placeholder: "Buscar...", class: "clean-input" %>
+              <%= text_field_tag :query,
+                params[:query],
+                placeholder: "Buscar...",
+                class: "clean-input",
+                data: { search_form_target: "input", action: "input->search-form#search" }
+              %>
+
+              <button type="button"
+                      class="btn-clear-search"
+                      data-search-form-target="clearButton"
+                      data-action="click->search-form#clear"
+                      style="background: transparent; border: none; cursor: pointer; color: #6c757d;">
+                <i class="bi bi-x-lg"></i>
+              </button>
               <%= hidden_field_tag :status, params[:status] if params[:status].present? %>
             </div>
+
           <% end %>
         </div>
 
