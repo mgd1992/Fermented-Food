@@ -3,7 +3,6 @@ require "securerandom"
 
 RSpec.describe Ferment, type: :model do
   before(:each) do
-    # Creamos un usuario único por test para evitar email duplicado
     @user = User.create!(
       email: "user_#{SecureRandom.hex(4)}@example.com",
       password: "1234567",
@@ -17,6 +16,7 @@ RSpec.describe Ferment, type: :model do
       ferment = Ferment.new(
         user: @user,
         name: "Kimchi",
+        description: "Un fermento coreano picante",
         instructions: "Mezclar miel y agua",
         ingredients: "Miel, agua",
         revisar_fermentos: 7,
@@ -100,9 +100,10 @@ RSpec.describe Ferment, type: :model do
 
   context "métodos" do
     it "calcula review_date correctamente" do
-      ferment = Ferment.new(
+      ferment = Ferment.create!(
         user: @user,
         name: "Kimchi",
+        description: "Un fermento coreano picante",
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 5,
@@ -115,11 +116,13 @@ RSpec.describe Ferment, type: :model do
       ferment = Ferment.new(
         user: @user,
         name: "Kimchi",
+        description: "Un fermento coreano picante",
         instructions: "Fermentar",
         ingredients: "Repollo",
         revisar_fermentos: 0,
         start_date: Date.today
       )
+      ferment.review_date = Date.yesterday
       expect(ferment.needs_review?).to be(true)
     end
 
