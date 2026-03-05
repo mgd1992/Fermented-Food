@@ -83,6 +83,7 @@ group :development do
   gem "web-console"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
+  gem "brakeman", require: false
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
