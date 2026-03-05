@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_05_112420) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_05_143537) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -96,6 +96,21 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_112420) do
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "actor_id", null: false
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
+    t.string "message", null: false
+    t.boolean "read", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["actor_id"], name: "index_notifications_on_actor_id"
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["user_id", "read"], name: "index_notifications_on_user_id_and_read"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "pg_search_documents", force: :cascade do |t|
     t.text "content"
     t.string "searchable_type"
@@ -126,4 +141,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_112420) do
   add_foreign_key "ferments", "users"
   add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "notifications", "users", column: "actor_id"
 end

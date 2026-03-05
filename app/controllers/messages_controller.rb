@@ -40,6 +40,12 @@ class MessagesController < ApplicationController
     @recipient = @message.recipient
 
     if @message.save
+      Notification.create!(
+        user: @recipient,
+        actor: current_user,
+        notifiable: @message,
+        message: "#{current_user.first_name} te envió un mensaje: \"#{@message.subject}\""
+      )
       redirect_to messages_path, notice: "Mensaje enviado ✅"
     else
       render :new

@@ -2,8 +2,15 @@
   require 'sidekiq-scheduler/web'
 
   Rails.application.routes.draw do
+
     root to: "pages#home"
     devise_for :users
+
+    resources :notifications, only: [:index] do
+      member do
+        patch :mark_as_read
+      end
+    end
 
     # Rutas de usuarios y fermentos anidados
     resources :users do

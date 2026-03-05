@@ -9,6 +9,14 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
+        if @ferment.user != current_user
+          Notification.create!(
+            user: @ferment.user,
+            actor: current_user,
+            notifiable: @comment,
+            message: "#{current_user.first_name} comentó en tu fermento #{@ferment.name}"
+          )
+        end
         format.turbo_stream { render turbo_stream: comment_turbo_streams }
         format.html { redirect_to user_ferment_path(@user, @ferment) }
       else
