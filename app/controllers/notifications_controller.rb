@@ -9,15 +9,23 @@ class NotificationsController < ApplicationController
   def mark_as_read
     @notification = current_user.notifications.find(params[:id])
     @notification.update(read: true)
+    redirect_to redirect_url_for(@notification)
+  end
 
-    case @notification.notifiable_type
+  private
+
+  def redirect_url_for(notification)
+    case notification.notifiable_type
     when "Comment"
-      comment = @notification.notifiable
-      redirect_to comment ? ferment_path(comment.ferment_id, anchor: dom_id(comment)) : notifications_path
+      comment = notification.notifiable
+      return notifications_path unless comment
+
+      ferment = comment.ferment
+      user_ferment_path(ferment.user_id, ferment, anchor: ActionView::RecordIdentifier.dom_id(comment))
     when "Message"
-      redirect_to @notification.notifiable ? message_path(@notification.notifiable) : notifications_path
+      notification.notifiable ? message_path(notification.notifiable) : notifications_path
     else
-      redirect_to notifications_path
+      notifications_path
     end
   end
 end
