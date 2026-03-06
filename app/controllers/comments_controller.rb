@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
       if @comment.save
         notify_ferment_owner
         format.turbo_stream { render turbo_stream: comment_turbo_streams }
-        format.html { redirect_to user_ferment_path(@user, @ferment) }
+        format.html { redirect_to user_ferment_path(@ferment.user_id, @ferment) }
       else
         format.html { render "ferments/show", status: :unprocessable_entity }
       end
@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
     @comment.destroy
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(helpers.dom_id(@comment)) }
-      format.html { redirect_to user_ferment_path(@user, @ferment), status: :see_other }
+      format.html { redirect_to user_ferment_path(@ferment.user_id, @ferment), status: :see_other }
     end
   end
 
