@@ -17,9 +17,9 @@
     </div>
   </div>
 
-  <div class="profile-actions d-grid gap-2 mt-4">
+  <div class="profile-actions mt-4">
     <% if user_signed_in? && user == current_user %>
-      <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), class: "btn btn-warning fw-bold py-2 shadow-sm" %>
+      <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), class: "btn btn-warning fw-bold py-2 shadow-sm w-100 mb-2" %>
       <div class="d-flex gap-2">
         <%= link_to 'Editar Perfil', edit_user_path(current_user), class: "btn btn-outline-light btn-sm flex-grow-1 py-2" %>
         <%= link_to messages_path, class: "btn btn-outline-warning btn-sm position-relative px-3" do %>
@@ -31,9 +31,8 @@
           <% end %>
         <% end %>
       </div>
-
     <% elsif user_signed_in? %>
-      <%= link_to new_message_path(recipient_id: user.id), class: "btn btn-outline-warning fw-bold py-2 d-flex align-items-center justify-content-center gap-2" do %>
+      <%= link_to new_message_path(recipient_id: user.id), class: "btn btn-outline-warning fw-bold py-2 w-100 d-flex align-items-center justify-content-center gap-2" do %>
         <i class="bi bi-chat-dots"></i> Enviar mensaje
       <% end %>
     <% end %>
