@@ -1,0 +1,28 @@
+<% liked = user_signed_in? && current_user.likes.exists?(ferment_id: ferment.id) %>
+
+<div id="like_button_<%= ferment.id %>">
+  <% if user_signed_in? %>
+    <% if liked %>
+      <%= button_to ferment_like_path(ferment),
+          method: :delete,
+          class: "btn btn-sm btn-like liked",
+          data: { turbo_stream: true } do %>
+        <i class="bi bi-heart-fill text-danger"></i>
+        <span class="like-count"><%= ferment.likes.count %></span>
+      <% end %>
+    <% else %>
+      <%= button_to ferment_like_path(ferment),
+          method: :post,
+          class: "btn btn-sm btn-like",
+          data: { turbo_stream: true } do %>
+        <i class="bi bi-heart text-secondary"></i>
+        <span class="like-count"><%= ferment.likes.count %></span>
+      <% end %>
+    <% end %>
+  <% else %>
+    <span class="btn btn-sm btn-like">
+      <i class="bi bi-heart text-secondary"></i>
+      <span class="like-count"><%= ferment.likes.count %></span>
+    </span>
+  <% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_05_155920) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_07_070926) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -86,6 +86,16 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_155920) do
     t.index ["user_id"], name: "index_ferments_on_user_id"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "ferment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ferment_id"], name: "index_likes_on_ferment_id"
+    t.index ["user_id", "ferment_id"], name: "index_likes_on_user_id_and_ferment_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.bigint "sender_id", null: false
     t.bigint "recipient_id", null: false
@@ -141,6 +151,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_155920) do
   add_foreign_key "comments", "ferments"
   add_foreign_key "comments", "users"
   add_foreign_key "ferments", "users"
+  add_foreign_key "likes", "ferments"
+  add_foreign_key "likes", "users"
   add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "messages", "users", column: "sender_id"
   add_foreign_key "notifications", "users"

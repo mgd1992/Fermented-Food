@@ -1,0 +1,26 @@
+.btn-like {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  border-radius: 20px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  color: #aaa;
+
+  &:hover {
+    border-color: #dc3545;
+    background: rgba(220, 53, 69, 0.05);
+  }
+
+  &.liked {
+    border-color: rgba(220, 53, 69, 0.3);
+    background: rgba(220, 53, 69, 0.05);
+  }
+
+  .like-count {
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+}

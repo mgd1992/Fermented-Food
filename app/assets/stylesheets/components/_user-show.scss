@@ -125,3 +125,22 @@
     border-radius: 10px;
   }
 }
+
+.tab-link {
+  text-decoration: none;
+  color: #aaa;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 8px 4px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+
+  &:hover {
+    color: #fff;
+  }
+
+  &.active {
+    color: #ffc107;
+    border-bottom-color: #ffc107;
+  }
+}

@@ -1,34 +1,49 @@
 <div class="show-page mt-2">
-
   <%= render "profile", user: @user %>
+  <div class="ferments-side d-flex align-items-center flex-column mb-4">
 
-  <div class="ferments-side d-flex align-items-center flex-column mb-4 ">
-    <div class="d-flex align-items-center mb-3">
-      <%= link_to ferments_path, class: "btn-back" do %>
-        <i class="bi bi-arrow-left me-2 border p-1 text-warning rounded-3"></i>
+    <div class="d-flex gap-3 mb-4 border-bottom border-secondary border-opacity-25 w-100 pb-2">
+      <%= link_to user_path(@user),
+          class: "tab-link #{params[:tab] != 'likes' ? 'active' : ''}" do %>
+        <i class="bi bi-jar me-1"></i> Mis Fermentos
+        <span class="badge bg-secondary ms-1"><%= @ferments.count %></span>
       <% end %>
-      <h4 class="text-light m-0 p-0">Mis Fermentos</h4>
+      <%= link_to user_path(@user, tab: 'likes'),
+          class: "tab-link #{params[:tab] == 'likes' ? 'active' : ''}" do %>
+        <i class="bi bi-heart-fill text-danger me-1"></i> Likes
+        <span class="badge bg-secondary ms-1"><%= @liked_ferments.count %></span>
+      <% end %>
     </div>
 
-    <% if @ferments.any? %>
-      <div class="ferment-list">
-        <%= render partial: "ferments/ferment_item", collection: @ferments, as: :ferment %>
-      </div>
+    <% if params[:tab] == 'likes' %>
+      <% if @liked_ferments.any? %>
+        <div class="ferment-list">
+          <%= render partial: "ferments/ferment_item", collection: @liked_ferments, as: :ferment %>
+        </div>
+      <% else %>
+        <div class="text-center text-muted my-5">
+          <i class="bi bi-heart fs-1 d-block mb-3 opacity-25"></i>
+          <h4>Todavía no hay likes</h4>
+          <p>Explorá fermentos y dale like a los que te gusten</p>
+          <%= link_to 'Explorar', ferments_path, class: "btn btn-outline-warning" %>
+        </div>
+      <% end %>
 
     <% else %>
-
-      <div class="text-center text-muted my-5">
-
-        <h4>No hay fermentos aún 🫙</h4>
-        <p>Crea tu primer fermento!</p>
-
-        <% if user_signed_in? && @user == current_user %>
-          <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), class: "btn btn-outline-info" %>
-        <% end %>
-      </div>
-
-
+      <% if @ferments.any? %>
+        <div class="ferment-list">
+          <%= render partial: "ferments/ferment_item", collection: @ferments, as: :ferment %>
+        </div>
+      <% else %>
+        <div class="text-center text-muted my-5">
+          <h4>No hay fermentos aún 🫙</h4>
+          <p>Crea tu primer fermento!</p>
+          <% if user_signed_in? && @user == current_user %>
+            <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), class: "btn btn-outline-info" %>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
-  </div>
 
+  </div>
 </div>

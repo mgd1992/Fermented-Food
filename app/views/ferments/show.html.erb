@@ -7,7 +7,9 @@
         <%= link_to ferments_path, class: "btn-back me-3" do %>
           <i class="bi bi-arrow-left border p-1 text-warning rounded-3"></i>
         <% end %>
-        <h1 class="h2 text-white fw-bold mb-0"><%= @ferment.name %></h1>
+        <h1 class="h2 text-white fw-bold mb-0 me-2"><%= @ferment.name %></h1>
+        <%= render "likes/button", ferment: @ferment %>
+
       </div>
 
       <div data-controller="share" data-share-url-value="<%= request.base_url %>/f/<%= @ferment.share_token %>">

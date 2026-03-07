@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
 
   def show
-    @ferments = @user.ferments.includes(:user, :comments, photos_attachments: :blob).with_attached_photos
+    @ferments = @user.ferments.includes(:user, :comments,
+                                        photos_attachments: :blob).with_attached_photos.order(created_at: :desc)
+
+    @liked_ferments = @user.liked_ferments.order("likes.created_at DESC")
   end
 
   def edit; end
