@@ -165,6 +165,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    groupdate (6.7.0)
+      activesupport (>= 7.1)
     httparty (0.22.0)
       csv
       mini_mime (>= 1.0.0)
@@ -446,6 +448,7 @@ DEPENDENCIES
   faker
   faraday
   font-awesome-sass (~> 6.1)
+  groupdate
   image_processing (>= 1.2)
   importmap-rails
   jbuilder

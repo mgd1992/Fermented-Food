@@ -69,6 +69,7 @@
       </div>
 
       <%= link_to 'Explorar', ferments_path, class: 'btn btn-sm text-light' %>
+      <%= link_to 'Dashboard', dashboard_path, class: 'btn btn-sm text-light' %>
       <%= link_to 'Nuevo Fermento', new_user_ferment_path(current_user), class: 'btn btn-sm btn-outline-warning' %>
       <%= link_to user_path(current_user) do %>
         <% if current_user.photo.attached? %>

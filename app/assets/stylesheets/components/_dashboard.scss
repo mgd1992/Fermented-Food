@@ -1,0 +1,54 @@
+.dashboard-layout {
+  background-color: #0d0d0d;
+  min-height: 100vh;
+}
+
+.dashboard-stat-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: rgba(255, 193, 7, 0.3);
+    transform: translateY(-3px);
+  }
+
+  .stat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ffc107;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.dashboard-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.dashboard-activity-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #2a2a2a;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
