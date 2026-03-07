@@ -23,6 +23,7 @@
 
 
     <div class="f-card-footer">
+      <%= render "likes/button", ferment: ferment %>
       <% owner = ferment.user %>
       <%= link_to profile_path(owner), class: "f-user", data: { turbo_frame: "_top" } do %>
         <% if owner.photo.attached? %>

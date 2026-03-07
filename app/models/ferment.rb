@@ -29,6 +29,9 @@
 class Ferment < ApplicationRecord
   include PgSearch::Model
 
+  has_many :likes, dependent: :destroy
+  has_many :likers, through: :likes, source: :user
+
   pg_search_scope :search_by_details,
                   against: {
                     name: 'A',

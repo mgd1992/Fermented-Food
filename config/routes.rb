@@ -2,6 +2,8 @@
   require 'sidekiq-scheduler/web'
 
   Rails.application.routes.draw do
+    get 'likes/create'
+    get 'likes/destroy'
 
     root to: "pages#home"
     devise_for :users
@@ -27,6 +29,7 @@
         patch :restart
         delete "photos/:photo_id", to: "ferments#destroy_photo", as: :destroy_photo
       end
+      resource :like, only: [:create, :destroy]
     end
 
     #Rutas de mensajes
