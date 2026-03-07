@@ -2,11 +2,10 @@
   require 'sidekiq-scheduler/web'
 
   Rails.application.routes.draw do
-    get 'likes/create'
-    get 'likes/destroy'
-
     root to: "pages#home"
     devise_for :users
+
+    get '/dashboard', to: 'dashboard#show', as: :dashboard
 
     resources :notifications, only: [:index] do
       member do
