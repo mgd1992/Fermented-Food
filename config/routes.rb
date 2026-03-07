@@ -2,11 +2,13 @@
   require 'sidekiq-scheduler/web'
 
   Rails.application.routes.draw do
+    
     root to: "pages#home"
     devise_for :users
 
     get '/dashboard', to: 'dashboard#show', as: :dashboard
 
+    # Rutas de notificaciones
     resources :notifications, only: [:index] do
       member do
         patch :mark_as_read
@@ -48,6 +50,7 @@
     # Health check
     get "up" => "rails/health#show", as: :rails_health_check
 
+    # Rutas de PWA
     get "/manifest.json", to: "pwa#manifest", as: :pwa_manifest
     get "/service-worker.js", to: "pwa#service_worker", as: :pwa_service_worker
 

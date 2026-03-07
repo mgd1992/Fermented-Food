@@ -23,6 +23,7 @@ module FermentedFood
     config.autoload_lib(ignore: %w(assets tasks))
 
     config.time_zone = 'Europe/Madrid'
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
+
   end
 end

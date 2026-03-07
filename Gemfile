@@ -41,6 +41,7 @@ gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
 gem 'faraday'
+gem 'groupdate'
 
 # novu notifications
 

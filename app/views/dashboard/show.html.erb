@@ -1,2 +1,118 @@
-<h1>Dashboard#show</h1>
-<p>Find me in app/views/dashboard/show.html.erb</p>
+<div class="dashboard-layout py-5">
+  <div class="container" style="max-width: 1100px;">
+
+    <%# Header %>
+    <div class="mb-5">
+      <h1 class="text-white fw-bold h2">
+        Hola, <%= current_user.first_name %> 👋
+      </h1>
+      <p class="text-secondary">Acá tenés un resumen de tu actividad en Cool Beans</p>
+    </div>
+
+    <%# Stats cards %>
+    <div class="row g-3 mb-5">
+      <div class="col-6 col-md-3">
+        <div class="dashboard-stat-card">
+          <div class="stat-icon">🫙</div>
+          <div class="stat-number"><%= @ferments_active %></div>
+          <div class="stat-label">Fermentos activos</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="dashboard-stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-number"><%= @ferments_completed %></div>
+          <div class="stat-label">Completados</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="dashboard-stat-card">
+          <div class="stat-icon">❤️</div>
+          <div class="stat-number"><%= @likes_received %></div>
+          <div class="stat-label">Likes recibidos</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="dashboard-stat-card">
+          <div class="stat-icon">💬</div>
+          <div class="stat-number"><%= @comments_received %></div>
+          <div class="stat-label">Comentarios recibidos</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dashboard-card mb-5">
+      <h5 class="text-white fw-bold mb-4">📈 Fermentos creados por mes</h5>
+      <canvas id="fermentChart"
+              height="80"
+              data-controller="ferment-chart"
+              data-ferment-chart-labels-value="<%= @ferments_by_month.keys.map { |d| d.strftime('%b %Y') }.to_json %>"
+              data-ferment-chart-data-value="<%= @ferments_by_month.values.to_json %>">
+      </canvas>
+    </div>
+
+
+    <div class="row g-4">
+
+      <div class="col-12 col-md-6">
+        <div class="dashboard-card h-100">
+          <h5 class="text-white fw-bold mb-4">⏰ Próximos a vencer</h5>
+          <% if @ferments_expiring.any? %>
+            <% @ferments_expiring.each do |ferment| %>
+              <div class="dashboard-activity-item">
+                <%= link_to ferment_path(ferment), class: "text-decoration-none" do %>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-white small fw-bold"><%= ferment.name %></span>
+                    <span class="badge bg-warning text-dark">
+                      <%= ferment.review_date.strftime("%d/%m") %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-secondary small">No tenés fermentos por vencer en los próximos 7 días 🎉</p>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="dashboard-card h-100">
+          <h5 class="text-white fw-bold mb-4">🔔 Actividad reciente</h5>
+          <% if @recent_comments.any? || @recent_likes.any? %>
+            <% @recent_comments.each do |comment| %>
+              <div class="dashboard-activity-item">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="text-warning">💬</span>
+                  <div>
+                    <span class="text-white small fw-bold"><%= comment.user.first_name %></span>
+                    <span class="text-secondary small"> comentó en </span>
+                    <%= link_to comment.ferment.name, ferment_path(comment.ferment), class: "text-warning small text-decoration-none" %>
+                    <div class="text-muted" style="font-size:0.7rem"><%= time_ago_in_words(comment.created_at) %> atrás</div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+            <% @recent_likes.each do |like| %>
+              <div class="dashboard-activity-item">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="text-danger">❤️</span>
+                  <div>
+                    <span class="text-white small fw-bold"><%= like.user.first_name %></span>
+                    <span class="text-secondary small"> le dio like a </span>
+                    <%= link_to like.ferment.name, ferment_path(like.ferment), class: "text-warning small text-decoration-none" %>
+                    <div class="text-muted" style="font-size:0.7rem"><%= time_ago_in_words(like.created_at) %> atrás</div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-secondary small">No hay actividad reciente todavía.</p>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
