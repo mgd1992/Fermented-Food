@@ -19,8 +19,17 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
+  include PgSearch::Model
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+
+
+  pg_search_scope :search_by_name,
+                against: { first_name: 'A', last_name: 'A', email: 'B' },
+                using: {
+                  tsearch: { prefix: true, dictionary: "spanish" },
+                  trigram: { threshold: 0.2 }
+                }
 
   has_one_attached :photo
 

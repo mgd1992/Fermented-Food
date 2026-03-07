@@ -2,7 +2,9 @@
   require 'sidekiq-scheduler/web'
 
   Rails.application.routes.draw do
-    
+
+
+
     root to: "pages#home"
     devise_for :users
 
@@ -46,6 +48,9 @@
 
       mount Sidekiq::Web => '/sidekiq'
     end
+
+    #Search route
+    get '/search', to: 'search#show', as: :search
 
     # Health check
     get "up" => "rails/health#show", as: :rails_health_check
