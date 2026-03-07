@@ -14,13 +14,14 @@
 
 .notifications-dropdown {
   position: absolute;
+  height: fit-content;
   top: calc(100% + 8px);
   right: 0;
   width: 320px;
   background: #1a1a2e;
   color: #fff;
   z-index: 1050;
-  border: 1px solid rgba(255, 255, 255, 0.1); // <- borde sutil claro
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-avatar-sm {

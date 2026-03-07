@@ -1,0 +1,49 @@
+<div class="container py-5" style="max-width: 1000px;">
+  <h4 class="text-white fw-bold mb-4">
+    <% if @query.present? %>
+      Resultados para "<span class="text-warning"><%= @query.capitalize %></span>"
+    <% else %>
+      Buscá fermentos y usuarios
+    <% end %>
+  </h4>
+
+  <% if @query.present? && @users.empty? && @ferments.empty? %>
+    <p class="text-secondary">No encontramos nada para "<%= @query %>".</p>
+  <% end %>
+
+  <% if @users.any? %>
+    <h5 class="text-secondary text-uppercase small fw-bold mb-3 mt-4">👤 Usuarios</h5>
+    <div class="row g-3 mb-5">
+      <% @users.each do |user| %>
+        <div class="col-12 col-md-4">
+          <%= link_to profile_path(user), class: "text-decoration-none" do %>
+            <div class="search-user-card d-flex align-items-center gap-3">
+              <% if user.photo.attached? %>
+                <%= image_tag url_for(user.photo), class: "rounded-circle", style: "width:48px;height:48px;object-fit:cover;" %>
+              <% else %>
+                <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width:48px;height:48px;">
+                  <span class="text-white fw-bold"><%= user.first_name[0].upcase %></span>
+                </div>
+              <% end %>
+              <div>
+                <div class="text-white fw-bold small"><%= user.full_name %></div>
+                <div class="text-secondary" style="font-size:0.75rem"><%= pluralize(user.ferments.count, 'fermento') %></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @ferments.any? %>
+    <h5 class="text-secondary text-uppercase small fw-bold mb-3">🫙 Fermentos</h5>
+    <div class="row g-3">
+      <% @ferments.each do |ferment| %>
+        <div class="col-12 col-md-6">
+          <%= render 'ferments/ferment_card', ferment: ferment %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

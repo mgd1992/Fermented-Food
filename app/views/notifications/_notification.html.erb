@@ -11,19 +11,24 @@
               method: :patch,
               form: { data: { turbo: true } },
               id: dom_id(notification),
-              class: "notification-item d-block text-decoration-none p-3 border-bottom w-100 text-start border-0 #{notification.read? ? 'opacity-60' : 'bg-warning bg-opacity-10'}" do %>
+              class: "notification-item d-block text-decoration-none p-3 border-bottom border-warning w-100 text-start bg-transparent border-0 #{notification.read? ? 'opacity-60' : 'bg-warning bg-opacity-10'}" do %>
+
   <div class="d-flex align-items-center gap-2">
+
     <% if notification.actor.photo.attached? %>
-      <%= image_tag notification.actor.photo, class: "rounded-circle", style: "width:32px;height:32px;object-fit:cover" %>
+      <%= image_tag notification.actor.photo, class: "rounded-circle", style: "width:40px;height:40px;object-fit:cover" %>
     <% else %>
       <i class="bi bi-person-circle fs-4 text-secondary"></i>
     <% end %>
-    <div>
+
+    <div class="">
       <p class="mb-0 small text-light"><%= notification.message %></p>
-      <span class="text-muted" style="font-size:0.75rem"><%= time_ago_in_words(notification.created_at) %> atrás</span>
+      <span class="text-light mt-0" style="font-size:0.75rem"><%= time_ago_in_words(notification.created_at) %> atrás</span>
     </div>
+
     <% unless notification.read? %>
       <span class="ms-auto bg-warning rounded-circle" style="width:8px;height:8px;flex-shrink:0"></span>
     <% end %>
   </div>
+
 <% end %>
