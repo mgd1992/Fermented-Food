@@ -89,7 +89,7 @@
                     <span class="text-white small fw-bold"><%= comment.user.first_name %></span>
                     <span class="text-secondary small"> comentó en </span>
                     <%= link_to comment.ferment.name, ferment_path(comment.ferment), class: "text-warning small text-decoration-none" %>
-                    <div class="text-muted" style="font-size:0.7rem"><%= time_ago_in_words(comment.created_at) %> atrás</div>
+                    <div class="text-light" style="font-size:0.7rem"><%= time_ago_in_words(comment.created_at) %> atrás</div>
                   </div>
                 </div>
               </div>
@@ -102,7 +102,7 @@
                     <span class="text-white small fw-bold"><%= like.user.first_name %></span>
                     <span class="text-secondary small"> le dio like a </span>
                     <%= link_to like.ferment.name, ferment_path(like.ferment), class: "text-warning small text-decoration-none" %>
-                    <div class="text-muted" style="font-size:0.7rem"><%= time_ago_in_words(like.created_at) %> atrás</div>
+                    <div class="text-light" style="font-size:0.7rem"><%= time_ago_in_words(like.created_at) %> atrás</div>
                   </div>
                 </div>
               </div>

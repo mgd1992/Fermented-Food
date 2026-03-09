@@ -7,13 +7,13 @@
   <% url = notifications_path %>
 <% end %>
 
-<%= button_to mark_as_read_notification_path(notification),
-              method: :patch,
-              form: { data: { turbo: true } },
-              id: dom_id(notification),
-              class: "notification-item d-block text-decoration-none p-3 border-bottom border-warning w-100 text-start bg-transparent border-0 #{notification.read? ? 'opacity-60' : 'bg-warning bg-opacity-10'}" do %>
+<div class="d-flex align-items-center position-relative">
 
-  <div class="d-flex align-items-center gap-2">
+  <%= button_to mark_as_read_notification_path(notification),
+                method: :patch,
+                form: { data: { turbo: true } },
+                id: dom_id(notification),
+                class: "notification-item d-flex align-items-center gap-2 text-decoration-none p-3 border-bottom border-warning w-100 text-start bg-transparent border-0 #{notification.read? ? 'opacity-60' : 'bg-warning bg-opacity-10'}" do %>
 
     <% if notification.actor.photo.attached? %>
       <%= image_tag notification.actor.photo, class: "rounded-circle", style: "width:40px;height:40px;object-fit:cover" %>
@@ -21,7 +21,7 @@
       <i class="bi bi-person-circle fs-4 text-secondary"></i>
     <% end %>
 
-    <div class="">
+    <div>
       <p class="mb-0 small text-light"><%= notification.message %></p>
       <span class="text-light mt-0" style="font-size:0.75rem"><%= time_ago_in_words(notification.created_at) %> atrás</span>
     </div>
@@ -29,6 +29,15 @@
     <% unless notification.read? %>
       <span class="ms-auto bg-warning rounded-circle" style="width:8px;height:8px;flex-shrink:0"></span>
     <% end %>
-  </div>
 
-<% end %>
+  <% end %>
+
+  <%= button_to notification_path(notification),
+                method: :delete,
+                form: { data: { turbo: true } },
+                class: "btn btn-sm text-secondary border-0 bg-transparent",
+                title: "Eliminar" do %>
+    <i class="bi bi-x fs-5"></i>
+  <% end %>
+
+</div>

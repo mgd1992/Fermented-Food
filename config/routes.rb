@@ -11,7 +11,7 @@
     get '/dashboard', to: 'dashboard#show', as: :dashboard
 
     # Rutas de notificaciones
-    resources :notifications, only: [:index] do
+    resources :notifications, only: [:index, :destroy] do
       member do
         patch :mark_as_read
       end
