@@ -6,13 +6,15 @@
 
   <div class="d-flex align-items-center d-md-none z-max">
 
-    <div class="d-flex justify-content-center align-items-center me-2">
+    <% if user_signed_in? %>
+      <div class="d-flex justify-content-center align-items-center me-2">
 
-      <%= link_to notifications_path, class: "position-relative text-light" do %>
-        <i class="bi bi-bell fs-5"></i>
-        <%= render "notifications/count", count: current_user.notifications.unread.count %>
-      <% end %>
-    </div>
+        <%= link_to notifications_path, class: "position-relative text-light" do %>
+          <i class="bi bi-bell fs-5"></i>
+          <%= render "notifications/count", count: current_user.notifications.unread.count %>
+        <% end %>
+      </div>
+    <% end %>
 
     <button class="nav-toggle btn text-light z-max d-md-none"
             type="button"
@@ -24,14 +26,14 @@
   </div>
 
   <div class="nav-mobile-menu" data-navbar-target="menu">
-
-    <%= form_with url: search_path, method: :get, local: true do |f| %>
-      <%= f.text_field :query, placeholder: "Buscar...", class: "form-control bg-transparent border-secondary text-white shadow-none mb-3" %>
-      <%= f.submit "Buscar", class: "btn btn-outline-warning btn-sm w-100 mb-3" %>
-    <% end %>
-
     <div class="w-100 px-4 d-flex flex-column align-items-center">
+
       <% if user_signed_in? %>
+
+        <%= form_with url: search_path, method: :get, local: true do |f| %>
+          <%= f.text_field :query, placeholder: "Buscar...", class: "form-control bg-transparent border-secondary text-white shadow-none mb-3" %>
+          <%= f.submit "Buscar", class: "btn btn-outline-warning btn-sm w-100 mb-3" %>
+        <% end %>
 
         <%= link_to 'Mi Perfil', user_path(current_user), data: { action: "click->navbar#close" }, class: 'nav-mobile-item' %>
         <%= link_to 'Crear Fermento', new_user_ferment_path(current_user), data: { action: "click->navbar#close" }, class: 'nav-mobile-item' %>
@@ -40,17 +42,22 @@
         <%= link_to "Log in", new_user_session_path, class: 'nav-mobile-item' %>
         <%= link_to "Sign up", new_user_registration_path, class: 'nav-mobile-item' %>
       <% end %>
+
       <hr class="w-25 border-light opacity-25 my-4">
       <%= link_to "GitHub", "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'text-light opacity-50 text-decoration-none' %>
+
     </div>
   </div>
 
   <div class="nav-links d-none d-md-flex align-items-center gap-3">
-    <%= form_with url: search_path, method: :get, local: true do |f| %>
-      <%= f.text_field :query, placeholder: "Buscar...", class: "form-control form-control-sm" %>
-    <% end %>
+
+    <%= link_to 'Explorar', ferments_path, class: 'btn btn-sm text-light' %>
     <%= link_to 'GitHub', "https://github.com/mgd1992/Fermented-Food", target: "_blank", class: 'btn btn-outline-light btn-sm border-0' %>
+
     <% if user_signed_in? %>
+      <%= form_with url: search_path, method: :get, local: true do |f| %>
+        <%= f.text_field :query, placeholder: "Buscar...", class: "form-control form-control-sm input-desktop" %>
+      <% end %>
       <%= turbo_stream_from "notifications_#{current_user.id}" %>
 
       <div class="position-relative" data-controller="notifications-dropdown">
@@ -80,7 +87,6 @@
         </div>
       </div>
 
-      <%= link_to 'Explorar', ferments_path, class: 'btn btn-sm text-light' %>
       <%= link_to 'Dashboard', dashboard_path, class: 'btn btn-sm text-light' %>
       <%= link_to 'Nuevo Fermento', new_user_ferment_path(current_user), class: 'btn btn-sm btn-outline-warning' %>
       <%= link_to user_path(current_user) do %>

@@ -15,3 +15,21 @@
   color: rgba(255, 255, 255, 0.5);
   opacity: 1;
 }
+
+.input-desktop {
+  background-color: #2a2a2a;
+  border: none;
+  color: #fff;
+  transition: all 0.2s;
+
+  &:focus {
+    background-color: #1a1a1a;
+    border-color: #ffc107;
+    color: #fff;
+    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+  }
+}
+
+.input-desktop::placeholder {
+  color: #1a1a1a;
+}
