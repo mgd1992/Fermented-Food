@@ -1,7 +1,8 @@
 class FermentsController < ApplicationController
   before_action :set_user, only: %i[new create edit update]
   before_action :set_ferment, only: %i[show edit update destroy destroy_photo restart]
-  before_action :authorize_user!, only: %i[new create edit update destroy destroy_photo restart]
+  before_action :authenticate_user!, only: %i[new create edit update destroy destroy_photo restart]
+  before_action :authorize_ferment!, only: %i[edit update destroy destroy_photo restart]
 
   def index
     ferments = Ferment.order(created_at: :desc)
@@ -68,26 +69,19 @@ class FermentsController < ApplicationController
 
   def restart
     @ferment = Ferment.find(params[:id])
-    if @ferment.user == current_user
-      if @ferment.update(start_date: Time.zone.today)
-        redirect_to ferment_path(@ferment), notice: "¡Ciclo reiniciado! El fermento vuelve a contar desde hoy."
-      else
-        redirect_to ferment_path(@ferment), alert: "No se pudo reiniciar el fermento."
-      end
+    authorize @ferment
+    if @ferment.update(start_date: Time.zone.today)
+      redirect_to ferment_path(@ferment), notice: "¡Ciclo reiniciado!"
     else
-      redirect_to root_path, alert: "No tienes permiso para realizar esta acción."
+      redirect_to ferment_path(@ferment), alert: "No se pudo reiniciar el fermento."
     end
   end
 
   def destroy
-    if @ferment.user == current_user
-      @ferment.destroy!
-      respond_to do |format|
-        format.html { redirect_to profile_path(current_user), notice: "Fermento eliminado con éxito " }
-        format.turbo_stream
-      end
-    else
-      redirect_to ferments_path, alert: "No tienes permiso para eliminar este fermento "
+    @ferment.destroy!
+    respond_to do |format|
+      format.html { redirect_to profile_path(current_user), notice: "Fermento eliminado con éxito" }
+      format.turbo_stream
     end
   end
 
@@ -135,6 +129,10 @@ class FermentsController < ApplicationController
     else
       redirect_to new_user_session_path, alert: "Debes iniciar sesión" unless user_signed_in?
     end
+  end
+
+  def authorize_ferment!
+    authorize @ferment
   end
 
   def attach_photos_if_present

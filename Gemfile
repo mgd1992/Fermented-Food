@@ -43,6 +43,7 @@ gem 'sidekiq-scheduler'
 gem 'faraday'
 gem 'groupdate'
 
+gem 'pundit'
 # novu notifications
 
 # REDIS
