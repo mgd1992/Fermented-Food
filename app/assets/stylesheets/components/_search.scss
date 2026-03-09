@@ -17,19 +17,25 @@
 }
 
 .input-desktop {
-  background-color: #2a2a2a;
+  background-color: transparent;
   border: none;
+  border-bottom: 1px solid #ccc;
   color: #fff;
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
 
   &:focus {
     background-color: #1a1a1a;
-    border-color: #ffc107;
+    border-bottom: 1px solid #ffc107;
     color: #fff;
-    box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
-  }
-}
+    outline: none;
+    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.3);
 
-.input-desktop::placeholder {
-  color: #1a1a1a;
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
 }

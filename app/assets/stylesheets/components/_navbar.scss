@@ -24,6 +24,33 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+#notifications_list {
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #ffc107 #2b2b2b;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1a1a1a;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 10px;
+    border: 1px solid #1a1a1a;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ffc107;
+  }
+}
+
+
 .profile-avatar-sm {
   width: 40px;
   height: 40px;

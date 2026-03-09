@@ -12,6 +12,15 @@ class NotificationsController < ApplicationController
     redirect_to redirect_url_for(@notification)
   end
 
+  def destroy
+    @notification = current_user.notifications.find(params[:id])
+    @notification.destroy
+    respond_to do |f|
+      f.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@notification)) }
+      f.html { redirect_to notifications_path }
+    end
+  end
+
   private
 
   def redirect_url_for(notification)
